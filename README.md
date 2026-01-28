@@ -4,6 +4,8 @@
 [![SkillsFuture](https://img.shields.io/badge/SkillsFuture-Funded-green)](https://www.skillsfuture.gov.sg/)
 [![Duration](https://img.shields.io/badge/Duration-2%20Days-orange)]()
 
+> **Register for the course:** [WSQ - Develop AI-Powered Copilots and Chatbots with Microsoft Copilot Studio](https://www.tertiarycourses.com.sg/wsq-develop-ai-powered-copilots-and-chatbots-with-microsoft-copilot-studio.html)
+
 This repository contains hands-on lab materials for the **WSQ - Develop Intelligent Chatbots with Microsoft Copilot Studio and Generative AI** course. Learn to build AI-powered chatbots and agents using Microsoft Copilot Studio, from fundamentals to advanced multi-agent systems.
 
 ## 📋 Course Overview
