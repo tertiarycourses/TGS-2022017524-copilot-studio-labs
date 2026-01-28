@@ -1,256 +1,102 @@
----
-prev:
-  text: 'Operative Overview'
-  link: '/operative'
-next:
-  text: 'Authoring Agent Instructions'
-  link: '/operative/02-agent-instructions'
----
+# Lab 13: Get Started with the Hiring Agent
 
-# 🚨 Lab 13: Get started with the Hiring Agent
+## Lab Title
+Get Started with the Hiring Agent - Building a Recruitment System
 
-## 🕵️‍♂️ CODENAME: `OPERATION TALENT SCOUT`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand the hiring automation scenario and its business value
+2. Import and configure the Operative solution with Dataverse tables
+3. Import sample data for job roles and evaluation criteria
+4. Create the central Hiring Agent for orchestration
+5. Understand the foundation for multi-agent hiring workflows
 
-> **⏱️ Operation Time Window:** `~45 minutes`
-
-## 🎯 Mission Brief
-
-Welcome, Agent. Your first assignment is **Operation Talent Scout** - establishing the foundational infrastructure for an AI-powered recruitment system that will transform how organizations identify and hire top talent.
-
-Your mission, should you choose to accept it, is to deploy and configure a comprehensive hiring management system using Microsoft Copilot Studio. You'll import a pre-built solution containing all the necessary data structures, then create your first AI agent - the **Hiring Agent** - which will serve as the central orchestrator for all future recruitment operations.
-
-This initial deployment establishes the solution that you'll enhance throughout the Agent Academy Operative course. Consider this your base of operations - the foundation upon which you'll build an entire network of specialized agents in subsequent missions.
-
-## 🔎 Objectives
-
-In this mission, you'll learn:
-
-1. About the scenario and gain comprehensive knowledge of hiring automation challenges and solutions
-1. How to successfully import and configure the fundamentals of a hiring management system
-1. How to build a hiring agent that is the start of the scenario you're going to build as an Agent Academy Operative
-
-## 🔍 Prerequisites
-
-Before embarking on this mission, ensure you have:
-
+## Prerequisites
 - Copilot Studio license
 - Access to a Microsoft Power Platform environment
 - Administrative permissions to create solutions and agents
-
-> [!TIP] Prerequisites help:
-> If you need help getting a Copilot Studio license, please reference the [Recruit Course Setup lab](./../../recruit/00-course-setup/index.md) which walks you through setting up a Power Platform environment with a Copilot Studio trial.
-
-## 🏢 Understanding the Hiring Automation Scenario
-
-This scenario demonstrates how a company can use Microsoft Copilot Studio full to improve and automate its hiring process. It introduces a system of agents that work together to handle tasks like reviewing resumes, recommending job roles, preparing interview materials, and evaluating candidates.
-
-### Business Value
-
-The solution helps HR teams save time and make better decisions by:
-
-- Automatically processing resumes received via email.
-- Suggesting suitable job roles based on candidate profiles.
-- Creating job applications and interview guides tailored to each candidate.
-- Ensuring fair and compliant hiring practices through built-in safety and moderation features.
-- Collecting feedback to improve the solution.
-
-### How It Works
-
-- A central **Hiring Agent** coordinates the process and stores data in Microsoft Dataverse.
-- An **Application Intake Agent** reads resumes and creates job applications.
-- An **Interview Prep Agent** generates interview questions and documents based on the candidate's background.
-- The system can be published to a demo website, allowing stakeholders to interact with it.
-
-This scenario is ideal for organizations looking to modernize their recruitment workflows using AI-powered automation, while maintaining transparency, fairness, and efficiency.
-
-## 🧪 Lab 1: Setup the Hiring Agent
-
-In this hands-on lab, you'll establish the foundation for your hiring automation system. You'll begin by importing a pre-configured solution that contains all the necessary Dataverse tables and data structure for managing candidates, job positions, and hiring workflows. Next, you'll populate these tables with sample data that will support your learning throughout this module and provide realistic scenarios for testing. Finally, you'll create the Hiring Agent in Copilot Studio, setting up the basic conversational interface that will serve as the cornerstone for all the other features you'll add in future missions.
-
-### 🧪 Lab 1.1: Import solution
-
-1. Go to **[Copilot Studio](https://copilotstudio.microsoft.com)**
-1. Select the **...** in the left navigation and select **Solutions**
-
-    ![Solutions tab](./assets/01-solutionstab.png)
-
-1. Select the **Import Solution** button on the top
-
-    ![Import Solution](./assets/01-importsolution.png)
-
-1. **[Download](https://raw.githubusercontent.com/microsoft/agent-academy/refs/heads/main/docs/operative/01-get-started/assets/Operative_1_0_0_0.zip)** the prepared solution
-1. Select **Browse** and select the downloaded solution from the previous step
-1. Select **Next**
-
-    ![Browse Solution](./assets/01-nextsolution.png)
-
-1. Select **Import**
-
-    ![Import Solution](./assets/01-import.png)
-
-    > [!NOTE]
-    > On success, you will see a green notification bar with the following message when it's done: "Solution "Operative" imported successfully."
-
-1. Once you see the "imported successfully" message, take a look at what you imported by selecting the display name of the solution (`Operative`) in the solutions list.
-
-![Open Solution](./assets/01-selectsolution.png)
-
-Review the solution and ensure that the following components are imported:
-
-![Imported tables](./assets/components.png)
-
-| Display Name | Type | Description |
-| ----------- | ---- | ----------- |
-| Candidate | Table | Candidate information |
-| Evaluation Criteria | Table | Evaluation criteria for the role |
-| Hiring Hub | Model-Driven App | Application for managing the hiring process |
-| Hiring Hub | Site Map | Navigation structure for the Hiring Hub app |
-| Job Application | Table | Job applications |
-| Job Role | Table | Job roles |
-| Resume | Table | Resumes of the candidates |
-
-As the last task for this lab, Select the **Publish all customizations** button at the top of the page.
-
-![Publish Customizations](./assets/01-pubcustomizations.png)
-
-### 🧪 Lab 1.2: Import sample data
-
-In this lab, you will add sample data to some of the tables that you imported in lab 1.1.
-
-#### Download the files to import
-
-1. **[Download](https://raw.githubusercontent.com/microsoft/agent-academy/refs/heads/main/docs/operative/01-get-started/assets/evaluation-criteria.csv)** the CSV-file with the evaluation criteria
-1. **[Download](https://raw.githubusercontent.com/microsoft/agent-academy/refs/heads/main/docs/operative/01-get-started/assets/job-roles.csv)** the CSV-file with the job roles
-
-#### Import the Job Role sample data
-
-1. Go back to the solution you just imported in the last lab
-1. Select the **Hiring Hub** Model-Driven App by selecting the checkmark in front of the row
-1. Select the **Play** button at the top
-
-    ![Play App](./assets/01-playhiringhubapp.png)
-
-    > [!WARNING]
-    > You might be prompted to login again. Make sure to do that. After doing that, you should see the Hiring Hub app.
-
-1. Select **Job Roles** in the left navigation
-1. Select the **More** icon (three dots below each other) in the command bar
-1. Select the **right arrow** next to *Import from Excel*
-
-    ![Import from Excel](./assets/import-from-excel.png)
-
-1. Select **Import from CSV**
-
-    ![Import from CSV](./assets/import-from-csv.png)
-
-1. Select the **Choose File** button, select the **job-roles.csv** file you just downloaded and then select **Open**
-1. Select **Next**
-1. Leave the next step as is and select **Review Mapping**
-
-    ![Review mapping](./assets/import-from-csv-job-roles.png)
-
-1. Make sure the mapping is correct and select **Finish Import**
-
-    > [!NOTE]
-    > This will start an import and you will be able to track progress or finish the process immediately by selecting **Done**
-
-1. Select **Done**
-
-This can take a little while, but you can hit the **Refresh** button to see if the import has succeeded.
-
-![Job roles import successful](./assets/job-roles-import-successful.png)
-
-#### Import the Evaluation Criteria sample data
-
-1. Select **Evaluation Criteria** in the left navigation
-1. Select the **More** icon (three dots below each other) in the command bar
-1. Select the **right arrow** next to *Import from Excel*
-
-    ![Import from Excel](./assets/import-from-excel.png)
-
-1. Select **Import from CSV**
-
-    ![Import from CSV](./assets/import-from-csv.png)
-
-1. Select the **Choose File** button, select the **evaluation-criteria.csv** file you just downloaded and then select **Open**
-1. Select **Next**
-1. Leave the next step as is and select **Review Mapping**
-
-    ![Review mapping](./assets/import-from-csv-evaluation-criteria.png)
-
-1. Now we have to do a bit more work for the mapping. Select the magnifying glass(🔎 icon) next to the Job Role field
-
-    ![Job Role](./assets/01-jobrolemag.png)
-
-1. Make sure **Job Title** is selected here, and if not - add it
-1. Select **OK**
-
-    ![Job Title](./assets/01-jobtitle.png)
-
-1. Make sure the rest of the mapping is correct too and select **Finish Import**
-
-    > [!NOTE]
-    > This will start an import again and you will be able to track progress or finish the process immediately by selecting **Done**
-
-1. Select **Done**
-
-This can take a little while, but you can hit the **Refresh** button to see if the import has succeeded.
-
-![Evaluation Criteria import successful](./assets/evaluation-criteria-import-successful.png)
-
-### 🧪 Lab 1.3: Create the hiring agent
-
-Now you are done with the setup of the prerequisites, it's time for the actual work! Let's add our Hiring Agent first!
-
-1. Go to **[Copilot Studio](https://copilotstudio.microsoft.com)** and make sure you are in the same environment as where you imported the solution and the data
-1. Select **Agents** in the left navigation
-
-    ![Agent Tab](./assets/01-agenttab.png)
-
-1. Select **New Agent**
-
-    ![New Agent](./assets/01-newagent.png)
-
-1. Select **Configure**
-1. For **Name**, enter:
-
-    ```text
-    Hiring Agent
-    ```
-
-1. For **Description**, enter:
-
-    ```text
-    Central orchestrator for all hiring activities
-    ```
-
-    ![Configuration](./assets/01-configname.png)
-
-1. Select the **...** next to the *Create* button on the top right corner
-1. Select **Update advanced settings**
-
-    ![Settings](./assets/01-advancedsettings.png)
-
-1. As **Solution**, select `Operative`
-1. Select **Update**
-
-    ![Update Solution Settings](./assets/01-solutionsettings.png)
-
-1. Select **Create** in the top right corner
-
-This will create the Hiring Agent for you, which you will use throughout this Operative course.
-
-## 🎉 Mission Complete
-
-Mission 01 is completed! You now have mastered the following skills:
-
-✅ **Scenario Understanding**: Comprehensive knowledge of hiring automation challenges and the solution you will be building
-✅ **Solution Deployment**: Successfully imported and configured the building blocks of the hiring management system
-✅ **Agent Creation**: Built an hiring agent that is the start of the scenario you're going to build as an Agent Academy Operative
-
-Next up is [Lab 14](../Lab%2014/index.md): Agent Instructions
-
-## 📚 Tactical Resources
-
-📖 [Microsoft Copilot Studio - Create an agent](https://learn.microsoft.com/microsoft-copilot-studio/authoring-first-bot)
-📖 [Microsoft Dataverse Documentation](https://learn.microsoft.com/power-apps/maker/data-platform)
+- Completed Day 1 labs (recommended)
+
+## Step-by-Step Guide
+
+### Step 1: Understanding the Scenario (~10 minutes)
+1. Review the hiring automation use case:
+   - System of agents working together
+   - Resume review and job matching
+   - Interview preparation
+   - Candidate evaluation
+2. Understand the business value:
+   - Automatic resume processing
+   - Job role suggestions
+   - Interview guide generation
+   - Fair and compliant practices
+3. Review the agent architecture:
+   - Central **Hiring Agent** (orchestrator)
+   - **Application Intake Agent** (resume processing)
+   - **Interview Prep Agent** (interview materials)
+
+### Step 2: Import the Operative Solution (~10 minutes)
+1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+2. Select **...** → **Solutions**
+3. Select **Import Solution**
+4. Download the prepared solution from the course materials
+5. Select **Browse** and choose the downloaded solution
+6. Select **Next** → **Import**
+7. Wait for "imported successfully" message
+8. Select the **Operative** solution to review components:
+   - Candidate table
+   - Evaluation Criteria table
+   - Hiring Hub app
+   - Job Application table
+   - Job Role table
+   - Resume table
+9. Select **Publish all customizations**
+
+### Step 3: Import Job Role Sample Data (~10 minutes)
+1. Download the `job-roles.csv` file from course materials
+2. Open the Hiring Hub Model-Driven App:
+   - Select the app checkbox
+   - Select **Play**
+3. Navigate to **Job Roles** in left navigation
+4. Select **More** (three dots) → **Import from Excel** → **Import from CSV**
+5. Select the downloaded `job-roles.csv` file
+6. Select **Next** → **Review Mapping**
+7. Verify mapping is correct
+8. Select **Finish Import** → **Done**
+9. Refresh and verify data imported successfully
+
+### Step 4: Import Evaluation Criteria Sample Data (~10 minutes)
+1. Download the `evaluation-criteria.csv` file
+2. Navigate to **Evaluation Criteria** in left navigation
+3. Select **More** → **Import from Excel** → **Import from CSV**
+4. Select the downloaded file
+5. Select **Next** → **Review Mapping**
+6. For Job Role field, select the magnifying glass icon
+7. Ensure **Job Title** is selected
+8. Select **OK** → **Finish Import** → **Done**
+9. Refresh and verify data imported successfully
+
+### Step 5: Create the Hiring Agent (~10 minutes)
+1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+2. Ensure you're in the same environment as the imported solution
+3. Select **Agents** → **New Agent**
+4. Select **Configure**
+5. Enter agent details:
+   - Name: `Hiring Agent`
+   - Description: `Central orchestrator for all hiring activities`
+6. Select **...** next to Create → **Update advanced settings**
+7. Set Solution to `Operative`
+8. Select **Update** → **Create**
+9. Wait for agent creation to complete
+
+### Step 6: Verify Setup (~5 minutes)
+1. Confirm the Hiring Agent appears in your agents list
+2. Verify it's associated with the Operative solution
+3. Review the agent configuration
+4. Prepare for adding instructions in the next lab
+
+## Duration
+~45 minutes
+
+## Next Steps
+Proceed to [Lab 14: Authoring Agent Instructions](../Lab%2014/index.md)

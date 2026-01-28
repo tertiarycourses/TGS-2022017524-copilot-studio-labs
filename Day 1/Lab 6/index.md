@@ -1,138 +1,83 @@
-# 🚨 Mission 06: Create a Custom Agent Using Natural Language with Copilot
+# Lab 6: Create a Custom Agent Using Natural Language
 
-## 🕵️‍♂️ CODENAME: `OPERATION NATURAL LANGUAGE`
+## Lab Title
+Create a Custom Agent Using Natural Language with Copilot
 
-> **⏱️ Operation Time Window:** `~60 minutes`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand what custom agents are vs. pre-built agents
+2. Use natural language prompts to define agent behavior
+3. Connect multiple knowledge sources (websites, SharePoint, documents)
+4. Ground your agent with enterprise data
+5. Test responses with citations from knowledge sources
 
-## 🎯 Mission Brief
-
-Welcome, Agent Maker. This mission teaches you how to build a custom agent in Microsoft Copilot Studio by describing your needs in plain language rather than coding. The focus is on creating an IT helpdesk agent that can access and reference enterprise knowledge sources.
-
-## 🔎 Objectives
-
-In this mission, you'll learn:
-
-1. What custom agents are and how they differ from pre-built agents
-2. How to use natural language prompts to define agent behavior
-3. Understanding different knowledge source types available in Copilot Studio
-4. How to ground your agent with enterprise data from multiple sources
-5. Testing and refining your agent's responses with citations
-
-## 🤔 What are Custom Agents?
-
-**Custom Agents** are chatbots you design where "you decide the purpose" and "you ground it with your own data" through supported knowledge resources. Unlike pre-built agents that come with predefined capabilities, custom agents give you full control over:
-
-- The agent's personality and tone
-- What knowledge sources it can access
-- How it responds to specific queries
-- Which tools and actions it can perform
-
-## 📝 Understanding Prompts
-
-A **prompt** is the message or instruction you give to an AI agent to tell it what you want it to do. Effective prompts are:
-
-- **Specific** - Clearly describe what you want
-- **User-focused** - Consider how users will interact with the agent
-- **Example-rich** - Include examples when possible to guide behavior
-
-## 🔌 Generative Orchestration
-
-**Generative Orchestration** refers to how the agent uses AI to dynamically decide how to answer a question by combining its built-in language skills with information from your added knowledge sources. This enables your agent to:
-
-- Understand user intent even with varied phrasing
-- Search multiple knowledge sources simultaneously
-- Synthesize information from different sources
-- Provide contextual, relevant responses
-
-## 📚 Knowledge Source Types
-
-Copilot Studio supports six categories of knowledge sources:
-
-| Source Type | Description | Best For |
-|-------------|-------------|----------|
-| **Public websites** | Searched via Bing | General information, documentation sites |
-| **Uploaded documents** | Stored in Dataverse | Internal policies, procedures, guides |
-| **SharePoint connections** | Direct integration | Enterprise content, team documents |
-| **Dataverse tables** | Structured data | Customer records, inventory, tickets |
-| **Real-time connectors** | Salesforce, ServiceNow, etc. | Live external system data |
-| **Azure AI Search** | Advanced search capabilities | Large document collections |
-
-## 🧪 Lab 06: Create an IT Helpdesk Agent
-
-In this hands-on lab, you'll create an IT helpdesk agent named "Contoso Helpdesk Agent" that:
-
-- Uses natural language prompts to define behavior
-- Accesses Microsoft support website content
-- References a SharePoint site for internal documentation
-- Incorporates an uploaded guidance document
-- Provides step-by-step responses with citations
-
-### Prerequisites
-
-- Access to Microsoft Copilot Studio
+## Prerequisites
+- Microsoft 365 account with Copilot Studio access
+- Copilot Studio environment with maker permissions
 - SharePoint site with IT documentation (from Course Setup)
 - Sample IT guidance documents
 
-### 6.1 Create the Agent Using Natural Language
+## Step-by-Step Guide
 
-1. Navigate to [https://copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+### Step 1: Understanding Custom Agents (~5 minutes)
+1. Review what custom agents are:
+   - You define the purpose
+   - You ground with your own data
+   - Full control over personality, knowledge, and actions
+2. Understand the difference from pre-built agents
+3. Explore use cases for custom agents
 
-2. Select **+ Create** and choose **New agent**
+### Step 2: Understanding Prompts (~5 minutes)
+1. Learn what a prompt is (instruction to AI)
+2. Review characteristics of effective prompts:
+   - Specific and clear
+   - User-focused
+   - Example-rich when possible
+3. Understand generative orchestration for dynamic routing
 
-3. In the conversational creation experience, describe your agent:
+### Step 3: Explore Knowledge Source Types (~5 minutes)
+1. Review the six knowledge source categories:
+   - Public websites (Searched via Bing)
+   - Uploaded documents (Stored in Dataverse)
+   - SharePoint (Direct integration)
+   - Dataverse tables (Structured data)
+   - Real-time connectors (Salesforce, ServiceNow, etc.)
+   - Azure AI Search (Advanced search)
 
-    ```text
-    I want to create an IT helpdesk agent that helps employees troubleshoot common technical issues. It should be friendly, professional, and provide step-by-step guidance. The agent should be able to answer questions about software, hardware, and network problems.
-    ```
+### Step 4: Create the IT Helpdesk Agent (~15 minutes)
+1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+2. Select **+ Create** → **New agent**
+3. Use the conversational creation experience to describe your agent
+4. Follow prompts to refine capabilities
+5. Name your agent: `Contoso Helpdesk Agent`
+6. Select **Create**
 
-4. Follow the prompts to refine your agent's capabilities
-
-5. Name your agent:
-
-    ```text
-    Contoso Helpdesk Agent
-    ```
-
-### 6.2 Add Knowledge Sources
-
-1. Navigate to the **Knowledge** section of your agent
-
-2. Add a **Public website** knowledge source:
+### Step 5: Add Knowledge Sources (~15 minutes)
+1. Navigate to the **Knowledge** section
+2. Add a **Public website**:
    - URL: `https://support.microsoft.com`
-   - This enables the agent to reference Microsoft's official support documentation
-
-3. Add a **SharePoint** knowledge source:
+3. Add a **SharePoint** connection:
    - Connect to your Contoso IT SharePoint site
-   - This gives access to internal documentation
-
 4. Upload a **Document**:
    - Upload your IT guidance document
-   - This provides specific organizational policies
 
-### 6.3 Test Your Agent
-
+### Step 6: Test Your Agent (~10 minutes)
 1. Open the **Test** pane
+2. Try various IT support queries:
+   - `How do I reset my password?`
+   - `My computer is running slowly, what should I do?`
+   - `How do I connect to the VPN?`
+3. Observe how the agent searches multiple knowledge sources
+4. Review the Activity Map for source tracking
 
-2. Try various queries:
-   - "How do I reset my password?"
-   - "My computer is running slowly, what should I do?"
-   - "How do I connect to the VPN?"
+### Step 7: Refine and Iterate (~5 minutes)
+1. Identify gaps in responses
+2. Add additional knowledge sources if needed
+3. Adjust agent instructions for better responses
+4. Test edge cases and error handling
 
-3. Observe how the agent:
-   - Searches multiple knowledge sources
-   - Provides citations for its answers
-   - Offers step-by-step guidance
+## Duration
+~60 minutes
 
-## ✅ Mission Complete
-
-Congratulations! 👏🏻 You've created a custom agent using natural language that can access multiple knowledge sources and provide helpful, cited responses to user queries.
-
-⏭️ [Move to **Add new topic with trigger and nodes** lesson](../Lab%207/index.md)
-
-## 📚 Tactical Resources
-
-🔗 [Create agents with natural language](https://learn.microsoft.com/microsoft-copilot-studio/authoring-first-bot)
-
-🔗 [Add knowledge sources](https://learn.microsoft.com/microsoft-copilot-studio/knowledge-add-existing-copilot)
-
-🔗 [Test your agent](https://learn.microsoft.com/microsoft-copilot-studio/authoring-test-bot)
+## Next Steps
+Proceed to [Lab 7: Add New Topic with Trigger and Nodes](../Lab%207/index.md)

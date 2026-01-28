@@ -1,103 +1,94 @@
----
-prev:
-  text: 'Add Event Triggers'
-  link: '/recruit/10-add-event-triggers'
-next:
-  text: 'Understanding Licensing'
-  link: '/recruit/12-understanding-licensing'
----
+# Lab 11: Publish Your Agent
 
-# 🚨 Mission 11: Publish Your Agent
+## Lab Title
+Publish Your Agent - Deploy to Teams and M365 Copilot
 
-## 🕵️‍♂️ CODENAME: `OPERATION PUBLISH PUBLISH PUBLISH`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand why publishing is important for agent updates
+2. Publish your agent to make changes live
+3. Add the Microsoft Teams and M365 Copilot channel
+4. Deploy the agent to Teams for personal use
+5. Submit the agent for organization-wide availability
 
-> **⏱️ Operation Time Window:** `~30 minutes`
-
-🎥 **Watch the Walkthrough**
-
-[![Publish agent video thumbnail](./assets/video-thumbnail.jpg)](https://www.youtube.com/watch?v=eVZmljhYlSI "Watch the walkthrough on YouTube")
-
-## 🎯 Mission Brief
-
-After completing a series of challenging modules, Agent Maker, you're now ready for your most critical step yet: publishing your agent. It's time to make your creation available to users across Microsoft Teams and Microsoft 365 Copilot.
-
-## 🔎 Objectives
-
-In this mission, you'll learn:
-
-1. Why it's important to publish your agent
-2. What happens when you publish your agent
-3. How to add channels (Microsoft Teams & Microsoft 365 Copilot)
-4. How to add the agent in Microsoft Teams
-5. How to make the agent available for your whole organization
-
-## 🚀 Why Publish?
-
-Every time you update your agent, you need to publish to make changes live. Publishing ensures that:
-
-- The latest updates are available to end users
-- New tools and knowledge sources are accessible
-- All configured channels receive the updates
-
-## ⚙️ Available Channels
-
-You can publish your agent to multiple channels:
-
-| Channel | Description |
-|---------|-------------|
-| **Microsoft Teams & M365 Copilot** | Teams chats, meetings, and Copilot experiences |
-| **Demo website** | Test on a demo website provided by Copilot Studio |
-| **Custom website** | Embed directly into your own website |
-| **Mobile app** | Integrate into custom mobile applications |
-| **SharePoint** | Add to SharePoint sites |
-| **Facebook Messenger** | Connect with Facebook users |
-| **Power Pages** | Integrate into Power Pages websites |
-| **Azure Bot Service** | Access Slack, Telegram, Twilio SMS, and more |
-
-## 🧪 Lab 11: Publish your agent to Teams and Microsoft 365 Copilot
-
-### Prerequisites
-
-- Completed previous labs with fully configured Contoso Helpdesk Agent
+## Prerequisites
+- Microsoft 365 account with Copilot Studio access
+- Fully configured Contoso Helpdesk Agent (from Labs 6-10)
+- Microsoft Teams access
 - Permissions to publish agents in your environment
-- Access to Microsoft Teams
 
-### 11.1 Publish your agent
+## Step-by-Step Guide
 
-1. Open your Contoso Helpdesk Agent in Copilot Studio
-2. Select the **Publish** button at the top
-3. Confirm by selecting **Publish** in the confirmation dialog
-4. Wait for the "Agent published" notification
+### Step 1: Understanding Publishing (~5 minutes)
+1. Learn why publishing matters:
+   - Makes latest updates available to users
+   - New tools and knowledge become accessible
+   - All configured channels receive updates
+2. Understand that unpublished changes are only visible in development
+3. Review: Always publish after making agent changes
 
-### 11.2 Add the Teams and Microsoft 365 Copilot channel
+### Step 2: Explore Available Channels (~5 minutes)
+1. Review channel options:
+   - **Teams & M365 Copilot**: Teams chats, meetings, Copilot
+   - **Demo website**: Copilot Studio test site
+   - **Custom website**: Embed in your site
+   - **Mobile app**: Custom mobile integration
+   - **SharePoint**: Site-based assistance
+   - **Facebook Messenger**: Social platform
+   - **Power Pages**: Power Pages websites
+   - **Azure Bot Service**: Slack, Telegram, Twilio, etc.
 
+### Step 3: Publish Your Agent (~5 minutes)
+1. Open your Contoso Helpdesk Agent
+2. Select the **Publish** button (top toolbar)
+3. Review the confirmation dialog
+4. Select **Publish** to confirm
+5. Wait for the "Agent published" notification
+6. Note: This only publishes the agent, not to channels yet
+
+### Step 4: Add Teams and M365 Copilot Channel (~5 minutes)
 1. Select **Channels** in the top navigation
-2. Select **Teams and Microsoft 365**
-3. Select **Add channel**
-4. Wait for the channel to be added (green notification appears)
-5. Select **See agent in Teams**
-6. Select **Add** to add the agent to Teams
-7. Select **Open** to open the agent in Teams
+2. Review available channels
+3. Select **Teams and Microsoft 365**
+4. Select **Add channel**
+5. Wait for the green notification confirming channel added
 
-### 11.3 Make the agent available for all users
+### Step 5: Add Agent to Teams (~5 minutes)
+1. Select **See agent in Teams**
+2. A new browser tab opens with the agent details
+3. Select **Add** to add the agent to your Teams
+4. Wait for the success confirmation
+5. Select **Open** to launch the agent in Teams
+6. Test the agent with a sample question
 
-1. Return to Copilot Studio
-2. Select **Availability options** in the Teams/M365 panel
-3. Select **Show to everyone in my org**
-4. Select **Submit for admin approval**
+### Step 6: Make Available Organization-Wide (~5 minutes)
+1. Return to Copilot Studio (Teams/M365 panel still open)
+2. Select **Edit details** to customize:
+   - Icon and background color
+   - Short and long descriptions
+   - Teams settings (teams, group chats)
+   - Developer information
+3. Select **Availability options**
+4. Review options:
+   - **Share Link**: Direct link for shared users
+   - **Show to teammates**: Built with Power Platform section
+   - **Show to everyone**: Organization catalog (requires admin)
+5. Select **Show to everyone in my org**
+6. Select **Submit for admin approval**
 
-The administrator can then:
-- Approve the agent in Teams Admin Center
-- Auto-install for all users via setup policies
-- Pin the agent to the left rail for easy access
+### Step 7: Admin Approval Process (~5 minutes)
+1. Understand admin workflow:
+   - Admin goes to Teams Admin Center
+   - Finds the agent in Apps section
+   - Reviews and approves the submission
+   - Publishes to organization
+2. After approval:
+   - Agent appears in "Built by your org" section
+   - Can be auto-installed via setup policies
+   - Can be pinned to left rail for easy access
 
-## ✅ Mission Complete
+## Duration
+~30 minutes
 
-🎉 Congratulations! You've successfully published your agent and made it available in Microsoft Teams and Microsoft 365 Copilot!
-
-⏭️ [Move to **Understanding Licensing** mission](../Lab%2012/index.md)
-
-## 📚 Tactical Resources
-
-🔗 [Publish channels documentation](https://learn.microsoft.com/microsoft-copilot-studio/publication-fundamentals-publish-channels)
-🔗 [Add agent to Microsoft Teams](https://learn.microsoft.com/microsoft-copilot-studio/publication-add-bot-to-microsoft-teams)
+## Next Steps
+Proceed to [Lab 12: Understanding Licensing](../Lab%2012/index.md)

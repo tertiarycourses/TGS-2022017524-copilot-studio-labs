@@ -1,124 +1,96 @@
----
-prev:
-  text: 'Add new topic with trigger and nodes'
-  link: '/recruit/07-add-new-topic-with-trigger'
-next:
-  text: 'Add an agent flow to your Topic for automation'
-  link: '/recruit/09-add-an-agent-flow'
----
+# Lab 8: Enhance User Interactions with Adaptive Cards
 
-# 🚨 Mission 08: Enhance user interactions in Topics with Adaptive Cards
+## Lab Title
+Enhance User Interactions with Adaptive Cards
 
-## 🕵️‍♂️ CODENAME: `OPERATION INTERFACE UPLIFT`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand what Adaptive Cards are and their benefits
+2. Use the Adaptive Card Designer to build cards
+3. Create interactive forms for data collection
+4. Use Power Fx formulas for dynamic card content
+5. Redirect between topics based on user responses
 
-> **⏱️ Operation Time Window:** `~45 minutes`
+## Prerequisites
+- Microsoft 365 account with Copilot Studio access
+- Contoso Helpdesk Agent with Available devices topic (from Lab 7)
+- SharePoint Devices list (from Course Setup)
+- Basic understanding of JSON (helpful but not required)
 
-🎥 **Watch the Walkthrough**
+## Step-by-Step Guide
 
-[![Adaptive cards video thumbnail](./assets/video-thumbnail.jpg)](https://www.youtube.com/watch?v=RhIlzYHPCXo "Watch the walkthrough on YouTube")
+### Step 1: Understanding Adaptive Cards (~10 minutes)
+1. Learn what Adaptive Cards are:
+   - Interactive, visually rich UI elements
+   - Structured JSON objects
+   - Render consistently across platforms (Teams, Outlook, agents)
+2. Review key benefits:
+   - Makes conversations interactive
+   - Consistent styling across hosts
+   - Easy JSON-based building
+   - Collect and use data in flows
+   - Better user experience
 
-## 🎯 Mission Brief
+### Step 2: Explore the Adaptive Card Designer (~5 minutes)
+1. Review the designer components:
+   - **Card Elements**: TextBlock, Image, FactSet, Inputs, Actions
+   - **Card Viewer**: Real-time preview
+   - **Card Structure**: Hierarchy view
+   - **Element Properties**: Configuration panel
+   - **Payload Editor**: Raw JSON code
 
-Agents, your mission is to infiltrate the static user experience and replace it with rich, dynamic, and actionable Adaptive Cards. You'll deploy JSON payloads and Power Fx formulas to transform Copilot Studio conversations from basic Q&A into fully interactive engagements.
+### Step 3: Common Use Cases (~5 minutes)
+1. Forms and data collection (leave requests, feedback)
+2. Displaying dynamic information (order summaries, status)
+3. Interactive choices (product selection, confirmations)
+4. Triggering actions (submit buttons, view details)
 
-## 🔎 Objectives
+### Step 4: Create the Request Device Topic (~10 minutes)
+1. Navigate to **Topics** tab
+2. Select **+ Add a topic** → **From blank**
+3. Configure:
+   - Name: `Request device`
+   - Trigger description: This topic helps users request a device when they answer yes to requesting one.
+4. Define input variable:
+   - Name: `VarDevices`
+   - Type: Table
+   - Source: From Available devices topic
 
-In this mission, you'll learn:
+### Step 5: Add an Adaptive Card Node (~10 minutes)
+1. Add a node → **Ask with adaptive card**
+2. Design the card to display:
+   - Title: "Available Devices"
+   - Device list with selection options
+   - Optional comments field
+   - Submit button
+3. Configure output variables:
+   - `VarSelectedDevice`: User's device selection
+   - `VarComments`: Optional user comments
 
-1. Understanding what Adaptive Cards are and how they enhance user interactions
-2. Learning to build interactive cards using JSON and Power Fx formulas
-3. Exploring the Adaptive Card Designer and its key components
-4. Creating rich, interactive forms and data collection experiences
-5. Implementing best practices for designing responsive adaptive cards
+### Step 6: Use Power Fx for Dynamic Content (~10 minutes)
+1. Switch from JSON to **Formula** mode
+2. Use Power Fx to loop through devices:
+   - `ForAll(Global.VarDevices.value, {title: ThisRecord.Model, value: Text(ThisRecord.ID)})`
+3. This dynamically populates the card with available devices
+4. Save the adaptive card configuration
 
-## 🤔 What is an Adaptive Card?
+### Step 7: Update Agent Instructions (~5 minutes)
+1. Navigate to agent Overview
+2. Edit Instructions
+3. Add: If the user answers yes to requesting a device, trigger [Request device].
+4. Save changes
 
-An **Adaptive Card** is a way to create interactive, visually rich UI elements that can be embedded in apps like Microsoft Teams, Outlook, or agents. It's a structured JSON object that defines:
+### Step 8: Test the Complete Flow (~5 minutes)
+1. Open the Test pane
+2. Enter: `I need a laptop`
+3. The agent should query available laptops and ask if user wants to request one
+4. Answer `Yes`
+5. Verify the adaptive card displays with device options
+6. Select a device and submit
+7. Review the Activity Map for topic flow
 
-- What elements appear on the card (text, images, buttons)
-- How those elements are arranged
-- What actions users can take (submitting forms, opening links)
+## Duration
+~45 minutes
 
-### Why Adaptive Cards matter in Copilot Studio
-
-1. **Makes conversations interactive** - show buttons, forms, images instead of just text
-2. **Look great everywhere** - automatically match the style of the host app
-3. **Easy to build with JSON** - define cards using JSON code
-4. **Collect and use data** - gather user input and use it in conversation flow
-5. **Boost user experience** - clean, clickable, user-friendly interface
-
-## 🎨 Adaptive Card Designer
-
-The **Adaptive Card Designer** is a visual tool that lets you build interactive cards using drag-and-drop elements.
-
-### Key Components
-
-- **Card Elements** - TextBlock, Image, FactSet, Input fields, Actions
-- **Card Viewer** - Preview area showing real-time changes
-- **Card Structure** - Hierarchy and layout of your card
-- **Element Properties** - Customize settings for each element
-- **Card Payload Editor** - Raw JSON code behind your card
-
-## 🌵 Common Use Cases
-
-1. **Forms and data collection** - Leave requests, feedback forms, contact info
-2. **Displaying dynamic information** - Order summaries, ticket status
-3. **Interactive choices** - Product categories, confirmations
-4. **Triggering actions** - Submit buttons, view details links
-
-## 🧪 Lab 08 - Add adaptive cards and enhance topic capabilities
-
-### ✨ Use case
-
-**As an** employee
-**I want to** request a device
-**So that I** can request a device from the list of available devices
-
-### Prerequisites
-
-1. SharePoint Devices list (from Course Setup)
-2. Contoso Helpdesk Agent with Available devices topic (from Lab 07)
-
-### 8.1 Create a new topic with an adaptive card
-
-1. Create a new topic named `Request device`
-2. Add trigger description:
-   ```text
-   This topic helps users request a device when they answer yes to requesting one.
-   ```
-
-3. Add an **Ask with adaptive card** node
-4. Design the card to display available devices and collect user selection
-
-### 8.2 Use Power Fx formula for dynamic content
-
-Switch from JSON to Formula mode and use Power Fx to loop through devices:
-
-```text
-ForAll(Global.VarDevices.value, {title: ThisRecord.Model, value: Text(ThisRecord.ID)})
-```
-
-### 8.3 Update agent instructions
-
-Add instruction to invoke the Request device topic:
-```text
-- If the user answers yes to requesting a device, trigger [Request device].
-```
-
-### 8.4 Test the flow
-
-1. Enter: `I need a laptop`
-2. Answer `Yes` to the device request question
-3. Verify the adaptive card displays with device options
-
-## ✅ Mission Complete
-
-Congratulations! 👏🏻 You've learned how to add adaptive cards using Power Fx formulas to display dynamic data and redirect between topics.
-
-⏭️ [Move to **Add an agent flow for automation** lesson](../Lab%209/index.md)
-
-## 📚 Tactical Resources
-
-🔗 [Using Adaptive Cards in Copilot Studio](https://learn.microsoft.com/microsoft-copilot-studio/guidance/adaptive-cards-overview)
-🔗 [Add an adaptive card in Send a message node](https://learn.microsoft.com/microsoft-copilot-studio/authoring-send-message)
-🔗 [Create expressions using Power Fx](https://learn.microsoft.com/microsoft-copilot-studio/advanced-power-fx)
+## Next Steps
+Proceed to [Lab 9: Add an Agent Flow for Automation](../Lab%209/index.md)

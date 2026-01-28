@@ -1,143 +1,77 @@
----
-prev:
-  text: 'Creating a Solution for Your Agent'
-  link: '/recruit/04-creating-a-solution'
-next:
-  text: 'Create a custom agent using natural language with Copilot'
-  link: '/recruit/06-create-agent-from-conversation'
----
+# Lab 5: Using a Pre-Built Agent
 
-# 🧰 Mission 05: Using a Pre-Built Agent
+## Lab Title
+Using a Pre-Built Agent - Quick Start with Templates
 
-## 🕵️‍♂️ CODENAME: `OPERATION SAFE TRAVELS`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand what pre-built agents (agent templates) are
+2. Deploy the Safe Travels agent template
+3. Customize the agent with additional knowledge sources
+4. Test and validate agent responses
+5. Publish the agent to channels
 
-> **⏱️ Operation Time Window:** `~30 minutes`
+## Prerequisites
+- Microsoft 365 account with Copilot Studio access
+- Copilot Studio environment with maker permissions
+- Completed Lab 4 (Solution created)
 
-🎥 **Watch the Walkthrough**
+## Step-by-Step Guide
 
-[![Pre-built agent video thumbnail](./images/video-thumbnail.jpg)](https://www.youtube.com/watch?v=NmXsx8WjWuM "Watch the walkthrough on YouTube")
+### Step 1: Understanding Pre-Built Agents (~5 minutes)
+1. Review what pre-built agents are:
+   - Turnkey AI agents created by Microsoft
+   - Address common business needs (travel, HR, IT support)
+   - Include topics, triggers, instructions, and sample knowledge
+   - Fully customizable and extendable
+2. Explore available templates in Copilot Studio
 
-## 🎯 Mission Brief
+### Step 2: Deploy the Safe Travels Template (~5 minutes)
+1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+2. Select **+ Create**
+3. Scroll to **Start with an agent template**
+4. Find and select **Safe Travels**
+5. Review the pre-loaded configuration
+6. Select **Create**
 
-Welcome to your next mission in the Copilot Studio Agent Academy. You're about to explore the world of **pre-built agents**—intelligent, purpose-driven agents created by Microsoft to accelerate your deployment and reduce time to value.
+### Step 3: Enable Generative AI (~2 minutes)
+1. In the agent Overview, locate the Orchestration section
+2. Toggle **Generative orchestration** to **On**
+3. This enables the agent to use the provided instructions
 
-Rather than building from scratch, pre-built agents (also called **agent templates**) give you a head start by providing ready-to-use scenarios that you can customize and deploy in minutes.
+### Step 4: Add Knowledge Sources (~10 minutes)
+1. Scroll to the **Knowledge** section
+2. Select **Add knowledge**
+3. Select **Public websites**
+4. Add the European Union travel website:
+   - URL: `https://european-union.europa.eu/`
+5. Select **Add**
+6. Select **Add to agent**
+7. The agent can now answer questions about European travel
 
-In this mission, you'll deploy the **Safe Travels** agent—an agent that helps your users prepare for business travel, understand company policies, and streamline planning.
+### Step 5: Test the Agent (~5 minutes)
+1. Select **Test** in the top-right corner
+2. Try various travel-related questions:
+   - `Do I need a visa to travel from the US to Amsterdam?`
+   - `How long does it take to get a US Passport?`
+   - `Where is the closest US embassy in Valencia, Spain?`
+3. Observe the Activity Map to see knowledge source usage
+4. Verify responses are accurate and helpful
 
-## 🧭 Objectives
+### Step 6: Publish the Agent (~3 minutes)
+1. Select **Publish** in the top toolbar
+2. Confirm by selecting **Publish** in the dialog
+3. Wait for the publishing notification
+4. Optionally add to Microsoft Teams via Channels
 
-Your goals for this mission are:
+### Bonus: Ground with SharePoint (~Optional)
+1. Navigate to Knowledge section
+2. Add a SharePoint site with your company's travel policies
+3. Test with company-specific travel questions
+4. Verify the agent references your internal policies
 
-1. Understand what pre-built agents are and why they matter
-1. Deploy the **Safe Travels** agent template
-1. Customize the agent's responses and content
-1. Test and publish the agent
+## Duration
+~30 minutes
 
-## 🧠 What Are Pre-Built Agents?
-
-Pre-built agents are turnkey AI agents created by Microsoft that:
-
-- Address common business needs (like travel, HR, IT support)
-- Include fully functioning topics, trigger phrases, instructions and sample knowledge.
-- Can be edited, extended, and grounded with your own data
-
-These agents are perfect for getting started quickly or learning how agents are structured.
-
-## 🧪 Lab 05: Quickly get started with a pre-built agent
-
-We're now going to learn how to select a pre-built agent and customize it.
-
-We're going to stick with the example from earlier, where we're going to create a solution in the dedicated Copilot Studio environment to build our IT helpdesk agent in.
-
-Let's begin!
-
-### 5.1 Launch Copilot Studio
-
-1. Navigate to [https://copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
-
-1. Sign in with your Microsoft 365 work or school account
-
-> [!WARNING]
-> You must be in a tenant where Copilot Studio is enabled. If you don't see Copilot Studio, revisit [Mission 00](../00-course-setup/index.md) to complete your setup.
-
-### 5.2 Choose the Safe Travels Agent Template
-
-1. From the Copilot Studio homepage, click **+ Create**
-    ![Create an agent](./images/create.png)
-
-1. Scroll down to the **Start with an agent template** section
-
-1. Find and select **Safe Travels**
-
-    ![Choose safe travels template](./images/choose_template.png)
-
-1. Notice that the template comes pre-loaded with a description, instructions and knowledge.
-
-    ![Review the template](./images/template-setup.png)
-
-1. Click **Create**
-
-    ![Create an agent](./images/create-agent-setup.png)
-
-This will create a new agent in your environment based on the Safe Travels configuration.
-
-### 5.3 Customize the Agent
-
-Now that the agent is created, let's tailor it to your organization:
-
-1. Select **Enabled generative AI** to turn on the generative AI feature so that it can use the instructions provided in the template.
-
-    ![Enable Generative Answers](./images/gen-answers.png)
-
-1. Now we'll equip the agent with an additional knowledge source so it can answer questions about Europe travel. To do this, scroll down to the **knowledge** section and select **Add knowledge**
-
-    ![Add Knowledge](./images/knowledge.png)
-
-1. Select **Public websites**
-
-    ![Add a public website](./images/public-website.png)
-
-1. In the text input, paste **<https://european-union.europa.eu/>** and select **Add**
-
-    ![Add the website](./images/paste-add.png)
-
-1. Select **Add to agent**
-
-    ![Add to Agent](./images/add-to-agent.png)
-
-### 5.4 Test and Publish
-
-1. Click **Test** in the top-right to launch the test window
-
-1. Try phrases like:
-
-    - `"Do I need a visa to travel from the US to Amsterdam?"`
-    - `"How long does it take to get a US Passport?"`
-    - `"Where is the closest US embassy in Valencia, Spain?"`
-
-1. Confirm the agent responds with accurate and helpful information and observe the Activity Map to see where it retrieved the information.
-
-    ![Add to Agent](./images/response-passport.png)
-
-1. When ready, click **Publish**
-
-    ![Add to Agent](./images/publish-1.png)
-
-1. Select **Publish** again in the dialog box
-    ![Add to Agent](./images/publish-2.png)
-
-1. Optionally, add the agent to Microsoft Teams using the built-in **Channels** feature.
-
-> [!NOTE] 🧳 Bonus Objective
-> Try grounding the Safe Travels agent with a SharePoint site or FAQ file to make it more relevant to your company's travel policies.
-
-## ✅ Mission Complete
-
-You've now successfully:
-
-- Deployed a Microsoft pre-built agent
-- Customized the agent
-- Tested and published your own version of the **Safe Travels** agent template
-
-⏭️ [Move to **Creating a custom agent from scratch** lesson](../Lab%206/index.md).
+## Next Steps
+Proceed to [Lab 6: Create a Custom Agent Using Natural Language](../Lab%206/index.md)

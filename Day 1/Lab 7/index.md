@@ -1,154 +1,102 @@
----
-prev:
-  text: 'Create a custom agent using natural language with Copilot'
-  link: '/recruit/06-create-agent-from-conversation'
-next:
-  text: 'Enhance user interactions in Topics with Adaptive Cards'
-  link: '/recruit/08-add-adaptive-card'
----
+# Lab 7: Add New Topic with Trigger and Nodes
 
-# 🚨 Mission 07: Add new topic with trigger and nodes
+## Lab Title
+Add New Topic with Trigger and Nodes - Structured Conversations
 
-## 🕵️‍♂️ CODENAME: `OPERATION STAY ON TOPIC`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand what topics are and their purpose in agents
+2. Create custom topics with trigger descriptions
+3. Use conversation nodes (messages, questions, conditions)
+4. Connect to SharePoint using connectors
+5. Apply Power Fx for dynamic filtering and logic
 
-> **⏱️ Operation Time Window:** `~60 minutes`
+## Prerequisites
+- Microsoft 365 account with Copilot Studio access
+- Contoso Helpdesk Agent from Lab 6
+- SharePoint site with Devices list (from Course Setup)
+- Basic understanding of conversation design
 
-🎥 **Watch the Walkthrough**
+## Step-by-Step Guide
 
-[![Trigger video thumbnail](./assets/video-thumbnail.jpg)](https://www.youtube.com/watch?v=7iPAZaA8nJs "Watch the walkthrough on YouTube")
+### Step 1: Understanding Topics (~10 minutes)
+1. Review what a topic is:
+   - Structured conversation for specific user questions/tasks
+   - Mini-conversation with defined flow
+2. Understand topic purposes:
+   - **Informational**: Answer "What is...?", "When will...?"
+   - **Task completion**: Help with "I want to...", "How do I...?"
+   - **Troubleshooting**: Solve "Something isn't working..."
+3. Learn topic types:
+   - **System topics**: Built-in handlers for common events
+   - **Custom topics**: Your specific business logic
 
-## 🎯 Mission Brief
+### Step 2: Understanding Conversation Nodes (~10 minutes)
+1. Review node types:
+   - **Send a message**: Display text to user
+   - **Ask a question**: Collect user input
+   - **Ask with adaptive card**: Rich interactive cards
+   - **Add a condition**: Branch logic
+   - **Variable management**: Store/clear data
+   - **Topic management**: Redirect to other topics
+   - **Add a tool**: Use connectors, flows, prompts
+   - **Generative answers**: AI-generated responses
+   - **HTTP request**: External API calls
 
-You've built an agent. It listens, learns, and answers questions - but now it's time to get more tactical. In this mission, you'll go deep under the hood and teach your agent how to respond to specific prompts with precision.
+### Step 3: Introduction to Power Fx (~5 minutes)
+1. Understand Power Fx basics (low-code formula language)
+2. Review common operations:
+   - Set variables: `Set(userName, "Adele Vance")`
+   - Conditions: `If(score > 80, "Pass", "Fail")`
+   - Data formatting: `Text(DateValue, "dd/mm/yyyy")`
+3. Understand Power Fx use in topics
 
-With Topics and Triggers, your agent can:
+### Step 4: Create the Available Devices Topic (~15 minutes)
+1. Open your Contoso Helpdesk Agent
+2. Navigate to **Topics** tab
+3. Select **+ Add a topic** → **From blank**
+4. Configure the topic:
+   - Name: `Available devices`
+   - Trigger description: This topic helps users find devices that are available from our SharePoint Devices list.
 
-- Recognize intent
-- Route conversations with logic
-- Gather and store variables
-- Trigger flows and take action
+### Step 5: Define Input and Output Variables (~5 minutes)
+1. Open **Topic details**
+2. Create input variable:
+   - Name: `VarDeviceType`
+   - Type: Text
+   - Description: The type of device to search for
+3. Create output variable:
+   - Name: `VarAvailableDevices`
+   - Type: Table
+   - Description: List of available devices
 
-You're not just building dialogue, you're wiring up its decision making cortex. Welcome to the Neural Nexus.
+### Step 6: Add SharePoint Connector Tool (~10 minutes)
+1. Add a node → **Add a tool**
+2. Search for **SharePoint** connector
+3. Select **Get items** action
+4. Configure the connection:
+   - Site Address: Your Contoso IT site
+   - List Name: Devices
+5. Add a filter query using Power Fx
+6. Map output to `VarAvailableDevices`
 
-## 🔎 Objectives
+### Step 7: Update Agent Instructions (~5 minutes)
+1. Navigate to agent Overview
+2. Edit Instructions
+3. Add guidance to use the topic
+4. Save changes
 
-In this mission, you'll learn:
+### Step 8: Test the Topic (~5 minutes)
+1. Open the Test pane
+2. Enter: `I need a laptop`
+3. Verify the agent:
+   - Triggers the Available devices topic
+   - Queries SharePoint for available laptops
+   - Returns matching devices
+4. Review the Activity Map
 
-1. Understanding what topics are and their role in creating structured conversations for your agent
-2. Learning the anatomy of topics including trigger phrases and conversation nodes
-3. Exploring different types of conversation nodes and how to use Power Fx for dynamic logic
-4. Creating custom topics from scratch to handle specific user requests and tasks
-5. Building a functional topic that connects to SharePoint data using connectors and tools
+## Duration
+~60 minutes
 
-## 🤔 What is a Topic?
-
-A topic is a structured conversation that helps your agent respond to specific user questions or tasks. Think of a topic as a mini-conversation or task that your agent can handle. Each topic is designed to respond to a specific user question or request.
-
-### 🌌 Purpose of a topic
-
-There are three common purposes for topics based on what users need:
-
-**Informational** - answers questions such as:
-- `What is …?`
-- `When will …?`
-- `Why …?`
-
-**Task completion** - helps users _do_ something:
-- `"I want to …"`
-- `"How do I …?"`
-
-**Troubleshooting** - solves problems:
-- `Something isn't working …`
-- `I'm encountering an error message …`
-
-## 🪺 Types of topics
-
-1. **System topics** - built-in topics that handle common events (starting/ending conversations, errors, escalation)
-
-2. **Custom topics** - topics you create to handle specific tasks or questions
-
-## 🧬 Anatomy of a topic
-
-### 🗣️ Trigger phrases
-
-Words or sentences users might say to start the topic.
-
-### 💬 Conversation nodes
-
-Steps the agent follows once the topic is triggered:
-
-- **Send a message** - sends a message to the user
-- **Ask a question** - asks the user a question and waits for their answer
-- **Ask with adaptive card** - send a rich, interactive card using JSON
-- **Add a condition** - add logic to check something and decide what to do next
-- **Variable management** - stores or clears information during the conversation
-- **Topic management** - moves the conversation to another topic
-- **Add a tool** - connects to connectors, agent flows, prompts
-- **Generative answers node** - uses AI to generate natural responses
-- **HTTP request node** - connect to external systems via API calls
-
-## 🏋🏻‍♀️ Using Power Fx in your nodes
-
-Power Fx is a low-code programming language used to add logic and dynamic behavior to your agent. It's similar to Excel formulas.
-
-### What Power Fx can do in topics
-
-- Set and manipulate variables: `Set(userName, "Adele Vance")`
-- Create conditions: `If(score > 80, "Pass", "Fail")`
-- Format and transform data: `Text(DateValue, "dd/mm/yyyy")`
-
-## 🧪 Lab 07 - Add a new topic with conversation nodes
-
-### ✨ Use case
-
-**As an** employee
-**I want to** know what devices are available
-**So that I** have a list of available devices
-
-### Prerequisites
-
-1. SharePoint list with Devices (from Course Setup)
-2. Contoso Helpdesk Agent from Lab 06
-
-### 7.1 Add a new topic from blank
-
-1. Select the **Topics tab** in your agent
-2. Select **+ Add a topic** and select **From blank**
-3. Name the topic: `Available devices`
-4. Enter trigger description:
-   ```text
-   This topic helps users find devices that are available from our SharePoint Devices list.
-   ```
-
-### 7.2 Define the trigger inputs and outputs
-
-1. Open **Topic details** and create input variable `VarDeviceType`
-2. Create output variable `VarAvailableDevices` (Table type)
-
-### 7.3 Add a tool using a connector
-
-1. Add a **Get items** SharePoint connector action
-2. Configure the connection and select your Devices list
-3. Add a filter query using Power Fx:
-   ```text
-   Concatenate("Status eq 'Available' and AssetType eq '", Topic.VarDeviceType, "'")
-   ```
-
-4. Update agent instructions to invoke the topic:
-   ```text
-   - Help find available devices using [Available devices]. Always extract the VarDeviceType from the inputs.
-   ```
-
-5. Test with: `I need a laptop`
-
-## ✅ Mission Complete
-
-Congratulations! 👏🏻 You've learned how to add topics with triggers, use SharePoint connectors, and apply Power Fx filters.
-
-⏭️ [Move to **Enhance user interactions with Adaptive Cards** lesson](../Lab%208/index.md)
-
-## 📚 Tactical Resources
-
-🔗 [Use system topics](https://learn.microsoft.com/microsoft-copilot-studio/authoring-system-topics)
-🔗 [Topics in Microsoft Copilot Studio](https://learn.microsoft.com/microsoft-copilot-studio/guidance/topics-overview)
-🔗 [Create expressions using Power Fx](https://learn.microsoft.com/microsoft-copilot-studio/advanced-power-fx)
+## Next Steps
+Proceed to [Lab 8: Enhance User Interactions with Adaptive Cards](../Lab%208/index.md)

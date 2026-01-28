@@ -1,136 +1,101 @@
----
-prev:
-  text: 'Add an agent flow to your Topic for automation'
-  link: '/recruit/09-add-an-agent-flow'
-next:
-  text: 'Publish your agent'
-  link: '/recruit/11-publish-your-agent'
----
+# Lab 10: Add Event Triggers for Autonomous Agents
 
-# 🚨 Mission 10: Add Event Triggers - Enable autonomous agent capabilities
+## Lab Title
+Add Event Triggers - Enable Autonomous Agent Capabilities
 
-## 🕵️‍♂️ CODENAME: `OPERATION GHOST ROUTINE`
+## Lab Objectives
+By the end of this lab, you will be able to:
+1. Understand what event triggers are and how they work
+2. Differentiate between event triggers and topic triggers
+3. Create event triggers for SharePoint item creation
+4. Build autonomous workflows with email acknowledgments
+5. Test and validate trigger-based automation
 
-> **⏱️ Operation Time Window:** `~45 minutes`
-
-🎥 **Watch the Walkthrough**
-
-[![Event triggers video thumbnail](./assets/video-thumbnail.jpg)](https://www.youtube.com/watch?v=ZgwHL8PQ1nY "Watch the walkthrough on YouTube")
-
-## 🎯 Mission Brief
-
-It's time to elevate your agent from conversational assistant to autonomous operative. Your mission is to enable your agent to act without being summoned - responding to signals from across your digital domain with precision and speed.
-
-With Event Triggers, you'll train your agent to monitor external systems and execute intelligent actions the moment a signal is received.
-
-## 🔎 Objectives
-
-In this mission, you'll learn:
-
-1. Understanding Event Triggers and how they enable autonomous behavior
-2. Learning the difference between event triggers and topic triggers
-3. Exploring common Event Trigger scenarios
-4. Understanding authentication and security considerations
-5. Building an autonomous agent that responds to SharePoint events
-
-## 🤔 What is an Event Trigger?
-
-An **Event Trigger** allows your agent to act autonomously in response to external events, without requiring direct user input. Examples include:
-
-- When a new file is created in SharePoint
-- When a record is created in Dataverse
-- When a task is completed in Planner
-- When a new Form response is submitted
-- Based on a recurring schedule
-
-### Event vs Topic Triggers
-
-| Event Triggers | Topic Triggers |
-|----------------|----------------|
-| Activated by external system events | Activated by user input/phrases |
-| Enable autonomous agent behavior | Enable conversational responses |
-| Use maker's authentication | Option for user's authentication |
-| Run without user interaction | Require user to start conversation |
-
-## 📦 Understanding Trigger Payloads
-
-When an event occurs, the trigger sends a **payload** containing:
-
-- **Default payload** - Basic event information
-- **Custom payload** - Specific instructions and data formatting
-
-## 🎯 Common Event Trigger Scenarios
-
-| Scenario | Trigger | Action |
-|----------|---------|--------|
-| IT Help Desk | New SharePoint item | Categorize, assign priority, notify team |
-| Employee Onboarding | New Dataverse user | Send welcome, create tasks, provision access |
-| Project Management | Task completed in Planner | Update dashboard, notify stakeholders |
-| Document Management | File uploaded to SharePoint | Extract metadata, apply tags |
-
-## 🧪 Lab 10 - Add Event Triggers for autonomous behavior
-
-### 🎯 Use case
-
-Enhance your IT Help Desk agent to automatically respond to new support requests in SharePoint.
-
-### Prerequisites
-
-- Completed previous labs (especially Lab 6-8)
+## Prerequisites
+- Microsoft 365 account with Copilot Studio access
+- Contoso Helpdesk Agent (from Labs 6-9)
 - SharePoint site with IT support tickets list
-- Generative orchestration enabled on your agent
+- Generative orchestration enabled on agent
+- Email access for testing
 
-### 10.1 Enable Generative AI and create trigger
+## Step-by-Step Guide
 
+### Step 1: Understanding Event Triggers (~10 minutes)
+1. Learn what event triggers are:
+   - Enable autonomous agent behavior
+   - Fire from external system events
+   - No user message required
+2. Review trigger types available:
+   - SharePoint/OneDrive file or item created
+   - Planner task completed/assigned
+   - Microsoft Forms response submitted
+   - Email received
+   - Recurrence/schedule
+3. Understand key characteristics:
+   - Payload-driven execution
+   - Requires generative orchestration
+   - Uses maker's authentication
+
+### Step 2: Event vs Topic Triggers (~5 minutes)
+1. Compare the two trigger types:
+   - Event Triggers: External system events, autonomous behavior, maker authentication
+   - Topic Triggers: User input/phrases, conversational responses, user authentication option
+
+### Step 3: Enable Generative Orchestration (~2 minutes)
 1. Open your IT Help Desk agent
-2. Enable **Generative orchestration** in Settings
-3. Navigate to **Triggers** section and click **+ Add trigger**
-4. Select **When an item is created** (SharePoint)
-5. Configure:
-   - **Trigger name**: New Support Ticket Created in SharePoint
-   - **Site Address**: Your Contoso IT site
-   - **List Name**: Tickets list
-   - **Instructions**:
-     ```text
-     New Support Ticket Created: {Body}
-     Use the 'Acknowledge SharePoint Ticket' tool to respond.
-     IMPORTANT: Work completely autonomously.
-     ```
+2. Navigate to **Overview** tab
+3. Under Orchestration, toggle **Generative orchestration** to **On**
+4. Save changes
 
-### 10.2 Edit the Trigger in Power Automate
+### Step 4: Create SharePoint Trigger (~10 minutes)
+1. Navigate to **Triggers** section in Overview
+2. Select **+ Add trigger**
+3. Search for and select **When an item is created** (SharePoint)
+4. Configure trigger:
+   - Name: `New Support Ticket Created in SharePoint`
+   - Wait for connections to configure
+5. Configure parameters:
+   - Site Address: Your Contoso IT site
+   - List Name: Tickets
+6. Add instructions for the trigger
+7. Select **Create trigger**
 
-1. Select **Edit in Power Automate**
-2. Update the Body/message with an expression containing ticket details:
-   ```text
-   concat('Submitted By: ', triggerOutputs()?['body/Author/DisplayName'],
-          '\nTitle: ', triggerOutputs()?['body/Title'],
-          '\nDescription: ', triggerOutputs()?['body/Description'])
-   ```
-3. **Publish** the flow
+### Step 5: Edit Trigger in Power Automate (~10 minutes)
+1. Select **...** on the trigger → **Edit in Power Automate**
+2. Select the **Sends a prompt to the specified copilot** node
+3. Update the Body/message with an expression containing ticket details
+4. Select **Publish**
 
-### 10.3 Create email acknowledgment tool
-
+### Step 6: Create Email Acknowledgment Tool (~5 minutes)
 1. Navigate to **Tools** tab
-2. Add **Send an email (V2)** connector
-3. Configure:
-   - **Name**: Acknowledge SharePoint ticket
-   - **Description**: Sends email acknowledgement that ticket was received
+2. Select **+ Add a tool** → **Connector**
+3. Search for **Send an email (V2)**
+4. Configure:
+   - Name: `Acknowledge SharePoint ticket`
+   - Description: Sends email acknowledgement that ticket was received
+5. Configure input parameters
+6. Save the tool
 
-### 10.4 Test the trigger
+### Step 7: Test the Trigger (~8 minutes)
+1. In Overview, select **Test Trigger** icon
+2. Open SharePoint in a new tab
+3. Navigate to your Tickets list
+4. Create a new item:
+   - Title: `Unable to connect to VPN`
+   - Description: `Cannot connect after recent update`
+   - Priority: `Normal`
+5. Save the item
+6. Return to Copilot Studio
+7. Monitor the Test trigger panel (use Refresh)
+8. Select **Start testing** when trigger appears
+9. Verify:
+   - Agent received the trigger payload
+   - Called the Acknowledge tool
+   - Email was sent to submitter
+10. Review Activity Map for execution details
 
-1. Click **Test Trigger** in the Overview tab
-2. Create a new item in your SharePoint Tickets list
-3. Monitor the test panel for trigger activation
-4. Verify the acknowledgment email is sent
+## Duration
+~45 minutes
 
-## ✅ Mission Complete
-
-🎉 Congratulations! You've implemented event triggers that enable your agent to operate autonomously, automatically processing support tickets without user intervention.
-
-⏭️ [Move to **Publish your agent** lesson](../Lab%2011/index.md)
-
-## 📚 Tactical Resources
-
-🔗 [Make your agent autonomous](https://learn.microsoft.com/training/modules/autonomous-agents-online-workshop/)
-🔗 [Add an event trigger](https://learn.microsoft.com/microsoft-copilot-studio/authoring-trigger-event)
-🔗 [Power Automate triggers introduction](https://learn.microsoft.com/power-automate/triggers-introduction)
+## Next Steps
+Proceed to [Lab 11: Publish Your Agent](../Lab%2011/index.md)
