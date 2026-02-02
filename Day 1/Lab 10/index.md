@@ -65,8 +65,8 @@ By the end of this lab, you will be able to:
    - **Instructions**: Create a professional sales proposal including client name, project scope, pricing, and next steps
    - **Inputs**: clientName, projectScope
    - **Output**: proposalText
-5. Add a **Send a message** to display the proposal
-6. Add a tool to create a document from the proposal
+5. Add a **Send a message** to display the proposal:
+   - **Message**: `Here is your generated proposal:\n\n{proposalText}`
 
 ### Step 5: Build the "No" Branch (~5 minutes)
 1. Under the "If No" path, add a message node:
