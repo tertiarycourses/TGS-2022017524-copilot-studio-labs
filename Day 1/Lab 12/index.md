@@ -1,103 +1,113 @@
-# Lab 12: Understanding Licensing
+# Lab 12: Publish Your Agent to Teams and M365 Copilot
 
 ## Lab Title
-Understanding Licensing - Copilot Credits and Capacity Planning
+Publish Your Agent - Deploy to Teams and Microsoft 365 Copilot
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Understand how Copilot Credits work as the usage currency
-2. Compare licensing options (PAYGO, capacity packs, pre-purchase)
-3. Identify when M365 Copilot licenses apply vs. Copilot Studio credits
-4. Plan capacity for production agent deployments
-5. Monitor usage in the Power Platform admin center
+1. Understand why publishing is important for agent updates
+2. Publish your agent to make all changes live
+3. Add the Microsoft Teams and M365 Copilot channel
+4. Deploy the agent to your Teams for testing
+5. Make the agent available organization-wide
 
 ## Prerequisites
-- Basic understanding of Microsoft licensing concepts
-- Access to Power Platform admin center (for monitoring)
-- No hands-on configuration required (informational lab)
+- Microsoft 365 account with Copilot Studio access
+- Fully tested Sales Agent (from Labs 6-11)
+- Microsoft Teams access
+- Permissions to publish agents in your environment
 
 ## Step-by-Step Guide
 
-### Step 1: Understanding Copilot Credits (~5 minutes)
-1. Learn what Copilot Credits are:
-   - Currency for measuring Copilot Studio usage
-   - Replaces the older "message" concept
-   - Maps to actual work done by agent
-2. Credits are consumed when agent:
-   - Looks up information
-   - Answers questions
-   - Runs workflows and actions
-   - Calls tools and connectors
+### Step 1: Understanding Publishing (~10 minutes)
+1. Learn why publishing matters:
+   - Makes latest updates available to users
+   - New tools, topics, and knowledge become accessible
+   - All configured channels receive updates
+2. Understand the publish process:
+   - Only unpublished changes need to be published
+   - Publishes all topics, tools, knowledge, and instructions
+   - Takes a few moments to process
+3. Review: Always publish after making significant changes
 
-### Step 2: Licensing Options (~5 minutes)
-1. **Pay-As-You-Go (PAYGO)**:
-   - No upfront commitment
-   - $0.01 per Copilot Credit
-   - Billed through Azure
-   - Ideal for development and variable usage
+### Step 2: Publish Your Sales Agent (~5 minutes)
+1. Open your Sales Agent
+2. Select the **Publish** button in the top toolbar
+3. Review the confirmation dialog showing what will be published
+4. Select **Publish** to confirm
+5. Wait for the "Agent published successfully" notification
+6. Note: This publishes the agent itself, not necessarily to channels
 
-2. **Copilot Studio License (Capacity Pack)**:
-   - 25,000 credits per pack/month
-   - Pooled at tenant level
-   - Credits don't roll over
-   - Best for predictable usage
+### Step 3: Explore Available Channels (~10 minutes)
+1. Review deployment options:
+   - **Teams & M365 Copilot**: Teams chats, meetings, Microsoft 365 Copilot
+   - **Demo website**: Built-in Copilot Studio test website
+   - **Custom website**: Embed in your own site
+   - **Web chat**: Public web-based chat interface
+   - **SharePoint**: Site-based assistance
+   - **Azure Bot Service**: Integration with Slack, Telegram, etc.
+2. Understand channel licensing:
+   - Different channels may require different licenses
+   - Internal Teams use may have different requirements than external web channels
 
-3. **Copilot Credit Pre-Purchase**:
-   - Annual prepaid option
-   - Copilot Credit Commit Units (CCCUs)
-   - 1 CCCU = 100 Credits
-   - Cost advantage at scale
+### Step 4: Add Teams and M365 Copilot Channel (~10 minutes)
+1. From the agent Overview, select **Channels** tab (or look for Channels option)
+2. Browse available channels
+3. Select **Teams and Microsoft 365**
+4. Select **+ Add channel**
+5. Configure channel settings (team restrictions if needed)
+6. Wait for confirmation that the channel was added
+7. The agent is now available in Teams and Microsoft 365 Copilot
 
-### Step 3: User Licenses (~3 minutes)
-1. **Copilot Studio Tenant License**:
-   - Enables Copilot Studio in your tenant
-   - Capacity pack or PAYGO required
-2. **Copilot Studio User License** ($0):
-   - Required for makers who create/manage agents
-   - Assigned to individual users
+### Step 5: Deploy Agent to Microsoft Teams (~10 minutes)
+1. In the Teams & M365 Copilot channel settings, select **See agent in Teams** or similar option
+2. A new browser tab opens showing the agent
+3. Select **Add** to install the agent to your personal Teams instance
+4. Confirm the installation in the popup
+5. Open Teams and locate your agent (should appear in Apps or chat)
+6. Test the agent with a sample conversation:
+   - `I want to create a meeting recap`
+   - Verify all topics work in Teams environment
+   - Confirm documents are created in your OneDrive
+   - Check that emails draft correctly in Outlook
 
-### Step 4: M365 Copilot License Coverage (~5 minutes)
-1. What M365 Copilot licenses include:
-   - Copilot in Word, Teams, Outlook, Excel
-   - Ability to create and use agents in hosted channels
-2. When Copilot Studio Credits still apply:
-   - Running agent flows
-   - Using connectors/external services
-   - Publishing outside internal M365 experiences
-   - Topics with actions beyond simple responses
+### Step 6: Organization-Wide Distribution (~10 minutes)
+1. Return to Copilot Studio, select your agent
+2. Go to the Teams & M365 Copilot channel settings
+3. Look for **Edit details** or **Availability options**
+4. Customize your agent:
+   - Icon and background color
+   - Short description (one-liner)
+   - Long description (detailed)
+   - Developer name
+   - Support contact information
+5. Review availability/sharing options:
+   - **Share Link**: Direct URL for specific users
+   - **Show in Teams**: Visible in Teams app catalog
+   - **Show to everyone**: Organization-wide availability
+6. For organization-wide, you may need to submit for admin approval
 
-3. **Rule of thumb**:
-   - Internal M365 + basic responses → M365 Copilot license
-   - Automation, integrations, external → Copilot Studio credits
+### Step 7: Understanding Distribution Models (~5 minutes)
+1. Review deployment scenarios:
+   - **Personal/Team**: Share the agent link with specific people
+   - **Department**: Submit for admin approval for department-wide access
+   - **Organization**: Full organization-wide availability (requires admin approval)
+2. Each model serves different use cases:
+   - Pilot testing (team-level)
+   - Department rollout (admin approval)
+   - Company-wide adoption (organization-wide)
 
-### Step 5: Capacity Planning Tips (~5 minutes)
-1. **Before launching**:
-   - Use the Agent Usage Estimator (aka.ms/copilotstudioestimator)
-   - Disable unused tools to reduce costs
-   - Mix capacity packs + PAYGO for flexibility
-   - Assign user licenses to all builders
-   - Monitor in Power Platform admin center
-
-2. **Estimation process**:
-   - Estimate expected monthly interactions
-   - Multiply by average credits per interaction
-   - Add buffer for growth
-   - Compare to capacity pack vs. PAYGO costs
-
-### Step 6: Real-World Licensing Scenarios (~5 minutes)
-1. Review common scenarios:
-   - Internal Teams Q&A agent: User license (basic); credits for actions
-   - Agent with Power Automate: Uses Copilot Credits
-   - Autonomous agents: Uses Copilot Credits
-   - External web deployment: Uses Copilot Credits
-   - Maker building agents: Copilot Studio User License
-
-### Step 7: Monitoring Usage (~2 minutes)
-1. Navigate to Power Platform admin center
-2. Go to Billing → License → Copilot Studio
-3. Review:
-   - Credit consumption trends
-   - Per-agent usage breakdown
+### Step 8: Post-Deployment Monitoring (~5 minutes)
+1. After publishing:
+   - Monitor agent usage
+   - Collect user feedback
+   - Track error rates in analytics
+   - Identify improvement opportunities
+2. Plan for ongoing updates:
+   - Add new topics based on user requests
+   - Enhance prompts based on feedback
+   - Expand knowledge sources as needed
+   - Update agent description with new capabilities
    - Remaining capacity
 4. Set up alerts for approaching limits
 

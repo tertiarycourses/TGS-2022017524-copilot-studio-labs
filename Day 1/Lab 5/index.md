@@ -61,7 +61,7 @@ By the end of this lab, you will be able to:
    - `Do I need a visa to travel from the US to Amsterdam?`
    - `How long does it take to get a US Passport?`
    - `Where is the closest US embassy in Valencia, Spain?`
-3. Observe the Activity Map to see knowledge source usage
+3. Observe the Activity Map to see knowledge source usage.
    If the Activity Map is not visible, enable it by selecting the settings (**...**) icon in the test pane and toggling on **Track between topics**.
    >
    **Newer Version**: ![alt text](./assets/image-5.png)
