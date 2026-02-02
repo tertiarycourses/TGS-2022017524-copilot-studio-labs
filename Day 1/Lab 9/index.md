@@ -155,10 +155,10 @@ By the end of this lab, you will be able to:
      - `productName`
      - `quantity`
      - `unitPrice`
-     ![alt text](image-25.png)
+     ![alt text](./Assets/image-25.png)
    - Click the three dots (**>**) on **Outputs**
    - Under **Custom**, click on **Create a new variable**
-   ![alt text](image-10.png)
+   ![alt text](./Assets/image-10.png)
    - Rename the Var1 to `quote`
    - These will be populated by the prompt with the calculated values
 
@@ -166,7 +166,7 @@ By the end of this lab, you will be able to:
 1. Add a **Send a message** node
 2. Configure:
    - **Message**: `Here is your pricing quote:` followed by a new line and the quote details
-   ![alt text](image-12.png)
+   ![alt text](./Assets/image-12.png)
 3. Insert the individual variables from the prompt using the insert variable button **{x}**:
    - Product: {x} itemName
    - Quantity: {x} qty
@@ -179,7 +179,7 @@ By the end of this lab, you will be able to:
    - Payment Terms: {x} paymentTerms
    - Note: {x} note
    
-   ![alt text](image-20.png)
+   ![alt text](./Assets/image-20.png)
 4 . Save the topic by clicking the **Save** button at the top right corner
 
 ### Step 6: Prepare the Excel File (One-Time Setup) (~10 minutes)
@@ -188,7 +188,7 @@ By the end of this lab, you will be able to:
    [Note: You can use either OneDrive or SharePoint for storing the Excel file. Ensure you have edit permissions.
    If you are unsure how to create an Excel file in OneDrive or SharePoint, follow the guide on [Course Setup](../Course%20Setup/index.md)]
 3. Create a new file named: `PriceQuote.xlsx`
-   ![alt text](image-16.png)
+   ![alt text](./Assets/image-16.png)
    >
 4. Open the file and inside it:
    - Ensure you have a worksheet (default is Sheet1)
@@ -207,11 +207,11 @@ By the end of this lab, you will be able to:
    - On the **Insert** tab, select **Table** option
    - A prompt will appear, ensure "My table has headers" is checked
    - Click on **OK**
-   ![alt text](image-19.png)
+   ![alt text](./Assets/image-19.png)
    >
 7. Name the table:
    - In the **Table Design** tab, change the name to: `QuoteTable`
-   ![alt text](image-18.png)
+   ![alt text](./Assets/image-18.png)
    >
 8. Save the file
    - This pre-created table allows Power Automate to insert data into it dynamically
@@ -229,17 +229,17 @@ By the end of this lab, you will be able to:
      - `finalTotal` (Text)
      - `paymentTerms` (Text)
      - `note` (Text)
-   ![alt text](image-28.png)
+   ![alt text](./Assets/image-28.png)
    >
 4. Create an action: **Add a row into a table** (from Excel Online)
-   ![alt text](image-29.png)
+   ![alt text](./Assets/image-29.png)
    >
 5. Configure the Excel action:
    - **Location**: Select your OneDrive or SharePoint location
    - **Document Library**: Select the library where PriceQuote.xlsx is stored
    - **File**: `PriceQuote.xlsx`
    - **Table**: `QuoteTable`
-   ![alt text](image-30.png)
+   ![alt text](./Assets/image-30.png)
    >
    - Map the fields directly to the Excel columns:
      - **Item**: {x} productName
