@@ -1,94 +1,238 @@
-# Lab 14: Authoring Agent Instructions
+# Lab 13: Multi-Agent Systems - Case Study 2: Customer Service Agent (Air Fryer)
 
 ## Lab Title
-Authoring Agent Instructions - Shaping Agent Behavior
+Multi-Agent Systems - Building a Customer Service Agent Network
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Understand why instructions are critical for agent behavior
-2. Write clear, effective instructions with proper structure
-3. Apply best practices for tool and topic descriptions
-4. Structure instructions for multi-agent scenarios
-5. Test and refine instructions for optimal performance
+1. Understand when and how to use multi-agent architectures
+2. Create a parent orchestrator agent for customer service
+3. Create child agents for specialized customer service tasks
+4. Design agents for handling product support, troubleshooting, order management, sales, and post-sales
+5. Establish communication patterns between parent and child agents
+
+## Case Study Overview: Air Fryer Customer Service
+
+This lab uses an air fryer product scenario to demonstrate multi-agent patterns:
+- **Parent Agent**: Customer Service Copilot (newly created) - orchestrates customer inquiries
+- **Child Agents**: 
+  - Product Support Agent (troubleshooting)
+  - Order Management Agent (returns/refunds)
+  - Sales Inquiry Agent (product questions and purchases)
+  - Post Sales Agent (warranty, feedback, registration)
 
 ## Prerequisites
 - Copilot Studio license and environment access
-- Completed Lab 13 with Hiring Agent created
 - Understanding of agent fundamentals from Day 1
+- Basic knowledge of multi-agent concepts
+- Access to Copilot Studio with agent creation permissions
 
 ## Step-by-Step Guide
 
-### Step 1: Understanding Why Instructions Matter (~5 minutes)
-1. Review what instructions control:
-   - **Role definition**: Agent's persona and expertise
-   - **Response style**: Tone, format, detail level
-   - **Tool selection**: When to call specific tools
-   - **Boundaries**: Guardrails and restrictions
-   - **Edge cases**: Handling ambiguous situations
-2. Understand: Instructions must align with available capabilities
+### Step 1: Understanding Multi-Agent Architecture (~10 minutes)
+1. Review why multi-agent systems matter for customer service:
+   - **Specialization**: Each agent handles specific customer needs
+   - **Scalability**: Handle multiple customer interactions simultaneously
+   - **Maintainability**: Updates to one agent don't affect others
+   - **Domain Expertise**: Agents optimized for their specific domain
+2. Review the air fryer customer service workflow:
+   - Customer inquiry → Customer Service Copilot (parent agent)
+   - Sales/product questions → Sales Inquiry Agent
+   - Technical issues → Product Support Agent
+   - Order problems → Order Management Agent
+   - Warranty/feedback/registration → Post Sales Agent
 
-### Step 2: Essential Components of Instructions (~10 minutes)
-1. **Role Definition**:
-   - Example: You are the central orchestrator for the hiring process. You coordinate activities, provide summaries, and delegate work to specialized agents.
+### Step 2: Child Agents vs Connected Agents (~10 minutes)
+1. **Child Agents** (Used in this scenario):
+   - Lightweight specialists within parent agent
+   - Share parent's conversation context
+   - No separate publishing required initially
+   - Managed together with parent agent
+   - Example: Sales, Support, Orders teams within one Copilot
 
-2. **Tool Selection Guidance**:
-   - Example: When a user uploads a resume, use the /Resume Upload tool to process it.
+2. **Connected Agents**:
+   - Full-fledged independent agents
+   - Own separate conversation flows
+   - Must be published independently
+   - Multiple teams with independent lifecycles
+   - Example: Separate departmental agents connecting to central hub
 
-3. **Input Hints**:
-   - Example: Extract a cover letter style message from the context. The message must be less than 2000 characters.
+### Step 3: Create Customer Service Parent Agent (~10 minutes)
+1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
+2. Select **Agent** in the top-left corner
+3. Select **Create blank agent**
+4. Enter the following agent details:
+   - **Name**: `Customer Service Copilot - Air Fryer`
+   - **Description**: `Central orchestrator for air fryer customer service, coordinating support, sales, and order management`
+5. Click **Edit** and add Instructions:
+   ```
+   You are the central customer service orchestrator for our air fryer product line. 
+   You coordinate with specialized agents to help customers with sales, technical support, 
+   and order management. Route customer inquiries to the appropriate specialist agent based 
+   on their needs. Provide summaries of customer interactions and escalate complex issues.
+   ```
+6. Click **Save** to confirm
+![alt text](./Assets/image.png)
 
-4. **Response Formatting**:
-   - Example: Always format job application summaries with Candidate Name, Applied Position, Key Qualifications, and Recommendation.
+### Step 4: Configure Agent Settings for Multi-Agent (~5 minutes)
+1. Select **Settings** (top right of Customer Service Copilot)
+2. Verify these critical settings:
+   **Generative AI**
+   - **orchestration**: Yes
+   - **Connected Agents**: On
+   - **Content Moderation**: Moderate
+   - **User Feedback > Collect user reactions**: On
+   - **Use general knowledge**: Off
+   - **Use web information**: Off
+   - **File uploads**: On
+   - **Code Interpreter**: Off
+   ![alt text](./Assets/image-2.png)
+   ![alt text](./Assets/image-1.png)
+3. Save and close Settings
 
-5. **Behavioral Constraints**:
-   - Example: Never contact candidates directly. All candidate communication must go through the HR team.
+### Step 5: Create Product Support Child Agent (~10 minutes)
+1. Navigate to **Agents** tab within Customer Service Copilot
+2. Select **Add** → **New child agent**
+![alt text](./Assets/image-3.png)
+3. Configure child agent:
+   - Name: `Product Support Agent`
+   - When used: **The agent chooses** - Based on description
+   - Description: `Handles troubleshooting, technical issues, and product feature questions for air fryers`
+4. Expand **Advanced**, set Priority: `9000`
+5. Disable **Web Search**
+![alt text](./Assets/image-4.png)
+6. Save the child agent
 
-### Step 3: Description Best Practices (~5 minutes)
-1. Review Do's and Don'ts:
-   - Do: Straightforward language, active voice, concise (1-2 sentences)
-   - Don't: Technical jargon, passive voice, lengthy paragraphs
-2. Good examples:
-   - `Processes incoming resumes and stores candidates`
-   - `Generates interview questions based on job requirements`
-3. Poor examples:
-   - `This tool can answer questions`
-   - `Handles stuff related to hiring`
+### Step 6: Configure Product Support Instructions (~8 minutes)
+1. In Product Support Agent, select **Edit** in Instructions
+2. Add detailed instructions:
+   ```
+   You are a technical support specialist for air fryer products. Your expertise includes:
+   - Troubleshooting common issues (temperature problems, timer issues, error codes)
+   - Explaining product features and capabilities
+   - Providing cooking tips and best practices
+   - Escalating hardware failures to engineering team
+   
+   Always:
+   - Ask clarifying questions about the issue
+   - Provide step-by-step troubleshooting guidance
+   - Offer workarounds when applicable
+   - Never guarantee replacements (escalate to Order Management Agent)
+   ```
+   ![alt text](./Assets/image-5.png)
+3. Save changes
+### Step 7: Test Product Support Agent (~10 minutes)
+1. Open the **Test** pane on the right
+2. Test various support scenarios:
+   - **Basic issue**: "My air fryer isn't heating properly"
+   - **Feature question**: "How do I set the timer on my air fryer?"
+   - **Complex issue**: "The fryer shows error code E3 and won't start"
+3. Verify:
+   - Responses are accurate and helpful
+   - Troubleshooting steps are clear
+   - Complex issues are escalated appropriately
+4. Review **Activity Map** to see:
+   - Flow of conversation
+   - Any agent flow actions invoked 
 
-### Step 4: Structural Framework (~5 minutes)
-1. Follow this instruction pattern:
-   - Overview of agent role
-   - Sequential process steps
-   - Inter-agent collaboration points
-   - Safety/compliance requirements
-   - Feedback and escalation mechanisms
+### Step 8: Create Sales Inquiry Child Agent (~10 minutes)
+1. Navigate back to **Agents** tab in Customer Service Copilot
+2. Select **Add** → **New child agent**
+3. Configure:
+   - Name: `Sales Inquiry Agent`
+   - When used: **The agent chooses** - Based on description
+   - Description: `Answers product questions, helps with purchasing decisions, and provides pricing information for air fryers`
+4. Set Priority: `7000`
+![alt text](./Assets/image-7.png)
+5. Disable **Web Search**
+1. Under **Knowledge** section, add in "air_fryer_product.pdf" knowledge base
+![alt text](./Assets/image-6.png)
+6. Save the child agent
 
-2. Review example structure for Application Intake Agent:
-   - Role: Process incoming resumes and create candidate records
-   - Process: Upload Resume → Post-Upload confirmation
-   - Constraints: Only process PDF files, never modify existing records without instruction
+### Step 9: Configure Sales Inquiry Instructions (~8 minutes)
+1. In Sales Inquiry Agent, select **Edit** in Instructions
+2. Add detailed instructions:
+   ```
+   You are a sales specialist for air fryer products. Your expertise includes:
+   - Explaining different air fryer models and features
+   - Comparing specifications and capabilities
+   - Providing pricing and promotional information
+   - Assisting with purchase decisions
+   - Answering pre-purchase questions
+   
+   Always:
+   - Be enthusiastic about air fryer benefits
+   - Ask about customer needs before recommending models
+   - Provide honest feature comparisons
+   - Never make payment processing promises (escalate to Order Management Agent)
+   ```
+   ![alt text](./Assets/image-8.png)
+3. Save changes
 
-### Step 5: Testing Your Instructions (~5 minutes)
-1. Open the **Test pane** in Copilot Studio
-2. Try various scenarios:
-   - Happy path (normal usage)
-   - Edge cases (unusual inputs)
-   - Error conditions (failures)
-3. Check the **Activity Map** for tool/agent invocation
-4. Refine instructions based on unexpected behavior
-5. Repeat until behavior is consistent
+### Step 10: Create Post Sales Child Agent (~10 minutes)
+1. Navigate back to **Agents** tab in Customer Service Copilot
+2. Select **Add** → **New child agent**
+3. Configure:
+   - Name: `Post Sales Agent`
+   - When used: **The agent chooses** - Based on description
+   - Description: `Manages warranty claims, customer feedback, product registration, and post-purchase support for air fryers`
+4. Set Priority: `6000`
+![alt text](./Assets/image-9.png)
+1. Under **Knowledge** section, add in "air_fryer_warranty.pdf" knowledge base
+5. Disable **Web Search**
+![alt text](./Assets/image-10.png)
+6. Save the child agent
 
-### Step 6: Troubleshooting Tips (~3 minutes)
-1. If agent doesn't call expected tool:
-   - Check tool descriptions for overlap
-   - Make descriptions more specific
+### Step 11: Configure Post Sales Instructions (~8 minutes)
+1. In Post Sales Agent, select **Edit** in Instructions
+2. Add detailed instructions:
+   ```
+   You are a post-sales support specialist. Your responsibilities include:
+   - Processing warranty claims and extensions
+   - Collecting customer feedback and satisfaction surveys
+   - Managing product registration
+   - Providing care tips and maintenance advice
+   - Recommending accessories and complementary products
+   - Building customer loyalty and retention
+   
+   Always:
+   - Thank customers for their purchase
+   - Ensure warranty requirements are met before processing
+   - Show genuine interest in customer satisfaction
+   - Escalate dissatisfied customers to Order Management Agent if needed
+   - Use feedback to improve service quality
+   ```
+   ![alt text](./Assets/image-11.png)
+3. Save changes
+
+### Step 12: Test Multi-Agent System (~10 minutes)
+1. Open the **Test** pane on the right
+2. Test various customer scenarios:
+   - **Sales query**: "What are the different air fryer models available?"
+   - **Support query**: "My air fryer isn't heating properly"
+   - **Order query**: "I want to return my air fryer"
+   - **Complex query**: "The fryer isn't working and I want a refund"
+3. Verify:
+   - Copilot correctly routes to appropriate agent
+   - Agents stay in their domain of expertise
+   - Complex queries get coordinated across agents
+4. Review **Activity Map** to see:
+   - Which child agent was invoked
+   - The sequence of agent interactions
+   - Response quality from each agent
+
+### Step 13: Refine Agent Behaviors (~5 minutes)
+1. If agent doesn't route correctly:
+   - Check agent descriptions are clear and distinct
+   - Review instructions for overlapping responsibilities
    - Test with explicit trigger phrases
-2. If responses are inconsistent:
-   - Add more explicit formatting rules
-   - Include examples in instructions
-   - Clarify decision criteria
+2. If responses lack context:
+   - Ensure instructions clarify when to escalate
+   - Add examples of good vs poor responses
+   - Emphasize tone and empathy requirements
 
 ## Duration
-~30 minutes (intel only, no fieldwork required)
+~130 minutes
 
 ## Next Steps
-Proceed to [Lab 15: Multi-Agent Systems](../Lab%2015/index.md)
+Proceed to [Lab 14: Adding Tools and Automations to Multi-Agent Systems](../Lab%2014/index.md)
