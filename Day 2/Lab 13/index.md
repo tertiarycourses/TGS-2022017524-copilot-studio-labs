@@ -1,102 +1,94 @@
-# Lab 13: Get Started with the Hiring Agent
+# Lab 14: Authoring Agent Instructions
 
 ## Lab Title
-Get Started with the Hiring Agent - Building a Recruitment System
+Authoring Agent Instructions - Shaping Agent Behavior
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Understand the hiring automation scenario and its business value
-2. Import and configure the Operative solution with Dataverse tables
-3. Import sample data for job roles and evaluation criteria
-4. Create the central Hiring Agent for orchestration
-5. Understand the foundation for multi-agent hiring workflows
+1. Understand why instructions are critical for agent behavior
+2. Write clear, effective instructions with proper structure
+3. Apply best practices for tool and topic descriptions
+4. Structure instructions for multi-agent scenarios
+5. Test and refine instructions for optimal performance
 
 ## Prerequisites
-- Copilot Studio license
-- Access to a Microsoft Power Platform environment
-- Administrative permissions to create solutions and agents
-- Completed Day 1 labs (recommended)
+- Copilot Studio license and environment access
+- Completed Lab 13 with Hiring Agent created
+- Understanding of agent fundamentals from Day 1
 
 ## Step-by-Step Guide
 
-### Step 1: Understanding the Scenario (~10 minutes)
-1. Review the hiring automation use case:
-   - System of agents working together
-   - Resume review and job matching
-   - Interview preparation
-   - Candidate evaluation
-2. Understand the business value:
-   - Automatic resume processing
-   - Job role suggestions
-   - Interview guide generation
-   - Fair and compliant practices
-3. Review the agent architecture:
-   - Central **Hiring Agent** (orchestrator)
-   - **Application Intake Agent** (resume processing)
-   - **Interview Prep Agent** (interview materials)
+### Step 1: Understanding Why Instructions Matter (~5 minutes)
+1. Review what instructions control:
+   - **Role definition**: Agent's persona and expertise
+   - **Response style**: Tone, format, detail level
+   - **Tool selection**: When to call specific tools
+   - **Boundaries**: Guardrails and restrictions
+   - **Edge cases**: Handling ambiguous situations
+2. Understand: Instructions must align with available capabilities
 
-### Step 2: Import the Operative Solution (~10 minutes)
-1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
-2. Select **...** → **Solutions**
-3. Select **Import Solution**
-4. Download the prepared solution from the course materials
-5. Select **Browse** and choose the downloaded solution
-6. Select **Next** → **Import**
-7. Wait for "imported successfully" message
-8. Select the **Operative** solution to review components:
-   - Candidate table
-   - Evaluation Criteria table
-   - Hiring Hub app
-   - Job Application table
-   - Job Role table
-   - Resume table
-9. Select **Publish all customizations**
+### Step 2: Essential Components of Instructions (~10 minutes)
+1. **Role Definition**:
+   - Example: You are the central orchestrator for the hiring process. You coordinate activities, provide summaries, and delegate work to specialized agents.
 
-### Step 3: Import Job Role Sample Data (~10 minutes)
-1. Download the `job-roles.csv` file from course materials
-2. Open the Hiring Hub Model-Driven App:
-   - Select the app checkbox
-   - Select **Play**
-3. Navigate to **Job Roles** in left navigation
-4. Select **More** (three dots) → **Import from Excel** → **Import from CSV**
-5. Select the downloaded `job-roles.csv` file
-6. Select **Next** → **Review Mapping**
-7. Verify mapping is correct
-8. Select **Finish Import** → **Done**
-9. Refresh and verify data imported successfully
+2. **Tool Selection Guidance**:
+   - Example: When a user uploads a resume, use the /Resume Upload tool to process it.
 
-### Step 4: Import Evaluation Criteria Sample Data (~10 minutes)
-1. Download the `evaluation-criteria.csv` file
-2. Navigate to **Evaluation Criteria** in left navigation
-3. Select **More** → **Import from Excel** → **Import from CSV**
-4. Select the downloaded file
-5. Select **Next** → **Review Mapping**
-6. For Job Role field, select the magnifying glass icon
-7. Ensure **Job Title** is selected
-8. Select **OK** → **Finish Import** → **Done**
-9. Refresh and verify data imported successfully
+3. **Input Hints**:
+   - Example: Extract a cover letter style message from the context. The message must be less than 2000 characters.
 
-### Step 5: Create the Hiring Agent (~10 minutes)
-1. Navigate to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com)
-2. Ensure you're in the same environment as the imported solution
-3. Select **Agents** → **New Agent**
-4. Select **Configure**
-5. Enter agent details:
-   - Name: `Hiring Agent`
-   - Description: `Central orchestrator for all hiring activities`
-6. Select **...** next to Create → **Update advanced settings**
-7. Set Solution to `Operative`
-8. Select **Update** → **Create**
-9. Wait for agent creation to complete
+4. **Response Formatting**:
+   - Example: Always format job application summaries with Candidate Name, Applied Position, Key Qualifications, and Recommendation.
 
-### Step 6: Verify Setup (~5 minutes)
-1. Confirm the Hiring Agent appears in your agents list
-2. Verify it's associated with the Operative solution
-3. Review the agent configuration
-4. Prepare for adding instructions in the next lab
+5. **Behavioral Constraints**:
+   - Example: Never contact candidates directly. All candidate communication must go through the HR team.
+
+### Step 3: Description Best Practices (~5 minutes)
+1. Review Do's and Don'ts:
+   - Do: Straightforward language, active voice, concise (1-2 sentences)
+   - Don't: Technical jargon, passive voice, lengthy paragraphs
+2. Good examples:
+   - `Processes incoming resumes and stores candidates`
+   - `Generates interview questions based on job requirements`
+3. Poor examples:
+   - `This tool can answer questions`
+   - `Handles stuff related to hiring`
+
+### Step 4: Structural Framework (~5 minutes)
+1. Follow this instruction pattern:
+   - Overview of agent role
+   - Sequential process steps
+   - Inter-agent collaboration points
+   - Safety/compliance requirements
+   - Feedback and escalation mechanisms
+
+2. Review example structure for Application Intake Agent:
+   - Role: Process incoming resumes and create candidate records
+   - Process: Upload Resume → Post-Upload confirmation
+   - Constraints: Only process PDF files, never modify existing records without instruction
+
+### Step 5: Testing Your Instructions (~5 minutes)
+1. Open the **Test pane** in Copilot Studio
+2. Try various scenarios:
+   - Happy path (normal usage)
+   - Edge cases (unusual inputs)
+   - Error conditions (failures)
+3. Check the **Activity Map** for tool/agent invocation
+4. Refine instructions based on unexpected behavior
+5. Repeat until behavior is consistent
+
+### Step 6: Troubleshooting Tips (~3 minutes)
+1. If agent doesn't call expected tool:
+   - Check tool descriptions for overlap
+   - Make descriptions more specific
+   - Test with explicit trigger phrases
+2. If responses are inconsistent:
+   - Add more explicit formatting rules
+   - Include examples in instructions
+   - Clarify decision criteria
 
 ## Duration
-~45 minutes
+~30 minutes (intel only, no fieldwork required)
 
 ## Next Steps
-Proceed to [Lab 14: Authoring Agent Instructions](../Lab%2014/index.md)
+Proceed to [Lab 15: Multi-Agent Systems](../Lab%2015/index.md)

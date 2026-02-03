@@ -1,117 +1,126 @@
-# Lab 16: Add Event Triggers for Autonomous Agents
+# Lab 17: Understanding Agent Models
 
 ## Lab Title
-Add Event Triggers - Autonomous Email Processing
+Understanding Agent Models - Selecting the Right AI Brain
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Understand how event triggers enable autonomous agent behavior
-2. Differentiate between interactive and autonomous agents
-3. Create event triggers for email-based resume processing
-4. Build agent flows that post adaptive cards to Teams
-5. Pass data between event triggers and agent flows
+1. Understand different AI models available in Copilot Studio
+2. Compare model capabilities, performance, and cost characteristics
+3. Switch your agent's model and test the impact
+4. Evaluate differences in output quality and structure
+5. Make informed model selection decisions for your scenarios
 
 ## Prerequisites
 - Copilot Studio license and environment access
-- Completed Lab 13 and Lab 15 with Hiring Agent ready
-- Microsoft Teams access for testing notifications
-- Understanding of event triggers from Lab 10
+- Hiring Agent from previous labs
+- Understanding of agent fundamentals
+- Sample resume data in the system
 
 ## Step-by-Step Guide
 
-### Step 1: Understanding Event Triggers (~10 minutes)
-1. Review event trigger characteristics:
-   - Autonomous activation from external events
-   - Payload-driven execution
-   - Requires generative orchestration
-   - Uses maker's authentication
-2. Compare Interactive vs Autonomous agents:
-   | Dimension | Interactive | Autonomous |
-   |-----------|------------|------------|
-   | Start | User triggers topic | External event |
-   | Use | Q&A, guided workflows | Proactive automation |
-   | Trigger | By agent/Phrases | Event connectors |
-   | Example | "What's our policy?" | New email → process |
+### Step 1: Understanding Agent Models (~10 minutes)
+1. Learn what the agent model is:
+   - Underlying generative AI engine
+   - Determines how agent thinks and responds
+   - Impacts speed, quality, and cost
+2. Understand why model selection matters:
+   - Quick replies vs. deep analysis
+   - User satisfaction optimization
+   - Cost management
 
-### Step 2: Plan the Automation (~5 minutes)
-1. Define the use case:
-   - **As an** HR Recruiter
-   - **I want to** be notified when resume emails arrive
-   - **So that I** can review automatically uploaded applications
-2. Review the two-part approach:
-   - Event trigger for email arrival
-   - Agent flow for Teams notification
+### Step 2: Model Categories (~10 minutes)
+1. Review model use categories:
+   | Category | Description | Best For |
+   |----------|-------------|----------|
+   | **Deep** | Multi-step reasoning | Complex analytics, policy analysis |
+   | **Auto** | Dynamic routing | Mixed workloads, helpdesk |
+   | **General** | Speed and cost | FAQ, drafting, translation |
 
-### Step 3: Create Email Event Trigger (~15 minutes)
+2. Understand model availability tags:
+   - **Experimental**: Not for production
+   - **Preview**: Eventually GA, limited testing
+   - **No tag**: Generally available
+   - **Default**: Best performing GA model
+   - **Retired**: Available for 1 month after retirement
+
+### Step 3: Available OpenAI Models (~10 minutes)
+1. Review current model options:
+   | Model | Category | Status | Strengths |
+   |-------|----------|--------|-----------|
+   | GPT-4o | General | Retired | Fast, versatile, multimodal |
+   | GPT-4.1 | General | Default | High accuracy, complex analysis |
+   | GPT-5 Chat | General | Preview | Human-like dialogue |
+   | GPT-5 Auto | Auto | General | Multi-step automation |
+   | GPT-5 Reasoning | Deep | Preview | Advanced analytical tasks |
+   | GPT-5.1 Chat | General | Experimental | Latest conversational |
+   | GPT-5.1 Reasoning | Deep | Experimental | Maximum precision |
+
+2. Note: Experimental/preview models may have instability
+
+### Step 4: Available Anthropic Models (~5 minutes)
+1. Review external model options:
+   | Model | Status | Strengths |
+   |-------|--------|-----------|
+   | Claude Sonnet 4.5 | Experimental | Coding, agent workflows |
+   | Claude Opus 4.1 | Experimental | Intensive analysis |
+
+2. Note: External models subject to Anthropic terms
+
+### Step 5: Change Agent Model (~5 minutes)
 1. Open the Hiring Agent
-2. Navigate to **Overview** → **Triggers and Channels**
-3. Select **+ Add**
-4. Select **When a new email arrives (V3)** → **Next**
-5. Configure trigger:
-   - Name: `When a new email arrives from an applicant`
-   - Verify connection references (green checks)
-6. Set input properties:
-   - Include Attachments: **Yes**
-   - Subject Filter: `Application`
-   - Only with Attachments: **Yes**
-7. Select **Create trigger**
+2. Navigate to **Overview** tab
+3. Select the model **chevron** icon
+4. Browse available models:
+   - OpenAI models
+   - Anthropic models (if enabled)
+5. Select **GPT-5.1 Chat** (experimental)
+6. Wait for confirmation message
 
-### Step 4: Edit Trigger in Power Automate (~10 minutes)
-1. Select **...** on trigger → **Edit in Power Automate**
-2. Add condition to check PDF attachment:
-   - `contentType` equals `application/pdf`
-3. Add Dataverse actions:
-   - Extract file content
-   - Create Resume record
-   - Create Candidate record
-4. Configure prompt to agent:
-   - Pass Resume ID and Candidate ID
-   - Include processing instructions
-5. Publish the flow
+### Step 6: Compare Model Outputs (~10 minutes)
+1. Start a new test session with GPT-4.1 (default)
+2. Test question 1:
+   - `Summarize resume RXXXXX`
+3. Note the response format and detail level
 
-### Step 5: Create Teams Notification Agent Flow (~10 minutes)
-1. Navigate to Application Intake Agent
-2. Add new Agent Flow for Teams notification
-3. Configure inputs:
-   - `ResumeId`: Resume record identifier
-   - `CandidateId`: Candidate record identifier
-   - `CandidateName`: Name for display
-4. Add **Post adaptive card to Teams channel** action:
-   - Select target channel
-   - Design card with:
-     - Candidate name
-     - Resume link
-     - Quick action buttons
-5. Save and publish the flow
+4. Test question 2:
+   - `Can you provide suggestions of questions to ask in an interview for the Power Platform developer role (Job role number J1004) based on its associated evaluation criteria? Also provide expected answers.`
+5. Note the structure and depth
 
-### Step 6: Update Child Agent Instructions (~5 minutes)
-1. Edit Application Intake Agent instructions
-2. Add:
-   - When processing resumes from email triggers, use the Teams Notification flow to alert the HR recruitment team. Include the candidate name and link to the Dataverse record.
-3. Save changes
+6. Switch to GPT-5.1 Chat
+7. Repeat the same questions
+8. Compare:
+   - Response length (concise vs. detailed)
+   - Organization (headers, bullets)
+   - Formatting style
+   - Answer depth and specificity
 
-### Step 7: Test the Autonomous Flow (~10 minutes)
-1. Open Test pane → **Test Trigger**
-2. Send a test email:
-   - Subject contains "Application"
-   - Attach a PDF resume
-   - Send to the monitored inbox
-3. Wait for trigger activation (may take a few minutes)
-4. Verify:
-   - Trigger fires correctly
-   - Resume is uploaded to Dataverse
-   - Adaptive card appears in Teams channel
-   - Card contains correct candidate information
-5. Review Activity Map for complete flow
+### Step 7: Admin Controls (~5 minutes)
+1. Understand admin settings that affect model availability:
+   | Setting | Effect | Location |
+   |---------|--------|----------|
+   | Allow Anthropic | Enable external models | M365 Admin |
+   | Allow Preview | Enable experimental models | PP Admin |
+   | Move Data | Required for experimental | PP Admin |
 
-### Step 8: Monitor and Troubleshoot (~5 minutes)
-1. Check Power Automate flow runs
-2. Review Copilot Studio activity logs
-3. Verify Dataverse records created correctly
-4. Confirm Teams notifications delivered
+2. Note: Contact your admin if models aren't available
+
+### Step 8: Best Practices (~5 minutes)
+1. Model selection guidelines:
+   - **General tasks**: Use GPT-4.1 (default)
+   - **Complex reasoning**: Consider Deep models
+   - **Cost-sensitive**: Stick with General models
+   - **Testing new features**: Try Preview models
+2. Always test model changes before production
+3. Monitor performance and user satisfaction
+4. Plan for model retirement transitions
 
 ## Duration
 ~45 minutes
 
-## Next Steps
-Proceed to [Lab 17: Understanding Agent Models](../Lab%2017/index.md)
+## Course Complete!
+Congratulations on completing all 17 labs! You now have the skills to:
+- Build conversational and autonomous agents
+- Design multi-agent systems
+- Implement event-driven automation
+- Select optimal AI models for your scenarios
