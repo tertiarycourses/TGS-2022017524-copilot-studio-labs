@@ -1,126 +1,218 @@
-# Lab 17: Understanding Agent Models
+# Lab 16: Advanced Hiring Agent Features and Deployment
 
 ## Lab Title
-Understanding Agent Models - Selecting the Right AI Brain
+Enhance Hiring Agent with Skill Matching and Teams Integration
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Understand different AI models available in Copilot Studio
-2. Compare model capabilities, performance, and cost characteristics
-3. Switch your agent's model and test the impact
-4. Evaluate differences in output quality and structure
-5. Make informed model selection decisions for your scenarios
+1. Create a job requirements database for skill matching
+2. Build agent orchestration that analyzes candidate fit against job requirements
+3. Implement automated Teams notifications with rich adaptive cards
+4. Create child agent flows for candidate ranking and recommendations
+5. Set up Dataverse integrations for candidate tracking
+6. Test and deploy the complete hiring agent workflow
 
 ## Prerequisites
 - Copilot Studio license and environment access
-- Hiring Agent from previous labs
-- Understanding of agent fundamentals
-- Sample resume data in the system
+- Completed Lab 15 with Hiring Agent and event trigger created
+- Microsoft Teams access for testing notifications
+- OneDrive or SharePoint configured for resume and data storage
+- Sample job descriptions in a JSON configuration file
 
 ## Step-by-Step Guide
 
-### Step 1: Understanding Agent Models (~10 minutes)
-1. Learn what the agent model is:
-   - Underlying generative AI engine
-   - Determines how agent thinks and responds
-   - Impacts speed, quality, and cost
-2. Understand why model selection matters:
-   - Quick replies vs. deep analysis
-   - User satisfaction optimization
-   - Cost management
+### Step 1: Create Job Requirements Configuration (~10 minutes)
+1. Open **OneDrive** or **SharePoint**
+2. Create a folder: `/hiring-agent-config`
+3. Create a file: `job-requirements.json` with the following structure:
+   ```json
+   {
+     "jobs": [
+       {
+         "jobId": "job-001",
+         "jobTitle": "Power Platform Developer",
+         "requiredSkills": ["Power Apps", "Power Automate", "Power BI", "C#"],
+         "experienceLevel": "Mid",
+         "educationRequirements": "Bachelor's in Computer Science or related field",
+         "preferredCertifications": ["Power Platform Associate", "Power Platform Developer"],
+         "keyResponsibilities": "Develop and maintain Power Platform solutions",
+         "salaryRange": {"min": 80000, "max": 120000}
+       },
+       {
+         "jobId": "job-002",
+         "jobTitle": "Power BI Analyst",
+         "requiredSkills": ["Power BI", "DAX", "SQL", "Data Visualization"],
+         "experienceLevel": "Mid",
+         "educationRequirements": "Bachelor's degree in Data Science, Analytics, or related field",
+         "preferredCertifications": ["Power BI Data Analyst"],
+         "keyResponsibilities": "Create and maintain analytical dashboards and reports",
+         "salaryRange": {"min": 75000, "max": 110000}
+       },
+       {
+         "jobId": "job-003",
+         "jobTitle": "Dynamics 365 Administrator",
+         "requiredSkills": ["Dynamics 365", "Administration", "CRM", "Power Platform"],
+         "experienceLevel": "Mid",
+         "educationRequirements": "Bachelor's degree in IT or related field",
+         "preferredCertifications": ["Dynamics 365 Administrator", "Dynamics 365 Sales Administrator"],
+         "keyResponsibilities": "Manage and configure Dynamics 365 environments",
+         "salaryRange": {"min": 85000, "max": 125000}
+       }
+     ]
+   }
+   ```
+4. Save the configuration file for use in agent flows
 
-### Step 2: Model Categories (~10 minutes)
-1. Review model use categories:
-   | Category | Description | Best For |
-   |----------|-------------|----------|
-   | **Deep** | Multi-step reasoning | Complex analytics, policy analysis |
-   | **Auto** | Dynamic routing | Mixed workloads, helpdesk |
-   | **General** | Speed and cost | FAQ, drafting, translation |
+### Step 2: Build the Candidate Ranking Agent Flow (~15 minutes)
+1. In Copilot Studio, add a new **Agent Flow** to Hiring Agent:
+   - Name: `Candidate Ranking`
+   ![alt text](./Assets/image-1.png)
+2. Configure input parameters:
+   - `ResumeContent` (Text): Extracted resume text
+   - `CandidateName` (Text): Extracted candidate name
+   - `JobId` (Text): Target job position ID
+   ![alt text](./Assets/image.png)
+3. Add prompt instruction:
+   ```
+   You are analyzing a candidate for a specific role. Based on the resume provided:
+   1. Extract key qualifications
+   2. Compare against job requirements
+   3. Score on: Technical Skills (0-5), Experience Match (0-5), Education (0-5)
+   4. Provide overall recommendation (Strong Match, Good Fit, Needs Development, Not Qualified)
+   5. Highlight top 3 strengths and 2 development areas
+   6. Suggest interview questions for this role
+   ```
+4. Save the agent flow
 
-2. Understand model availability tags:
-   - **Experimental**: Not for production
-   - **Preview**: Eventually GA, limited testing
-   - **No tag**: Generally available
-   - **Default**: Best performing GA model
-   - **Retired**: Available for 1 month after retirement
+### Step 3: Create Teams Notification Flow (~15 minutes)
+1. Add a new **Cloud Flow** to the agent for Teams notifications
+2. Configure as **Automated cloud flow**:
+   - Trigger: **When an agent triggers me from Copilot Studio**
+3. Input parameters:
+   - `CandidateName` (Text)
+   - `MatchScore` (Number)
+   - `Recommendation` (Text)
+   - `TopStrengths` (Text)
+   - `InterviewQuestions` (Text)
+   - `Email` (Text)
+4. Add action: **Post adaptive card to Teams**:
+   ```json
+   {
+     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+     "type": "AdaptiveCard",
+     "version": "1.4",
+     "body": [
+       {
+         "type": "TextBlock",
+         "text": "New Resume Submission",
+         "weight": "bolder",
+         "size": "large"
+       },
+       {
+         "type": "TextBlock",
+         "text": "Candidate: @{triggerBody()?['CandidateName']}"
+       },
+       {
+         "type": "TextBlock",
+         "text": "Overall Match Score: @{triggerBody()?['MatchScore']}/15"
+       },
+       {
+         "type": "TextBlock",
+         "text": "Recommendation: @{triggerBody()?['Recommendation']}"
+       },
+       {
+         "type": "TextBlock",
+         "text": "Strengths: @{triggerBody()?['TopStrengths']}"
+       }
+     ],
+     "actions": [
+       {
+         "type": "Actionfile in OneDrive**:
+   - Folder: `/candidate-evaluations`
+   - File Name: `evaluation_{CandidateName}_{Timestamp}.json`
+   - Content:
+     ```json
+     {
+       "candidateName": "[From email]",
+       "resumeFile": "[Path from Lab 15]",
+       "rankingScore": "[From agent output]",
+       "recommendation": "[From agent output]",
+       "processingDate": "[Today]"
+     }
+     ```k.office.com"
+       }
+     ]
+   }
+   ```
+5. Publish the flow
 
-### Step 3: Available OpenAI Models (~10 minutes)
-1. Review current model options:
-   | Model | Category | Status | Strengths |
-   |-------|----------|--------|-----------|
-   | GPT-4o | General | Retired | Fast, versatile, multimodal |
-   | GPT-4.1 | General | Default | High accuracy, complex analysis |
-   | GPT-5 Chat | General | Preview | Human-like dialogue |
-   | GPT-5 Auto | Auto | General | Multi-step automation |
-   | GPT-5 Reasoning | Deep | Preview | Advanced analytical tasks |
-   | GPT-5.1 Chat | General | Experimental | Latest conversational |
-   | GPT-5.1 Reasoning | Deep | Experimental | Maximum precision |
+### Step 4: Enhance Event Trigger with Agent Invocation (~15 minutes)
+1. Return to the email event trigger from Lab 15
+2. After resume extraction, add action: **Invoke agent orchestration**
+   - Agent: Hiring Agent
+   - Input parameters:
+     - ResumeContent: [Extracted text from Step 4 of Lab 15]
+     - CandidateName: [Extract from email or resume]
+     - JobId: [User selection or default job]
+3. After agent completes, add action to call **Teams Notification flow**:
+   - Pass ranking results and recommendation
+4. Add action: **Create record in Dataverse**:
+   - Table: **Candidate Evaluations**
+   - Fields:
+     - Candidate Name: [From email]
+     - Resume ID: [From Step 4 of Lab 15]
+     - Ranking Score: [From agent output]
+     - Recommendation: [From agent output]
+     - Processing Date: [Today]
+5. Publish the flow
 
-2. Note: Experimental/preview models may have instability
+### Step 5: Configure Hiring Agent Main Instructions (~10 minutes)
+1. Edit the Hiring Agent instructions:
+   ```
+   You are an expert recruitment orchestrator. Your responsibilities:
+   1. When receiving a resume, extract candidate information
+   2. Trigger the Candidate Ranking agent flow for analysis
+   3. Based on ranking results, post notifications to the recruitment team via Teams
+   4. Store all evaluations in Dataverse for audit and tracking
+   5. Provide the HR team with clear recommendations for next steps
+   
+   Always prioritize candidate privacy and provide objective, fair assessments.
+   ```
+2. Save the agent configuration
 
-### Step 4: Available Anthropic Models (~5 minutes)
-1. Review external model options:
-   | Model | Status | Strengths |
-   |-------|--------|-----------|
-   | Claude Sonnet 4.5 | Experimental | Coding, agent workflows |
-   | Claude Opus 4.1 | Experimental | Intensive analysis |
-
-2. Note: External models subject to Anthropic terms
-
-### Step 5: Change Agent Model (~5 minutes)
-1. Open the Hiring Agent
-2. Navigate to **Overview** tab
-3. Select the model **chevron** icon
-4. Browse available models:
-   - OpenAI models
-   - Anthropic models (if enabled)
-5. Select **GPT-5.1 Chat** (experimental)
-6. Wait for confirmation message
-
-### Step 6: Compare Model Outputs (~10 minutes)
-1. Start a new test session with GPT-4.1 (default)
-2. Test question 1:
-   - `Summarize resume RXXXXX`
-3. Note the response format and detail level
-
-4. Test question 2:
-   - `Can you provide suggestions of questions to ask in an interview for the Power Platform developer role (Job role number J1004) based on its associated evaluation criteria? Also provide expected answers.`
-5. Note the structure and depth
-
-6. Switch to GPT-5.1 Chat
-7. Repeat the same questions
-8. Compare:
-   - Response length (concise vs. detailed)
-   - Organization (headers, bullets)
-   - Formatting style
-   - Answer depth and specificity
-
-### Step 7: Admin Controls (~5 minutes)
-1. Understand admin settings that affect model availability:
-   | Setting | Effect | Location |
-   |---------|--------|----------|
-   | Allow Anthropic | Enable external models | M365 Admin |
-   | Allow Preview | Enable experimental models | PP Admin |
-   | Move Data | Required for experimental | PP Admin |
-
-2. Note: Contact your admin if models aren't available
-
-### Step 8: Best Practices (~5 minutes)
-1. Model selection guidelines:
-   - **General tasks**: Use GPT-4.1 (default)
-   - **Complex reasoning**: Consider Deep models
-   - **Cost-sensitive**: Stick with General models
-   - **Testing new features**: Try Preview models
-2. Always test model changes before production
-3. Monitor performance and user satisfaction
-4. Plan for model retirement transitions
+### Step 6: Test End-to-End Workflow (~15 minutes)
+1. Send a test resume email:
+   - To: [Your monitored email address]
+   - Subject: "New Resume Submission"
+   - Attach: A sample resume file
+2. Monitor the trigger activation:
+   - Check Power Automate runs
+   - Verify email trigger fires
+3. Check Copilot Studio logs for agent execution
+4. Verify Teams notification appears in recruitment channel
+5. Check Dataverse for created Candidate Evaluation record or load from job-requirements.json
+   - Allow email subject to specify job position
+2. Create a tracking file in OneDrive:
+   - File: `/hiring-metrics/processing-log.json`
+   - Track total candidates processed, match score distribution, and processing timentify target job from email body
+   - Allow email subject to specify job position
+2. Create dashboard in Power Apps for tracking:
+   - Total candidates processed
+   - Match score distribution
+   - Time to process metrics
+3. Configure email response:
+   - Automatically acknowledge receipt to candidates
+   - Include expected timeline for next steps
 
 ## Duration
-~45 minutes
+~90 minutes
 
 ## Course Complete!
-Congratulations on completing all 17 labs! You now have the skills to:
+Congratulations on completing all 16 labs! You now have the skills to:
 - Build conversational and autonomous agents
-- Design multi-agent systems
-- Implement event-driven automation
-- Select optimal AI models for your scenarios
+- Design event-driven hiring workflows
+- Implement intelligent resume processing
+- Create multi-agent systems with orchestration
+- Integrate agents with Teams and Dataverse
+- Deploy production-ready autonomoOneDrive/SharePoint
+- Deploy production-ready autonomous hiring solutions without Dataverse

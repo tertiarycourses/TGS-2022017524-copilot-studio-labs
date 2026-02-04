@@ -1,117 +1,99 @@
-# Lab 16: Add Event Triggers for Autonomous Agents
+# Lab 15: Build an Autonomous Hiring Agent with Event Triggers
 
 ## Lab Title
-Add Event Triggers - Autonomous Email Processing
+Create an Event-Driven Hiring Agent for Resume Processing
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Understand how event triggers enable autonomous agent behavior
-2. Differentiate between interactive and autonomous agents
-3. Create event triggers for email-based resume processing
-4. Build agent flows that post adaptive cards to Teams
-5. Pass data between event triggers and agent flows
+1. Understand how event triggers enable autonomous hiring agent behavior
+2. Create an autonomous hiring agent that processes incoming resumes
+3. Implement email event triggers for resume receipt
+4. Configure the agent to extract candidate information and rank qualifications
+5. Set up automated Teams notifications for the recruitment team
+6. Test end-to-end hiring agent workflows
 
 ## Prerequisites
 - Copilot Studio license and environment access
-- Completed Lab 13 and Lab 15 with Hiring Agent ready
+- Completed prior labs with foundational agent knowledge
 - Microsoft Teams access for testing notifications
-- Understanding of event triggers from Lab 10
+- Email account configured for resume delivery
+- OneDrive or SharePoint configured for resume storage
 
 ## Step-by-Step Guide
 
-### Step 1: Understanding Event Triggers (~10 minutes)
-1. Review event trigger characteristics:
-   - Autonomous activation from external events
-   - Payload-driven execution
-   - Requires generative orchestration
-   - Uses maker's authentication
-2. Compare Interactive vs Autonomous agents:
-   | Dimension | Interactive | Autonomous |
-   |-----------|------------|------------|
-   | Start | User triggers topic | External event |
-   | Use | Q&A, guided workflows | Proactive automation |
-   | Trigger | By agent/Phrases | Event connectors |
-   | Example | "What's our policy?" | New email → process |
-
-### Step 2: Plan the Automation (~5 minutes)
-1. Define the use case:
+### Step 1: Understand the Hiring Agent Use Case (~10 minutes)
+1. Review the autonomous hiring agent scenario:
    - **As an** HR Recruiter
-   - **I want to** be notified when resume emails arrive
-   - **So that I** can review automatically uploaded applications
-2. Review the two-part approach:
-   - Event trigger for email arrival
-   - Agent flow for Teams notification
+   - **I want to** automatically process resume emails
+   - **So that I** can quickly identify qualified candidates and rank them
+2. Key capabilities of the hiring agent:
+   - Autonomous activation when resumes arrive
+   - Automatic resume content extraction and analysis
+   - Candidate qualification matching against job requirements
+   - Ranking candidates by experience and skills
+   - Posting notifications to the recruitment team in Teams
+3. Agent workflows vs. event triggers:
+   - Event triggers activate the agent autonomously
+   - Agent uses generative AI to extract insights
+   - Child flows handle Teams notifications and Dataverse updates
 
-### Step 3: Create Email Event Trigger (~15 minutes)
+### Step 2: Create the Hiring Agent (~10 minutes)
+1. In Copilot Studio, create a new agent:
+   - Name: `Hiring Agent`
+   - Description: `Autonomous hiring agent that processes resumes and ranks candidates`
+2. Configure the agent with instructions:
+   ```
+   You are an expert HR recruitment assistant. Your role is to:
+   1. Extract candidate information from resumes (name, email, phone, experience, skills)
+   2. Analyze qualifications against job requirements
+   3. Rank candidates based on experience level, skill match, and education
+   4. Provide hiring recommendations with reasoning
+   5. Format candidate information for HR team review
+   
+   Always be objective in your assessment and highlight both strengths and gaps.
+   ```
+   ![alt text](./Assets/image.png)
+3. Keep the agent in **Generative** mode for autonomous decision-making
+
+### Step 3: Create Event Trigger for Resume Emails (~15 minutes)
 1. Open the Hiring Agent
 2. Navigate to **Overview** → **Triggers and Channels**
 3. Select **+ Add**
 4. Select **When a new email arrives (V3)** → **Next**
-5. Configure trigger:
-   - Name: `When a new email arrives from an applicant`
-   - Verify connection references (green checks)
-6. Set input properties:
-   - Include Attachments: **Yes**
-   - Subject Filter: `Application`
-   - Only with Attachments: **Yes**
-7. Select **Create trigger**
+![alt text](./Assets/image-1.png)
+5. Configure the trigger:
+   - **Connection**: Select your email account
+   - **Name**: `When a new resume email arrives`
+   - **Folder**: Inbox
+   - **Include Attachments**: **Yes**
+   - **Subject Filter**: `resume` OR `application` OR `cv`
+      [Note: Cannot use all in the same field; use one keyword or create multiple triggers if needed]
+   - **Only with Attachments**: **Yes**
+6. Select **Create trigger**
+![alt text](./Assets/image-2.png)
 
-### Step 4: Edit Trigger in Power Automate (~10 minutes)
-1. Select **...** on trigger → **Edit in Power Automate**
-2. Add condition to check PDF attachment:
-   - `contentType` equals `application/pdf`
-3. Add Dataverse actions:
-   - Extract file content
-   - Create Resume record
-   - Create Candidate record
-4. Configure prompt to agent:
-   - Pass Resume ID and Candidate ID
-   - Include processing instructions
-5. Publish the flow
-
-### Step 5: Create Teams Notification Agent Flow (~10 minutes)
-1. Navigate to Application Intake Agent
-2. Add new Agent Flow for Teams notification
-3. Configure inputs:
-   - `ResumeId`: Resume record identifier
-   - `CandidateId`: Candidate record identifier
-   - `CandidateName`: Name for display
-4. Add **Post adaptive card to Teams channel** action:
-   - Select target channel
-   - Design card with:
-     - Candidate name
-     - Resume link
-     - Quick action buttons
-5. Save and publish the flow
-
-### Step 6: Update Child Agent Instructions (~5 minutes)
-1. Edit Application Intake Agent instructions
-2. Add:
-   - When processing resumes from email triggers, use the Teams Notification flow to alert the HR recruitment team. Include the candidate name and link to the Dataverse record.
-3. Save changes
-
-### Step 7: Test the Autonomous Flow (~10 minutes)
-1. Open Test pane → **Test Trigger**
-2. Send a test email:
-   - Subject contains "Application"
-   - Attach a PDF resume
-   - Send to the monitored inbox
-3. Wait for trigger activation (may take a few minutes)
-4. Verify:
-   - Trigger fires correctly
-   - Resume is uploaded to Dataverse
-   - Adaptive card appears in Teams channel
-   - Card contains correct candidate information
-5. Review Activity Map for complete flow
-
-### Step 8: Monitor and Troubleshoot (~5 minutes)
-1. Check Power Automate flow runs
-2. Review Copilot Studio activity logs
-3. Verify Dataverse records created correctly
-4. Confirm Teams notifications delivered
+### Step 4: Extract and Process Resume Data (~15 minutes)
+1. The trigger captures the email, now add processing logic
+2. In the Power Automate flow (edit trigger):
+   - Add action: **Extract text from word documents** or **Extract PDF content**
+   - Attach the resume file
+3. Add action: **Save file to OneDrive**
+   - Folder: `/resumes`
+   - File Name: `{CandidateName}_{Timestamp}.pdf`
+4. Add action: **Compose** to create a JSON resume metadata object:
+   ```json
+   {
+     "candidateName": "[Extract from email]",
+     "email": "[From sender]",
+     "submissionDate": "@{utcNow()}",
+     "resumeFile": "[OneDrive file path]",
+     "extractedText": "[Extracted resume content]"
+   }
+   ```
+5. Save the flow without publishing yet (we'll enhance it next)
 
 ## Duration
-~45 minutes
+~60 minutes
 
 ## Next Steps
-Proceed to [Lab 17: Understanding Agent Models](../Lab%2017/index.md)
+Proceed to [Lab 16: Advanced Hiring Agent Features](../Lab%2016/index.md)
