@@ -55,45 +55,142 @@ By the end of this lab, you will be able to:
    ![alt text](./Assets/image.png)
 3. Keep the agent in **Generative** mode for autonomous decision-making
 
-### Step 3: Create Event Trigger for Resume Emails (~15 minutes)
+### Step 3: Add Resume Processing Topic (~15 minutes)
 1. Open the Hiring Agent
-2. Navigate to **Overview** → **Triggers and Channels**
-3. Select **+ Add**
-4. Select **When a new email arrives (V3)** → **Next**
-![alt text](./Assets/image-1.png)
-5. Configure the trigger:
-   - **Connection**: Select your email account
-   - **Name**: `When a new resume email arrives`
-   - **Folder**: Inbox
-   - **Include Attachments**: **Yes**
-   - **Subject Filter**: `resume` OR `application` OR `cv`
-      [Note: Cannot use all in the same field; use one keyword or create multiple triggers if needed]
-   - **Only with Attachments**: **Yes**
-6. Select **Create trigger**
-![alt text](./Assets/image-2.png)
+2. Navigate to **Topics** → **+ Add a topic**
+3. Select **Create** to build a new skill
+4. Configure the skill:
+   - **Name**: `InformationCollection_ResumeProcessing`
+   - **Description**: Collecting candidate information from resume adaptive cards
+   ![alt text](image-5.png)
+5. In the Topic, add **Ask with adaptive card** action:
+   - Design an adaptive card to capture:
+     - Candidate Name
+     - Email
+     - Phone Number
+     - Role
+     - Start Date
+     - LinkedIn Profile/Portfolio
+     - Years of Experience
 
-### Step 4: Extract and Process Resume Data (~15 minutes)
-1. The trigger captures the email, now add processing logic
-2. In the Power Automate flow (edit trigger):
-   - Add action: **Extract text from word documents** or **Extract PDF content**
-   - Attach the resume file
-3. Add action: **Save file to OneDrive**
-   - Folder: `/resumes`
-   - File Name: `{CandidateName}_{Timestamp}.pdf`
-4. Add action: **Compose** to create a JSON resume metadata object:
+   Copy and past this into the adapative card:
    ```json
    {
-     "candidateName": "[Extract from email]",
-     "email": "[From sender]",
-     "submissionDate": "@{utcNow()}",
-     "resumeFile": "[OneDrive file path]",
-     "extractedText": "[Extracted resume content]"
+    "type": "AdaptiveCard",
+    "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.5",
+    "body": [
+        {
+            "type": "Input.Text",
+            "id": "applicantName",
+            "label": "Name"
+        },
+        {
+            "type": "Input.Text",
+            "id": "applicantEmail",
+            "label": "Email"
+        },
+        {
+            "type": "Input.Text",
+            "id": "applicantPhone",
+            "label": "Phone"
+        },
+        {
+            "type": "Input.Text",
+            "label": "Role",
+            "id": "roleApplied"
+        },
+        {
+            "type": "Input.Text",
+            "label": "From:",
+            "id": "avilabilityDate",
+            "placeholder": "yyyy-MM-dd"
+        },
+        {
+            "type": "Input.Text",
+            "label": "Linkedin/Portfolio Link",
+            "id": "portfolio"
+        },
+        {
+            "type": "Input.Text",
+            "label": "Years of Experience",
+            "id": "experienceYears"
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Submit"
+        }
+    ]
    }
    ```
-5. Save the flow without publishing yet (we'll enhance it next)
+   ![alt text](./Assets/image8.png)
+6. Save the adaptive card.
+
+### Step 4: Create Agent Flow to Log Details to Excel (~15 minutes)
+1. In Copilot Studio, navigate to the Hiring Agent
+2. Add a new **Agent Flow**:
+   - Name: `LogCandidateToExcel`
+   - Description: Logs candidate application details from adaptive card to Excel
+   ![alt text](./Assets/image-3.png)
+3. Configure the agent flow input parameters:
+   - `applicantName` (Text): Candidate name from adaptive card
+   - `applicantEmail` (Text): Candidate email from adaptive card
+   - `applicantPhone` (Text): Candidate phone from adaptive card
+   - `roleApplied` (Text): Job role applied for
+   - `avilabilityDate` (Date): Start date availability
+   - `portfolio` (Text): LinkedIn/Portfolio URL
+   - `experienceYears` (Text): Years of experience
+   ![alt text](./Assets/image-4.png)
+4. In the flow, add the following actions:
+   - Note: Create an Excel file named `CandidateApplications.xlsx` in OneDrive or SharePoint with a table named `Applications` before proceeding.
+   - **Table**: Create a table named `Applications` with columns:
+       - Name
+       - Email
+       - Phone
+       - Role Applied
+       - Start Date
+       - Portfolio/Linkedin
+       - Years of Experience
+       - Application Date
+   ![alt text](./Assets/image-2.png)
+   - Add action: **Excel Online (Business)** → **Add a row into a table**
+   - Configure the action:
+     - **Location**: Select your OneDrive or SharePoint site
+     - **Document Library**: Select the library
+     - **File**: Create or select `CandidateApplications.xlsx`
+     
+   - Map the adaptive card output values to each Excel column:
+     ```
+     - Candidate Name: @triggerBody()?['applicantName']
+     - Email: @triggerBody()?['applicantEmail']
+     - Phone: @triggerBody()?['applicantPhone']
+     - Role Applied: @triggerBody()?['roleApplied']
+     - Availability Date: @triggerBody()?['avilabilityDate']
+     - Portfolio Link: @triggerBody()?['portfolio']
+     - Experience Years: @triggerBody()?['experienceYears']
+     - Application Date: @utcNow()
+     ```
+     ![alt text](./Assets/image-1.png)
+6. Save and publish the agent flow
+
+### Step 5: Connect the Adaptive Card to the Excel Logging Flow (~10 minutes)
+1. Return to the **InformationCollection_ResumeProcessing** topic from Step 3
+2. After the adaptive card submission, add an action: **Add a tool** > **LogCandidateToExcel**
+   - Select the `LogCandidateToExcel` flow created in Step 4
+3. Map the adaptive card outputs to the flow inputs:
+   - Pass all captured values from the adaptive card to the Excel logging flow
+   ![alt text](./Assets/image-6.png)
+4. Add a follow-up message to confirm:
+   ```
+   Thank you for submitting your application! Your details have been recorded in our system.
+   ```
+   ![alt text](./Assets/image-7.png)
+5. Save the topic
 
 ## Duration
-~60 minutes
+~90 minutes
 
 ## Next Steps
 Proceed to [Lab 16: Advanced Hiring Agent Features](../Lab%2016/index.md)

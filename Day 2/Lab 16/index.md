@@ -1,27 +1,26 @@
-# Lab 16: Advanced Hiring Agent Features and Deployment
+# Lab 16: Advanced Hiring Agent Features with Candidate Ranking and Teams Integration
 
 ## Lab Title
-Enhance Hiring Agent with Skill Matching and Teams Integration
+Enhance Hiring Agent with Child Agent and Knowledge Source Integration
 
 ## Lab Objectives
 By the end of this lab, you will be able to:
-1. Create a job requirements database for skill matching
-2. Build agent orchestration that analyzes candidate fit against job requirements
-3. Implement automated Teams notifications with rich adaptive cards
-4. Create child agent flows for candidate ranking and recommendations
-5. Set up Dataverse integrations for candidate tracking
-6. Test and deploy the complete hiring agent workflow
+1. Create a child agent that specializes in candidate ranking
+2. Add knowledge sources (job-requirements.json) to empower the child agent
+3. Analyze candidate skills against job requirements using the child agent
+4. Create an agent flow that processes Excel data from Lab 15
+5. Set up a feedback loop for hiring decisions
+6. Test the complete hiring workflow from application to evaluation
 
 ## Prerequisites
 - Copilot Studio license and environment access
-- Completed Lab 15 with Hiring Agent and event trigger created
-- Microsoft Teams access for testing notifications
-- OneDrive or SharePoint configured for resume and data storage
+- **Completed Lab 15** with Hiring Agent, adaptive card, and Excel logging setup
+- Excel file with candidate applications from Lab 15
 - Sample job descriptions in a JSON configuration file
 
 ## Step-by-Step Guide
 
-### Step 1: Create Job Requirements Configuration (~10 minutes)
+### Step 1: Create Job Requirements Reference Database (~10 minutes)
 1. Open **OneDrive** or **SharePoint**
 2. Create a folder: `/hiring-agent-config`
 3. Create a file: `job-requirements.json` with the following structure:
@@ -61,158 +60,148 @@ By the end of this lab, you will be able to:
      ]
    }
    ```
-4. Save the configuration file for use in agent flows
+4. Save the configuration file - this will be used as a knowledge source for the child agent
 
-### Step 2: Build the Candidate Ranking Agent Flow (~15 minutes)
-1. In Copilot Studio, add a new **Agent Flow** to Hiring Agent:
-   - Name: `Candidate Ranking`
-   ![alt text](./Assets/image-1.png)
-2. Configure input parameters:
-   - `ResumeContent` (Text): Extracted resume text
-   - `CandidateName` (Text): Extracted candidate name
-   - `JobId` (Text): Target job position ID
-   ![alt text](./Assets/image.png)
-3. Add prompt instruction:
+### Step 2: Create a Child Agent for Candidate Ranking (~20 minutes)
+1. In Copilot Studio, create a new **Agent**:
+   - Name: `CandidateRankingAgent`
+   - Description: Specialized agent for analyzing and ranking candidates against job requirements
+   - Leave in **Generative** mode
+2. Configure the child agent instructions:
    ```
-   You are analyzing a candidate for a specific role. Based on the resume provided:
-   1. Extract key qualifications
-   2. Compare against job requirements
-   3. Score on: Technical Skills (0-5), Experience Match (0-5), Education (0-5)
-   4. Provide overall recommendation (Strong Match, Good Fit, Needs Development, Not Qualified)
-   5. Highlight top 3 strengths and 2 development areas
-   6. Suggest interview questions for this role
-   ```
-4. Save the agent flow
-
-### Step 3: Create Teams Notification Flow (~15 minutes)
-1. Add a new **Cloud Flow** to the agent for Teams notifications
-2. Configure as **Automated cloud flow**:
-   - Trigger: **When an agent triggers me from Copilot Studio**
-3. Input parameters:
-   - `CandidateName` (Text)
-   - `MatchScore` (Number)
-   - `Recommendation` (Text)
-   - `TopStrengths` (Text)
-   - `InterviewQuestions` (Text)
-   - `Email` (Text)
-4. Add action: **Post adaptive card to Teams**:
-   ```json
-   {
-     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-     "type": "AdaptiveCard",
-     "version": "1.4",
-     "body": [
-       {
-         "type": "TextBlock",
-         "text": "New Resume Submission",
-         "weight": "bolder",
-         "size": "large"
-       },
-       {
-         "type": "TextBlock",
-         "text": "Candidate: @{triggerBody()?['CandidateName']}"
-       },
-       {
-         "type": "TextBlock",
-         "text": "Overall Match Score: @{triggerBody()?['MatchScore']}/15"
-       },
-       {
-         "type": "TextBlock",
-         "text": "Recommendation: @{triggerBody()?['Recommendation']}"
-       },
-       {
-         "type": "TextBlock",
-         "text": "Strengths: @{triggerBody()?['TopStrengths']}"
-       }
-     ],
-     "actions": [
-       {
-         "type": "Actionfile in OneDrive**:
-   - Folder: `/candidate-evaluations`
-   - File Name: `evaluation_{CandidateName}_{Timestamp}.json`
-   - Content:
-     ```json
-     {
-       "candidateName": "[From email]",
-       "resumeFile": "[Path from Lab 15]",
-       "rankingScore": "[From agent output]",
-       "recommendation": "[From agent output]",
-       "processingDate": "[Today]"
-     }
-     ```k.office.com"
-       }
-     ]
-   }
-   ```
-5. Publish the flow
-
-### Step 4: Enhance Event Trigger with Agent Invocation (~15 minutes)
-1. Return to the email event trigger from Lab 15
-2. After resume extraction, add action: **Invoke agent orchestration**
-   - Agent: Hiring Agent
-   - Input parameters:
-     - ResumeContent: [Extracted text from Step 4 of Lab 15]
-     - CandidateName: [Extract from email or resume]
-     - JobId: [User selection or default job]
-3. After agent completes, add action to call **Teams Notification flow**:
-   - Pass ranking results and recommendation
-4. Add action: **Create record in Dataverse**:
-   - Table: **Candidate Evaluations**
-   - Fields:
-     - Candidate Name: [From email]
-     - Resume ID: [From Step 4 of Lab 15]
-     - Ranking Score: [From agent output]
-     - Recommendation: [From agent output]
-     - Processing Date: [Today]
-5. Publish the flow
-
-### Step 5: Configure Hiring Agent Main Instructions (~10 minutes)
-1. Edit the Hiring Agent instructions:
-   ```
-   You are an expert recruitment orchestrator. Your responsibilities:
-   1. When receiving a resume, extract candidate information
-   2. Trigger the Candidate Ranking agent flow for analysis
-   3. Based on ranking results, post notifications to the recruitment team via Teams
-   4. Store all evaluations in Dataverse for audit and tracking
-   5. Provide the HR team with clear recommendations for next steps
+   You are a specialized recruitment assessment expert. Your role is to:
+   1. Analyze candidate qualifications based on provided application data
+   2. Access and reference job requirements from your knowledge base
+   3. Compare candidate skills, experience, and education against job requirements
+   4. Score candidates on:
+      - Skill Match (0-5): How well candidate skills align with required skills
+      - Experience Level (0-5): Years of experience matching the role level
+      - Education Fit (0-5): Education and certifications matching requirements
+   5. Provide overall ranking (0-15 total score)
+   6. Generate hiring recommendation: Strong Match, Good Fit, Needs Development, or Not Qualified
+   7. Highlight top 3 strengths specific to the role
+   8. Identify 2 key development areas
+   9. Suggest 3 targeted interview questions
    
-   Always prioritize candidate privacy and provide objective, fair assessments.
+   Always use job requirements from your knowledge source to make consistent, fair assessments.
    ```
-2. Save the agent configuration
+3. Add **Knowledge Source** to the child agent:
+   - Click **Knowledge** → **Add knowledge source**
+   - Select **Upload files**
+   - Upload `job-requirements.json` from `/hiring-agent-config` folder
+   - This makes the job requirements available to the child agent's reasoning
+4. Save the child agent (do not publish yet)
 
-### Step 6: Test End-to-End Workflow (~15 minutes)
-1. Send a test resume email:
-   - To: [Your monitored email address]
-   - Subject: "New Resume Submission"
-   - Attach: A sample resume file
-2. Monitor the trigger activation:
-   - Check Power Automate runs
-   - Verify email trigger fires
-3. Check Copilot Studio logs for agent execution
-4. Verify Teams notification appears in recruitment channel
-5. Check Dataverse for created Candidate Evaluation record or load from job-requirements.json
-   - Allow email subject to specify job position
-2. Create a tracking file in OneDrive:
-   - File: `/hiring-metrics/processing-log.json`
-   - Track total candidates processed, match score distribution, and processing timentify target job from email body
-   - Allow email subject to specify job position
-2. Create dashboard in Power Apps for tracking:
-   - Total candidates processed
-   - Match score distribution
-   - Time to process metrics
-3. Configure email response:
-   - Automatically acknowledge receipt to candidates
-   - Include expected timeline for next steps
+### Step 3: Create Excel Data Processing Flow (~15 minutes)
+1. In the Hiring Agent, add a new **Agent Flow**:
+   - Name: `ProcessApplicationFromExcel`
+   - Description: Reads candidate applications from Excel and invokes child agent for ranking
+2. Add action: **Excel Online (Business)** → **List rows present in a table**
+   - Location: OneDrive/SharePoint where `CandidateApplications.xlsx` is stored
+   - Document Library: Select appropriate library
+   - File: `CandidateApplications.xlsx`
+   - Table: `Applications`
+3. Add action: **Apply to each** to process each Excel row:
+   ```
+   For each row in the Applications table:
+   - Extract: Candidate Name, Email, Role Applied, Experience Years, Portfolio, Application Date
+   - Call the CandidateRankingAgent child agent with this information
+   ```
+4. Add action: **Update Excel row** to track processing:
+   - Add column: "Evaluation Status" = "Completed"
+   - Add column: "Evaluation Date" = Today
+   - Add column: "Match Score" = [From child agent output]
+5. Save the flow
+
+### Step 4: Configure Hiring Agent to Invoke Child Agent (~10 minutes)
+1. In the **Hiring Agent** from Lab 15, add a new topic or update existing logic:
+   - Name: `ReviewApplications`
+   - Add action: **Invoke another agent**
+     - Select: `CandidateRankingAgent` (the child agent created in Step 2)
+     - Pass input: Candidate application details from Excel
+2. Edit the **Hiring Agent** instructions:
+   ```
+   You are an expert recruitment orchestrator. Your workflow:
+   
+   1. CANDIDATE DATA COLLECTION:
+      - Users submit applications via adaptive card from Lab 15
+      - Data is automatically logged to Excel (CandidateApplications.xlsx)
+   
+   2. CANDIDATE RANKING:
+      - When asked to review applications, invoke the CandidateRankingAgent
+      - This specialized child agent analyzes skills against job requirements
+      - Child agent has access to job-requirements.json as a knowledge source
+      - Generate match scores and interview recommendations
+   
+   3. FEEDBACK LOOP:
+      - Track evaluations in Excel for audit and reporting
+      - Help HR team make informed hiring decisions
+      - Maintain fair, objective assessment practices
+   
+   When a user asks to "review applications" or "process applications":
+   - Call ProcessApplicationFromExcel flow
+   - This will automatically invoke the child agent for each candidate
+   ```
+3. Save the agent configuration
+
+### Step 5: Test Complete End-to-End Workflow (~20 minutes)
+1. **Test Lab 15 Application Submission:**
+   - Open the Hiring Agent in Copilot Studio
+   - Test the adaptive card from Lab 15 with sample candidate data:
+     - Name: John Smith
+     - Email: john.smith@example.com
+     - Phone: 555-0100
+     - Role Applied: Power Platform Developer
+     - Availability Date: 2026-03-01
+     - Portfolio: https://linkedin.com/in/johnsmith
+     - Experience Years: 5 years
+   - Verify the data is logged to Excel in the CandidateApplications table
+
+2. **Test Candidate Ranking with Child Agent:**
+   - In the main Hiring Agent, ask: "Please review the applications and rank candidates"
+   - This triggers the ProcessApplicationFromExcel flow
+   - Monitor the invocation of CandidateRankingAgent:
+     - Agent accesses job-requirements.json knowledge source
+     - Agent analyzes candidate data for "Power Platform Developer"
+     - Agent scores candidate skills (5 years matches mid-level requirement)
+     - Agent generates interview questions and recommendation
+     - Child agent returns ranking results to parent flow
+
+3. **Verify Excel Updates:**
+   - Return to CandidateApplications.xlsx
+   - Confirm new columns are populated:
+     - Evaluation Status: "Completed"
+     - Evaluation Date: Today's date
+     - Match Score: Score from child agent (e.g., 13/15)
+
+4. **Test with Multiple Candidates:**
+   - Submit 2-3 more test applications with different experience levels
+   - Run the ProcessApplicationFromExcel flow
+   - Verify all candidates are ranked by the child agent
+   - Check for consistent scoring and recommendations based on job-requirements.json
 
 ## Duration
-~90 minutes
+~90 minutes total for Lab 16
+
+## Key Learnings
+In this lab, you learned to:
+- Create specialized child agents for specific tasks
+- Add knowledge sources (JSON files) to empower agents with reference data
+- Implement parent-child agent orchestration patterns
+- Process bulk data from Excel and invoke child agents
+- Create cohesive workflows combining Excel, parent agents, and child agents
+
+## Next Steps
+Proceed to additional scenarios such as:
+- Adding more knowledge sources for different job types
+- Creating additional child agents for other HR tasks (scheduling, feedback collection)
+- Building dashboard reports of hiring metrics
+- Implementing multi-stage candidate evaluation workflows
 
 ## Course Complete!
 Congratulations on completing all 16 labs! You now have the skills to:
 - Build conversational and autonomous agents
-- Design event-driven hiring workflows
-- Implement intelligent resume processing
-- Create multi-agent systems with orchestration
-- Integrate agents with Teams and Dataverse
-- Deploy production-ready autonomoOneDrive/SharePoint
-- Deploy production-ready autonomous hiring solutions without Dataverse
+- Design complete hiring workflows from application to evaluation
+- Create specialized child agents with knowledge source integration
+- Implement multi-agent orchestration patterns
+- Deploy production-ready autonomous hiring solutions
