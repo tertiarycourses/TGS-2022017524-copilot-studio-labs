@@ -85,11 +85,17 @@ By the end of this lab, you will be able to:
    
    Always use job requirements from your knowledge source to make consistent, fair assessments.
    ```
+   >
+   ![alt text](image.png)
+   >
 3. Add **Knowledge Source** to the child agent:
    - Click **Knowledge** → **Add knowledge source**
    - Select **Upload files**
    - Upload `job-requirements.json` from `/hiring-agent-config` folder
+   - If cannot load from Sharepoint/OneDrive directly, download and upload manually
+   - Confirm the knowledge source is added
    - This makes the job requirements available to the child agent's reasoning
+   ![alt text](image-1.png)
 4. Save the child agent (do not publish yet)
 
 ### Step 3: Create Excel Data Processing Flow (~15 minutes)
@@ -101,6 +107,7 @@ By the end of this lab, you will be able to:
    - Document Library: Select appropriate library
    - File: `CandidateApplications.xlsx`
    - Table: `Applications`
+   ![alt text](image-2.png)
 3. Add action: **Apply to each** to process each Excel row:
    ```
    For each row in the Applications table:
