@@ -1,171 +1,141 @@
-# Create Copilot Chatbots and Agents with Microsoft Copilot Studio
+# Microsoft Copilot Studio & Power Automate for Business Workflow Automation
 
-[![Course](https://img.shields.io/badge/Course-Tertiary%20Courses-blue)](https://www.tertiarycourses.com.sg/wsq-develop-ai-powered-copilots-and-chatbots-with-microsoft-copilot-studio.html)
+[![Course](https://img.shields.io/badge/Course-Tertiary%20Courses-blue)](https://www.tertiarycourses.com.sg/)
 [![SkillsFuture](https://img.shields.io/badge/SkillsFuture-Funded-green)](https://www.skillsfuture.gov.sg/)
-[![Duration](https://img.shields.io/badge/Duration-2%20Days-orange)]()
+[![Duration](https://img.shields.io/badge/Duration-3%20Days-orange)]()
+[![Labs](https://img.shields.io/badge/Labs-12%20Hands--On-purple)]()
 
-> **Register for the course:** [WSQ - Develop AI-Powered Copilots and Chatbots with Microsoft Copilot Studio](https://www.tertiarycourses.com.sg/wsq-develop-ai-powered-copilots-and-chatbots-with-microsoft-copilot-studio.html)
+This repository contains hands-on lab materials for the **Microsoft Copilot Studio & Power Automate for Business Workflow Automation** course. Learn to automate real business processes — sales, finance, procurement, and order processing — by combining **Power Automate** flows with AI **agents** built in **Microsoft Copilot Studio**.
 
-This repository contains hands-on lab materials for the **WSQ - Develop Intelligent Chatbots with Microsoft Copilot Studio and Generative AI** course. Learn to build AI-powered chatbots and agents using Microsoft Copilot Studio, from fundamentals to advanced multi-agent systems.
+The course is **practical and step-by-step**: every lab is written so a complete beginner can follow along, starting from creating your account through to building full end-to-end automated workflows.
 
-## 📋 Course Overview
+## Course Overview
 
 | Aspect | Details |
 |--------|---------|
-| **Duration** | 2 Days (9:30 AM - 6:30 PM) |
+| **Duration** | 3 Days (9:30 AM – 6:30 PM) |
 | **Mode** | Physical / Zoom / On-site Corporate |
-| **Certification** | Certificate of Completion + SkillsFuture OpenCert |
-| **Course Code** | TGS-2022017524 |
+| **Level** | Beginner to Intermediate |
+| **Certification** | Certificate of Completion |
+| **Prerequisites** | Basic Microsoft 365 familiarity (Outlook, Excel). No coding required. |
 
-## 🎯 Learning Outcomes
+## Learning Outcomes
 
 Upon completion, you will be able to:
 
-- ✅ Map out chatbot storyboards to suit customer preferences
-- ✅ Determine appropriate chatbot content frequency and delivery types
-- ✅ Select optimal deployment channels and assess chatbot performance
-- ✅ Build conversational AI agents using Microsoft Copilot Studio
-- ✅ Integrate generative AI and Power Automate for automation
-- ✅ Deploy agents across multiple channels (Teams, M365 Copilot, Web)
+- Explain business workflow automation and the difference between standalone agents and integrated workflows
+- Identify workflow logic components: triggers, actions, outputs, and steps
+- Build Power Automate flows that send emails, log data to Excel, and run approvals
+- Create practical business agents in Copilot Studio and design prompts for structured outputs
+- Connect agents to Power Automate flows and pass outputs between them
+- Orchestrate complete end-to-end workflows for sales, finance, procurement, and order processing
 
 ---
 
-## 📚 Labs Structure
+## Course Structure
 
-### Day 1: Foundations & Core Concepts (Labs 1-12)
+### Day 1 — Foundations & Power Automate
 
-Build your foundation in Copilot Studio with these progressive labs covering agent creation, knowledge grounding, topics, adaptive cards, and automation.
+Understand workflow automation concepts and build your first automated flows.
 
-| Lab | Title | Duration | Description |
-|-----|-------|----------|-------------|
-| **Lab 1** | [Introduction to Agents](Day%201/Lab%201/index.md) | ~30 min | Learn foundational AI concepts: LLMs, RAG, conversational vs autonomous agents |
-| **Lab 2** | [Copilot Studio Fundamentals](Day%201/Lab%202/index.md) | ~30 min | Explore the four building blocks: Knowledge, Tools, Topics, and Instructions |
-| **Lab 3** | [Deploy a Declarative Agent for M365 Copilot](Day%201/Lab%203/index.md) | ~60 min | Build and publish a declarative agent with prompts for Microsoft 365 Copilot |
-| **Lab 4** | [Creating a Solution for Your Agent](Day%201/Lab%204/index.md) | ~45 min | Learn Power Platform solutions, publishers, and ALM practices |
-| **Lab 5** | [Using a Pre-Built Agent](Day%201/Lab%205/index.md) | ~30 min | Deploy and customize the Safe Travels pre-built agent template |
-| **Lab 6** | [Create a Custom Agent Using Natural Language](Day%201/Lab%206/index.md) | ~60 min | Build an IT helpdesk agent with multiple knowledge sources |
-| **Lab 7** | [Add New Topic with Trigger and Nodes](Day%201/Lab%207/index.md) | ~60 min | Create topics with triggers, SharePoint connectors, and Power Fx |
-| **Lab 8** | [Enhance User Interactions with Adaptive Cards](Day%201/Lab%208/index.md) | ~45 min | Build interactive adaptive cards with dynamic data |
-| **Lab 9** | [Add an Agent Flow for Automation](Day%201/Lab%209/index.md) | ~30 min | Create agent flows to automate multi-step processes |
-| **Lab 10** | [Add Event Triggers for Autonomous Agents](Day%201/Lab%2010/index.md) | ~45 min | Enable autonomous behavior with SharePoint event triggers |
-| **Lab 11** | [Publish Your Agent](Day%201/Lab%2011/index.md) | ~30 min | Publish to Microsoft Teams and Microsoft 365 Copilot |
-| **Lab 12** | [Understanding Licensing](Day%201/Lab%2012/index.md) | ~15 min | Learn Copilot Credits, capacity planning, and licensing models |
+| Lab | Title | Description |
+|-----|-------|-------------|
+| **Lab 0** | [Environment Setup](Day%201/Lab%200%20-%20Environment%20Setup/index.md) | Create your Microsoft 365, Copilot Studio, and Power Automate accounts step by step |
+| **Module 1** | [Workflow Automation Concepts](Day%201/Module%201%20-%20Workflow%20Automation%20Concepts.md) | Triggers, actions, outputs, steps; standalone agents vs integrated workflows |
+| **Lab 1** | [Automated Email Workflow](Day%201/Lab%201%20-%20Automated%20Email%20Workflow/index.md) | Build a flow that sends an email automatically when triggered |
+| **Lab 2** | [Excel Data Logging Workflow](Day%201/Lab%202%20-%20Excel%20Data%20Logging%20Workflow/index.md) | Capture form data and log each entry into an Excel table |
+| **Lab 3** | [Simple Approval Workflow](Day%201/Lab%203%20-%20Simple%20Approval%20Workflow/index.md) | Route a request for manager approval and act on the decision |
 
-### Day 2: Advanced Agent Development (Labs 13-17)
+### Day 2 — Building Business Agents with Copilot Studio
 
-Take your skills to the next level with advanced scenarios including multi-agent systems, autonomous triggers, and AI model selection.
+Create AI agents that understand requests and feed structured data into your flows.
 
-| Lab | Title | Duration | Description |
-|-----|-------|----------|-------------|
-| **Lab 13** | [Get Started with the Hiring Agent](Day%202/Lab%2013/index.md) | ~45 min | Set up the Hiring Agent scenario with Dataverse and sample data |
-| **Lab 14** | [Authoring Agent Instructions](Day%202/Lab%2014/index.md) | ~30 min | Master instruction writing for precise agent behavior |
-| **Lab 15** | [Multi-Agent Systems](Day%202/Lab%2015/index.md) | ~45 min | Build child agents and connected agents for complex workflows |
-| **Lab 16** | [Add Event Triggers (Autonomous)](Day%202/Lab%2016/index.md) | ~45 min | Create autonomous email processing with Teams notifications |
-| **Lab 17** | [Understanding Agent Models](Day%202/Lab%2017/index.md) | ~45 min | Compare AI models (GPT-4.1, GPT-5, Anthropic) for your agents |
+| Lab | Title | Description |
+|-----|-------|-------------|
+| **Module 3** | [Business Agents Concepts](Day%202/Module%203%20-%20Business%20Agents%20Concepts.md) | Prompt design for structured outputs; connecting agents to flows |
+| **Lab 4** | [Create Your First Copilot Studio Agent](Day%202/Lab%204%20-%20Create%20Your%20First%20Agent/index.md) | Build, configure, and test a business agent from scratch |
+| **Lab 5** | [Sales Enquiry Assistant](Day%202/Lab%205%20-%20Sales%20Enquiry%20Assistant/index.md) | An agent that captures sales enquiries as structured data |
+| **Lab 6** | [Procurement Request Workflow](Day%202/Lab%206%20-%20Procurement%20Request%20Workflow/index.md) | An agent that collects procurement requests and triggers a flow |
+| **Lab 7** | [Automated Response Generation](Day%202/Lab%207%20-%20Automated%20Response%20Generation/index.md) | Use AI prompts to draft professional responses automatically |
+
+### Day 3 — End-to-End Workflow Automation & Workshop
+
+Combine agents and flows into complete business processes, then build your own.
+
+| Lab | Title | Description |
+|-----|-------|-------------|
+| **Module 4** | [End-to-End Orchestration Concepts](Day%203/Module%204%20-%20End-to-End%20Orchestration%20Concepts.md) | How agents + Power Automate work together; managing outputs and next steps |
+| **Lab 8** | [Email Enquiry → Excel Logging → Notification](Day%203/Lab%208%20-%20Email%20to%20Excel%20to%20Notification/index.md) | Capture an enquiry, log it, and notify the team |
+| **Lab 9** | [Invoice Upload → Approval Workflow](Day%203/Lab%209%20-%20Invoice%20Upload%20Approval/index.md) | Trigger an approval when an invoice file is uploaded |
+| **Lab 10** | [Purchase Request → Manager Approval → Notification](Day%203/Lab%2010%20-%20Purchase%20Request%20Approval/index.md) | A full procurement approval chain with notifications |
+| **Lab 11** | [Capstone Workshop](Day%203/Lab%2011%20-%20Capstone%20Workshop/index.md) | Build your own end-to-end workflow for Sales, Finance, Procurement, or Order Processing |
 
 ---
 
-## 🗂️ Repository Structure
+## Repository Structure
 
 ```
 copilot-studio-labs/
-├── README.md                    # This file
-├── Day 1/                       # Foundations & Core Concepts
-│   ├── Lab 1/                   # Introduction to Agents
-│   │   ├── index.md
-│   │   └── images/
-│   ├── Lab 2/                   # Copilot Studio Fundamentals
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 3/                   # Declarative Agent for M365
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 4/                   # Creating a Solution
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 5/                   # Pre-Built Agents
-│   │   ├── index.md
-│   │   └── images/
-│   ├── Lab 6/                   # Custom Agent (Natural Language)
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 7/                   # Topics with Triggers
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 8/                   # Adaptive Cards
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 9/                   # Agent Flows
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 10/                  # Event Triggers
-│   │   ├── index.md
-│   │   └── assets/
-│   ├── Lab 11/                  # Publishing
-│   │   ├── index.md
-│   │   └── assets/
-│   └── Lab 12/                  # Licensing
-│       ├── index.md
-│       └── assets/
-│
-└── Day 2/                       # Advanced Agent Development
-    ├── Lab 13/                  # Hiring Agent Setup
-    │   ├── index.md
-    │   └── assets/
-    ├── Lab 14/                  # Agent Instructions
-    │   ├── index.md
-    │   └── assets/
-    ├── Lab 15/                  # Multi-Agent Systems
-    │   ├── index.md
-    │   └── assets/
-    ├── Lab 16/                  # Autonomous Triggers
-    │   ├── index.md
-    │   └── assets/
-    └── Lab 17/                  # AI Model Selection
-        ├── index.md
-        └── assets/
+├── README.md
+├── Day 1/                                  # Foundations & Power Automate
+│   ├── Lab 0 - Environment Setup/
+│   ├── Module 1 - Workflow Automation Concepts.md
+│   ├── Lab 1 - Automated Email Workflow/
+│   ├── Lab 2 - Excel Data Logging Workflow/
+│   └── Lab 3 - Simple Approval Workflow/
+├── Day 2/                                  # Business Agents with Copilot Studio
+│   ├── Module 3 - Business Agents Concepts.md
+│   ├── Lab 4 - Create Your First Agent/
+│   ├── Lab 5 - Sales Enquiry Assistant/
+│   ├── Lab 6 - Procurement Request Workflow/
+│   └── Lab 7 - Automated Response Generation/
+├── Day 3/                                  # End-to-End Workflow Automation
+│   ├── Module 4 - End-to-End Orchestration Concepts.md
+│   ├── Lab 8 - Email to Excel to Notification/
+│   ├── Lab 9 - Invoice Upload Approval/
+│   ├── Lab 10 - Purchase Request Approval/
+│   └── Lab 11 - Capstone Workshop/
+└── archive/                                # Previous 2-day chatbot course (reference)
 ```
 
 ---
 
-## 🛠️ Prerequisites
+## Prerequisites
 
-Before starting the labs, ensure you have:
+Before starting, you need a Microsoft account with access to Power Platform. **Lab 0 walks you through getting everything for free.** In summary you will need:
 
-- [ ] Microsoft 365 account with Copilot Studio access
-- [ ] Power Platform environment (Developer or Trial)
-- [ ] Microsoft Teams access
-- [ ] SharePoint site for lab exercises
-- [ ] Basic understanding of conversational AI concepts
+- [ ] A Microsoft 365 account (work/school account, or a free Microsoft 365 Developer account)
+- [ ] Access to [Power Automate](https://make.powerautomate.com)
+- [ ] Access to [Copilot Studio](https://copilotstudio.microsoft.com)
+- [ ] Outlook (email) and Excel (via OneDrive/SharePoint) — included with Microsoft 365
+- [ ] A modern web browser (Microsoft Edge or Google Chrome recommended)
 
-### Environment Setup
-
-1. **Create a Developer Environment**: Follow [Lab 4](Day%201/Lab%204/index.md) for detailed setup instructions
-2. **Obtain Copilot Studio License**: Trial licenses available at [Copilot Studio](https://copilotstudio.microsoft.com)
-3. **Prepare SharePoint Site**: Create a SharePoint site with sample lists for the IT Helpdesk scenario
+> **No prior coding or automation experience is required.** Every step is described in detail.
 
 ---
 
-## 🔗 Key Resources
+## How to Use These Labs
 
-### Microsoft Documentation
+1. Start with **Lab 0** to set up your accounts — do this before the course if possible.
+2. Work through the labs **in order**; each builds on skills from the previous one.
+3. Read the **Module** concept pages at the start of each day for the "why" behind the labs.
+4. Use **Lab 11** to apply everything to a workflow relevant to your own job.
+
+---
+
+## Key Resources
+
+- [Power Automate Documentation](https://learn.microsoft.com/power-automate/)
 - [Microsoft Copilot Studio Documentation](https://learn.microsoft.com/microsoft-copilot-studio/)
-- [Power Platform Admin Center](https://admin.powerplatform.microsoft.com/)
+- [Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program)
+- [Power Automate Templates Gallery](https://make.powerautomate.com/templates/)
 - [Copilot Studio Licensing](https://learn.microsoft.com/microsoft-copilot-studio/billing-licensing)
 
-### Learning Paths
-- [Build agents with Microsoft Copilot Studio](https://learn.microsoft.com/training/paths/build-agents-copilot-studio/)
-- [Make your agent autonomous](https://learn.microsoft.com/training/modules/autonomous-agents-online-workshop/)
-
-### Community Resources
-- [Microsoft Agent Academy](https://github.com/microsoft/agent-academy)
-- [Power Platform Community](https://powerusers.microsoft.com/)
-
 ---
 
-## 📝 Course Information
+## Course Information
 
-**Provider**: [Tertiary Courses](https://www.tertiarycourses.com.sg/wsq-develop-ai-powered-copilots-and-chatbots-with-microsoft-copilot-studio.html)
+**Provider**: [Tertiary Courses](https://www.tertiarycourses.com.sg/)
 
 **Funding Available**:
 - SkillsFuture Credit (SFC)
@@ -174,14 +144,11 @@ Before starting the labs, ensure you have:
 
 ---
 
-## 📄 License
+## License
 
-This repository contains lab materials adapted from the [Microsoft Agent Academy](https://github.com/microsoft/agent-academy) and is intended for educational purposes.
+This repository contains lab materials intended for educational purposes.
 
----
+## Acknowledgments
 
-## 🙏 Acknowledgments
-
-- [Microsoft Agent Academy](https://github.com/microsoft/agent-academy) for the original lab content
+- Microsoft Power Automate and Copilot Studio teams for the platform and documentation
 - [Tertiary Courses](https://www.tertiarycourses.com.sg/) for course facilitation
-- Microsoft Copilot Studio team for the platform and documentation
