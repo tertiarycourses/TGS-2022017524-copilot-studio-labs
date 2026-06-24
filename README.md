@@ -3,7 +3,7 @@
 [![Course](https://img.shields.io/badge/Course-Tertiary%20Courses-blue)](https://www.tertiarycourses.com.sg/)
 [![SkillsFuture](https://img.shields.io/badge/SkillsFuture-Funded-green)](https://www.skillsfuture.gov.sg/)
 [![Duration](https://img.shields.io/badge/Duration-3%20Days-orange)]()
-[![Labs](https://img.shields.io/badge/Labs-12%20Hands--On-purple)]()
+[![Labs](https://img.shields.io/badge/Labs-17%20Hands--On-purple)]()
 
 This repository contains hands-on lab materials for the **Microsoft Copilot Studio & Power Automate for Business Workflow Automation** course. Learn to automate real business processes — sales, finance, procurement, and order processing — by combining **Power Automate** flows with AI **agents** built in **Microsoft Copilot Studio**.
 
@@ -42,9 +42,12 @@ Understand workflow automation concepts and build your first automated flows.
 |-----|-------|-------------|
 | **Lab 0** | [Environment Setup](Day%201/Lab%200%20-%20Environment%20Setup/index.md) | Create your Microsoft 365, Copilot Studio, and Power Automate accounts step by step |
 | **Module 1** | [Workflow Automation Concepts](Day%201/Module%201%20-%20Workflow%20Automation%20Concepts.md) | Triggers, actions, outputs, steps; standalone agents vs integrated workflows |
+| **Module 2** | [Introduction to Power Automate](Day%201/Module%202%20-%20Introduction%20to%20Power%20Automate.md) | Power Automate overview; flow types, common triggers, actions, connections |
 | **Lab 1** | [Automated Email Workflow](Day%201/Lab%201%20-%20Automated%20Email%20Workflow/index.md) | Build a flow that sends an email automatically when triggered |
 | **Lab 2** | [Excel Data Logging Workflow](Day%201/Lab%202%20-%20Excel%20Data%20Logging%20Workflow/index.md) | Capture form data and log each entry into an Excel table |
 | **Lab 3** | [Simple Approval Workflow](Day%201/Lab%203%20-%20Simple%20Approval%20Workflow/index.md) | Route a request for manager approval and act on the decision |
+| **Lab 4** | [Scheduled Trigger Workflow](Day%201/Lab%204%20-%20Scheduled%20Trigger%20Workflow/index.md) | Run a flow automatically on a schedule (daily reminder/digest email) |
+| **Lab 5** | [Form Submission Workflow](Day%201/Lab%205%20-%20Form%20Submission%20Workflow/index.md) | A Microsoft Form (shareable URL) that emails the team and logs to Excel on submit |
 
 ### Day 2 — Building Business Agents with Copilot Studio
 
@@ -53,10 +56,12 @@ Create AI agents that understand requests and feed structured data into your flo
 | Lab | Title | Description |
 |-----|-------|-------------|
 | **Module 3** | [Business Agents Concepts](Day%202/Module%203%20-%20Business%20Agents%20Concepts.md) | Prompt design for structured outputs; connecting agents to flows |
-| **Lab 4** | [Create Your First Copilot Studio Agent](Day%202/Lab%204%20-%20Create%20Your%20First%20Agent/index.md) | Build, configure, and test a business agent from scratch |
-| **Lab 5** | [Sales Enquiry Assistant](Day%202/Lab%205%20-%20Sales%20Enquiry%20Assistant/index.md) | An agent that captures sales enquiries as structured data |
-| **Lab 6** | [Procurement Request Workflow](Day%202/Lab%206%20-%20Procurement%20Request%20Workflow/index.md) | An agent that collects procurement requests and triggers a flow |
-| **Lab 7** | [Automated Response Generation](Day%202/Lab%207%20-%20Automated%20Response%20Generation/index.md) | Use AI prompts to draft professional responses automatically |
+| **Lab 6** | [Create Your First Copilot Studio Agent](Day%202/Lab%206%20-%20Create%20Your%20First%20Agent/index.md) | Build, configure, and test a business agent from scratch |
+| **Lab 7** | [Add Knowledge to Your Agent (RAG)](Day%202/Lab%207%20-%20Add%20Knowledge%20to%20Your%20Agent/index.md) | Ground the agent in your own documents/websites, with citations |
+| **Lab 8** | [Add Tools and Actions](Day%202/Lab%208%20-%20Add%20Tools%20and%20Actions/index.md) | Give the agent tools — connectors, prebuilt actions, and flows |
+| **Lab 9** | [Sales Enquiry Assistant](Day%202/Lab%209%20-%20Sales%20Enquiry%20Assistant/index.md) | An agent that captures sales enquiries as structured data |
+| **Lab 10** | [Procurement Request Workflow](Day%202/Lab%2010%20-%20Procurement%20Request%20Workflow/index.md) | An agent that collects procurement requests and triggers a flow |
+| **Lab 11** | [Automated Response Generation](Day%202/Lab%2011%20-%20Automated%20Response%20Generation/index.md) | Use AI prompts to draft professional responses automatically |
 
 ### Day 3 — End-to-End Workflow Automation & Workshop
 
@@ -65,10 +70,12 @@ Combine agents and flows into complete business processes, then build your own.
 | Lab | Title | Description |
 |-----|-------|-------------|
 | **Module 4** | [End-to-End Orchestration Concepts](Day%203/Module%204%20-%20End-to-End%20Orchestration%20Concepts.md) | How agents + Power Automate work together; managing outputs and next steps |
-| **Lab 8** | [Email Enquiry → Excel Logging → Notification](Day%203/Lab%208%20-%20Email%20to%20Excel%20to%20Notification/index.md) | Capture an enquiry, log it, and notify the team |
-| **Lab 9** | [Invoice Upload → Approval Workflow](Day%203/Lab%209%20-%20Invoice%20Upload%20Approval/index.md) | Trigger an approval when an invoice file is uploaded |
-| **Lab 10** | [Purchase Request → Manager Approval → Notification](Day%203/Lab%2010%20-%20Purchase%20Request%20Approval/index.md) | A full procurement approval chain with notifications |
-| **Lab 11** | [Capstone Workshop](Day%203/Lab%2011%20-%20Capstone%20Workshop/index.md) | Build your own end-to-end workflow for Sales, Finance, Procurement, or Order Processing |
+| **Lab 12** | [Email Enquiry → Excel Logging → Notification](Day%203/Lab%2012%20-%20Email%20to%20Excel%20to%20Notification/index.md) | Capture an enquiry, log it, and notify the team |
+| **Lab 13** | [Invoice Upload → Approval Workflow](Day%203/Lab%2013%20-%20Invoice%20Upload%20Approval/index.md) | Trigger an approval when an invoice file is uploaded |
+| **Lab 14** | [Purchase Request → Manager Approval → Notification](Day%203/Lab%2014%20-%20Purchase%20Request%20Approval/index.md) | A full procurement approval chain with notifications |
+| **Lab 15** | [Order Processing Workflow](Day%203/Lab%2015%20-%20Order%20Processing%20Workflow/index.md) | An agent captures an order; the flow confirms, logs, and raises a restock alert |
+| **Module 5** | [Business Workflow Workshop](Day%203/Module%205%20-%20Business%20Workflow%20Workshop.md) | Workshop briefing: business domains, design method, and quality bar |
+| **Lab 16** | [Capstone Workshop](Day%203/Lab%2016%20-%20Capstone%20Workshop/index.md) | Build your own end-to-end workflow for Sales, Finance, Procurement, or Order Processing |
 
 ---
 
@@ -80,21 +87,28 @@ copilot-studio-labs/
 ├── Day 1/                                  # Foundations & Power Automate
 │   ├── Lab 0 - Environment Setup/
 │   ├── Module 1 - Workflow Automation Concepts.md
+│   ├── Module 2 - Introduction to Power Automate.md
 │   ├── Lab 1 - Automated Email Workflow/
 │   ├── Lab 2 - Excel Data Logging Workflow/
-│   └── Lab 3 - Simple Approval Workflow/
+│   ├── Lab 3 - Simple Approval Workflow/
+│   ├── Lab 4 - Scheduled Trigger Workflow/
+│   └── Lab 5 - Form Submission Workflow/
 ├── Day 2/                                  # Business Agents with Copilot Studio
 │   ├── Module 3 - Business Agents Concepts.md
-│   ├── Lab 4 - Create Your First Agent/
-│   ├── Lab 5 - Sales Enquiry Assistant/
-│   ├── Lab 6 - Procurement Request Workflow/
-│   └── Lab 7 - Automated Response Generation/
+│   ├── Lab 6 - Create Your First Agent/
+│   ├── Lab 7 - Add Knowledge to Your Agent/
+│   ├── Lab 8 - Add Tools and Actions/
+│   ├── Lab 9 - Sales Enquiry Assistant/
+│   ├── Lab 10 - Procurement Request Workflow/
+│   └── Lab 11 - Automated Response Generation/
 ├── Day 3/                                  # End-to-End Workflow Automation
 │   ├── Module 4 - End-to-End Orchestration Concepts.md
-│   ├── Lab 8 - Email to Excel to Notification/
-│   ├── Lab 9 - Invoice Upload Approval/
-│   ├── Lab 10 - Purchase Request Approval/
-│   └── Lab 11 - Capstone Workshop/
+│   ├── Lab 12 - Email to Excel to Notification/
+│   ├── Lab 13 - Invoice Upload Approval/
+│   ├── Lab 14 - Purchase Request Approval/
+│   ├── Lab 15 - Order Processing Workflow/
+│   ├── Module 5 - Business Workflow Workshop.md
+│   └── Lab 16 - Capstone Workshop/
 └── archive/                                # Previous 2-day chatbot course (reference)
 ```
 
@@ -104,7 +118,7 @@ copilot-studio-labs/
 
 Before starting, you need a Microsoft account with access to Power Platform. **Lab 0 walks you through getting everything for free.** In summary you will need:
 
-- [ ] A Microsoft 365 account (work/school account, or a free Microsoft 365 Developer account)
+- [ ] A Microsoft 365 account (a work/school account, or a free Microsoft 365 Business trial — see Lab 0)
 - [ ] Access to [Power Automate](https://make.powerautomate.com)
 - [ ] Access to [Copilot Studio](https://copilotstudio.microsoft.com)
 - [ ] Outlook (email) and Excel (via OneDrive/SharePoint) — included with Microsoft 365
@@ -119,7 +133,7 @@ Before starting, you need a Microsoft account with access to Power Platform. **L
 1. Start with **Lab 0** to set up your accounts — do this before the course if possible.
 2. Work through the labs **in order**; each builds on skills from the previous one.
 3. Read the **Module** concept pages at the start of each day for the "why" behind the labs.
-4. Use **Lab 11** to apply everything to a workflow relevant to your own job.
+4. Use **Lab 13** to apply everything to a workflow relevant to your own job.
 
 ---
 
