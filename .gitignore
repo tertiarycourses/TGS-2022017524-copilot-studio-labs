@@ -6,7 +6,6 @@
 
 # PPTX skill working artifacts
 unpacked/
-*.pdf
 thumbnails*.jpg
 .playwright-mcp/
 
