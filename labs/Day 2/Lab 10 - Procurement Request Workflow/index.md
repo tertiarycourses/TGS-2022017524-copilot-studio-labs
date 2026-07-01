@@ -46,13 +46,11 @@ At **ACME Pte Ltd**, staff currently email the procurement team to request suppl
      has been submitted.
      ```
    - Select **Create**.
-2. Open the **Topics** tab, select **Add a topic**, then **From blank**. Rename the topic to `New Procurement Request`.
-3. Select the **Trigger** node, set it to **Phrases**, and add these trigger phrases (press **Enter** after each):
-   - `I need to buy something`
-   - `procurement request`
-   - `I want to order supplies`
-   - `raise a purchase request`
-4. Add four **Ask a question** nodes in order, using the **+** button each time. For each, set the **Identify** type and rename the **Save response as** variable exactly as shown:
+2. Open the **Topics** tab, select **+ Add a topic**, then **From blank**. On the toolbar select **Details** and set the **Name** to `New Procurement Request`.
+3. Give the topic a clear **trigger** so the agent knows when to run it:
+   - **Latest Copilot Studio (generative orchestration — default):** the **Trigger** node reads **The agent chooses**. In the **Details** panel, set the **Description** to `Use this topic when a staff member wants to raise a procurement or purchase request to buy supplies. It collects their name, item, quantity, and reason.` No phrases are needed.
+   - **(Optional) Classic orchestration / exact phrases:** hover the **Trigger** node → **Change trigger** → **User says a phrase**, then add phrases such as `procurement request`, `I need to buy something`, `I want to order supplies`, `raise a purchase request`.
+4. Add four **Ask a question** nodes in order, using the **Add node** icon (**+**) each time. For each, set the **Identify** type and rename the **Save user response as** variable exactly as shown:
    - Question `What is your name?` → Identify **User's entire response** → save as `requester`
    - Question `What item do you need?` → Identify **User's entire response** → save as `item`
    - Question `How many do you need?` → Identify **Number** → save as `quantity`
@@ -138,7 +136,7 @@ At **ACME Pte Ltd**, staff currently email the procurement team to request suppl
 
 ### Step 6: Test end-to-end (~10 minutes)
 1. Open the **Test** pane and select the **Refresh / restart** icon so it loads the latest topic.
-2. Type a trigger phrase: `procurement request`. Answer the questions:
+2. Type a message that starts the request, e.g. `procurement request` — the agent recognises it from the topic **Description** (or phrases). Answer the questions:
    - Name: `Daniel`
    - Item: `Wireless mouse`
    - Quantity: `10`

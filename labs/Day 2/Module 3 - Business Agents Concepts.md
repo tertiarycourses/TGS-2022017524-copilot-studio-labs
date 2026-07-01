@@ -38,7 +38,7 @@ An agent is assembled from five kinds of building block. You'll meet each one ac
 |-------|------------|---------|-----------|
 | **Instructions** | Plain-language directions that shape the agent's behaviour and personality | "You are a sales assistant. Always collect name, company, product, and quantity." | Lab 6 |
 | **Knowledge** | Documents / sites the agent can answer from (RAG) | Product catalogue, FAQ | Lab 7 |
-| **Topics** | Conversation flows triggered by what the user says | A "New Sales Enquiry" topic triggered by "I want a quote" | Lab 9 |
+| **Topics** | Conversation flows the agent runs when the user's message matches the topic's **description** (generative orchestration, the default) or its **trigger phrases** (classic) | A "New Sales Enquiry" topic the agent chooses when someone asks for a quote | Lab 9 |
 | **Tools / Actions** | Things the agent can *do*, including **Power Automate flows** | "Log enquiry to Excel" flow | Lab 8 |
 | **Variables** | Where captured answers are stored to pass onward | `customerName`, `product`, `quantity` | Lab 9 |
 

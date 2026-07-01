@@ -113,11 +113,20 @@ copilot-studio-labs/
 │   │   └── Lab 16 - Capstone Workshop/
 ├── courseware/                             # Facilitator + participant materials
 │   ├── facilitator-slides.pptx             # Slide deck (94 slides)
-│   ├── ... Learner Guide.docx              # Full step-by-step learner guide (Word)
-│   ├── Lesson Plan - ....docx              # 3-day lesson plan (9:00am–5:00pm)
+│   ├── LG-<course>.docx                     # Learner Guide (Word) — generated
+│   ├── LP-<course>.docx                     # Lesson Plan (Word) — generated
 │   ├── build_learner_guide.py              # Single-source generator (MD + DOCX)
-│   └── build_lesson_plan.py                # Lesson-plan generator
-└── archive/                                # Previous 2-day chatbot course (reference)
+│   ├── build_lesson_plan.py                # Lesson-plan generator
+│   └── build_assessment.py                 # WSQ assessment generator (WA + CS)
+├── assessemnt/                             # WSQ assessments (question papers + answer keys)
+│   ├── Written Assessment(WA) - <course>.docx
+│   ├── Answers to Written Assessment(WA) - <course>.docx
+│   ├── Case Study(CS) Assessment - <course>.docx
+│   └── Answers to Case Study(CS) Assessment - <course>.docx
+├── references/                             # Reference material
+│   ├── labs/                               # Copilot Studio agents lab notes (PL-7008 style)
+│   ├── Day 1/ · Day 2/                     # Previous 2-day chatbot course (reference)
+│   └── PL-7008/                            # Microsoft PL-7008 course slides (PDF)
 ```
 
 ---
@@ -129,11 +138,15 @@ The `courseware/` folder holds the ready-to-deliver materials, and a full partic
 | Material | File | For |
 |----------|------|-----|
 | **Learner Guide (Markdown)** | [LEARNER-GUIDE.md](LEARNER-GUIDE.md) | Participants — every lab, click-by-click |
-| **Learner Guide (Word)** | `courseware/…​Learner Guide.docx` | Print / distribute |
-| **Lesson Plan (Word)** | `courseware/Lesson Plan - ….docx` | Facilitator — 3-day schedule, 9:00am–5:00pm |
+| **Learner Guide (Word)** | `courseware/LG-<course>.docx` | Print / distribute |
+| **Lesson Plan (Word)** | `courseware/LP-<course>.docx` | Facilitator — 3-day schedule |
 | **Slide Deck** | `courseware/facilitator-slides.pptx` | Facilitator — 94 slides |
+| **Written Assessment (WA)** | `assessemnt/Written Assessment(WA) - <course>.docx` (+ answer key) | Open-ended knowledge assessment |
+| **Case Study (CS) Assessment** | `assessemnt/Case Study(CS) Assessment - <course>.docx` (+ answer key) | Practical assessment (lab-based) |
 
-> The learner guide and lesson plan are **generated from a single source** (the lab markdown). After editing any lab, re-run `python3 courseware/build_learner_guide.py` and `python3 courseware/build_lesson_plan.py` to keep them in sync.
+> The learner guide, lesson plan and assessments are **generated from a single source** (the lab markdown). After editing any lab, re-run `python3 courseware/build_learner_guide.py`, `python3 courseware/build_lesson_plan.py`, and `python3 courseware/build_assessment.py` to keep them in sync.
+>
+> **PDFs** (`LG-….pdf`, `LP-….pdf`) are generated from the DOCX via LibreOffice and are **git-ignored** (regenerable build artifacts).
 
 ---
 

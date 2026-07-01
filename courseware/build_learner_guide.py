@@ -348,7 +348,7 @@ def render_docx(blocks):
 md = render_markdown(B)
 with open(os.path.join(REPO, "LEARNER-GUIDE.md"), "w", encoding="utf-8") as f:
     f.write(md)
-out_docx = os.path.join(REPO, f"courseware/{TITLE} Learner Guide.docx")
+out_docx = os.path.join(REPO, f"courseware/LG-{TITLE}.docx")
 render_docx(B).save(out_docx)
 print("Wrote LEARNER-GUIDE.md (%d blocks, %d labs/modules headings)" %
       (len(B), sum(1 for b in B if b[0]=="h3")))

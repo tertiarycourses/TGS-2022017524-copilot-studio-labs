@@ -55,6 +55,18 @@ def _shade(cell, hexc):
     tcPr = cell._tc.get_or_add_tcPr(); shd = OxmlElement("w:shd")
     shd.set(qn("w:val"),"clear"); shd.set(qn("w:color"),"auto"); shd.set(qn("w:fill"),hexc); tcPr.append(shd)
 
+def _borders(t, color="7A8190", sz=6):
+    """Apply explicit single borders (outer + inner grid) so every cell edge is visible."""
+    tblPr = t._tbl.tblPr
+    for old in tblPr.findall(qn("w:tblBorders")): tblPr.remove(old)
+    b = OxmlElement("w:tblBorders")
+    for edge in ("top","left","bottom","right","insideH","insideV"):
+        e = OxmlElement(f"w:{edge}")
+        e.set(qn("w:val"),"single"); e.set(qn("w:sz"),str(sz))
+        e.set(qn("w:space"),"0"); e.set(qn("w:color"),color)
+        b.append(e)
+    tblPr.append(b)
+
 def heading(doc, text, lvl=1):
     doc.add_paragraph(style=f"Heading {lvl}").add_run(text)
 def para(doc, text):
@@ -68,17 +80,18 @@ def info_table(doc, rows):
         c = t.add_row().cells
         c[0].text = ""; rr = c[0].paragraphs[0].add_run(k); rr.bold = True; rr.font.size = Pt(10); _shade(c[0], "EAF1FF")
         c[1].text = ""; c[1].paragraphs[0].add_run(v).font.size = Pt(10)
+    _borders(t)
 
 def schedule_table(doc, rows):
-    """rows: (time, activity, duration, kind) ; kind in {'topic','lab','break',''}"""
-    t = doc.add_table(rows=0, cols=3); t.style = "Table Grid"; t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    """rows: (time, activity, duration, kind, slides) ; kind in {'topic','lab','break',''}"""
+    t = doc.add_table(rows=0, cols=4); t.style = "Table Grid"; t.alignment = WD_TABLE_ALIGNMENT.CENTER
     hdr = t.add_row().cells
-    for i, h in enumerate(["Time", "Topic / Activity", "Duration"]):
+    for i, h in enumerate(["Time", "Topic / Activity", "Duration", "Slides"]):
         hdr[i].text = ""; rr = hdr[i].paragraphs[0].add_run(h)
         rr.bold = True; rr.font.size = Pt(9.5); rr.font.color.rgb = RGBColor(0xFF,0xFF,0xFF); _shade(hdr[i], "1F6FEB")
-    for time, act, dur, kind in rows:
+    for time, act, dur, kind, slides in rows:
         cells = t.add_row().cells
-        vals = [time, act, dur]
+        vals = [time, act, dur, slides]
         tint = {"break":"FFF4E5", "topic":"EAF1FF", "lab":"E8F7EE"}.get(kind)
         for i, v in enumerate(vals):
             cells[i].text = ""; pp = cells[i].paragraphs[0]
@@ -87,55 +100,56 @@ def schedule_table(doc, rows):
             if tint: _shade(cells[i], tint)
     # widths
     for row in t.rows:
-        row.cells[0].width = Pt(95); row.cells[2].width = Pt(70)
+        row.cells[0].width = Pt(82); row.cells[2].width = Pt(54); row.cells[3].width = Pt(58)
+    _borders(t)
 
 # ---------------------------------------------------------------- schedules
 DAY1 = [
-    ("9:00 – 9:30",  "Welcome, introductions, environment & accounts check (Lab 0)", "30 min", "topic"),
-    ("9:30 – 10:15", "Module 1: Introduction to Workflow Automation — triggers, actions, outputs, steps", "45 min", "topic"),
-    ("10:15 – 10:45","Module 2: Introduction to Power Automate — flow types, common triggers, connectors", "30 min", "topic"),
-    ("10:45 – 11:00","Tea break", "15 min", "break"),
-    ("11:00 – 12:00","Lab 1: Automated Email Workflow (manual trigger → Send an email)", "60 min", "lab"),
-    ("12:00 – 12:30","Lab 2: Excel Data Logging Workflow — build the table & flow", "30 min", "lab"),
-    ("12:30 – 1:30", "Lunch", "60 min", "break"),
-    ("1:30 – 2:15",  "Lab 2 (cont.): map columns, fx date expression, test & verify rows", "45 min", "lab"),
-    ("2:15 – 3:15",  "Lab 3: Simple Approval Workflow — approvals & conditions", "60 min", "lab"),
-    ("3:15 – 3:30",  "Tea break", "15 min", "break"),
-    ("3:30 – 4:15",  "Lab 4: Scheduled Trigger Workflow — Recurrence & reminders", "45 min", "lab"),
-    ("4:15 – 5:00",  "Lab 5: Form Submission Workflow + Day 1 recap & Q&A", "45 min", "lab"),
+    ("9:00 – 9:30",  "Welcome, introductions, environment & accounts check (Lab 0)", "30 min", "topic", "1–5"),
+    ("9:30 – 10:15", "Module 1: Introduction to Workflow Automation — triggers, actions, outputs, steps", "45 min", "topic", "6–17"),
+    ("10:15 – 10:45","Module 2: Introduction to Power Automate — flow types, common triggers, connectors", "30 min", "topic", "18–30"),
+    ("10:45 – 11:00","Tea break", "15 min", "break", "—"),
+    ("11:00 – 12:00","Lab 1: Automated Email Workflow (manual trigger → Send an email)", "60 min", "lab", "31–32"),
+    ("12:00 – 12:30","Lab 2: Excel Data Logging Workflow — build the table & flow", "30 min", "lab", "33"),
+    ("12:30 – 1:30", "Lunch", "60 min", "break", "—"),
+    ("1:30 – 2:15",  "Lab 2 (cont.): map columns, fx date expression, test & verify rows", "45 min", "lab", "33"),
+    ("2:15 – 3:15",  "Lab 3: Simple Approval Workflow — approvals & conditions", "60 min", "lab", "34"),
+    ("3:15 – 3:30",  "Tea break", "15 min", "break", "—"),
+    ("3:30 – 4:15",  "Lab 4: Scheduled Trigger Workflow — Recurrence & reminders", "45 min", "lab", "35"),
+    ("4:15 – 5:00",  "Lab 5: Form Submission Workflow + Day 1 recap & Q&A", "45 min", "lab", "36–37"),
 ]
 DAY2 = [
-    ("9:00 – 9:15",  "Day 1 recap & Q&A", "15 min", "topic"),
-    ("9:15 – 10:00", "Module 3: Building Business Agents with Copilot Studio — prompt design for structured output", "45 min", "topic"),
-    ("10:00 – 10:45","Lab 6: Create Your First Agent — instructions, knowledge, Test pane", "45 min", "lab"),
-    ("10:45 – 11:00","Tea break", "15 min", "break"),
-    ("11:00 – 11:45","Lab 7: Add Knowledge to Your Agent (Grounding / RAG)", "45 min", "lab"),
-    ("11:45 – 12:30","Lab 8: Add Tools and Actions — connectors & flows as tools", "45 min", "lab"),
-    ("12:30 – 1:30", "Lunch", "60 min", "break"),
-    ("1:30 – 2:30",  "Lab 9: Sales Enquiry Assistant — capture structured data", "60 min", "lab"),
-    ("2:30 – 3:15",  "Lab 10: Procurement Request Workflow — agent calls a flow", "45 min", "lab"),
-    ("3:15 – 3:30",  "Tea break", "15 min", "break"),
-    ("3:30 – 4:15",  "Lab 10 (cont.): log + notify, wire inputs, test end-to-end", "45 min", "lab"),
-    ("4:15 – 5:00",  "Lab 11: Automated Response Generation (AI prompts) + recap", "45 min", "lab"),
+    ("9:00 – 9:15",  "Day 1 recap & Q&A", "15 min", "topic", "37–39"),
+    ("9:15 – 10:00", "Module 3: Building Business Agents with Copilot Studio — prompt design for structured output", "45 min", "topic", "40–49"),
+    ("10:00 – 10:45","Lab 6: Create Your First Agent — instructions, knowledge, Test pane", "45 min", "lab", "55–56"),
+    ("10:45 – 11:00","Tea break", "15 min", "break", "—"),
+    ("11:00 – 11:45","Lab 7: Add Knowledge to Your Agent (Grounding / RAG)", "45 min", "lab", "57"),
+    ("11:45 – 12:30","Lab 8: Add Tools and Actions — connectors & flows as tools", "45 min", "lab", "58"),
+    ("12:30 – 1:30", "Lunch", "60 min", "break", "—"),
+    ("1:30 – 2:30",  "Lab 9: Sales Enquiry Assistant — capture structured data", "60 min", "lab", "59"),
+    ("2:30 – 3:15",  "Lab 10: Procurement Request Workflow — agent calls a flow", "45 min", "lab", "50–54, 60"),
+    ("3:15 – 3:30",  "Tea break", "15 min", "break", "—"),
+    ("3:30 – 4:15",  "Lab 10 (cont.): log + notify, wire inputs, test end-to-end", "45 min", "lab", "60"),
+    ("4:15 – 5:00",  "Lab 11: Automated Response Generation (AI prompts) + recap", "45 min", "lab", "61–63"),
 ]
 DAY3 = [
-    ("9:00 – 9:15",  "Day 2 recap & Q&A", "15 min", "topic"),
-    ("9:15 – 9:45",  "Module 4: End-to-End Orchestration Concepts", "30 min", "topic"),
-    ("9:45 – 10:45", "Lab 12: Email Enquiry → Excel Logging → Notification", "60 min", "lab"),
-    ("10:45 – 11:00","Tea break", "15 min", "break"),
-    ("11:00 – 12:00","Lab 13: Invoice Upload → Approval Workflow (file trigger)", "60 min", "lab"),
-    ("12:00 – 12:30","Lab 14: Purchase Request → Manager Approval — build", "30 min", "lab"),
-    ("12:30 – 1:30", "Lunch", "60 min", "break"),
-    ("1:30 – 2:15",  "Lab 14 (cont.): threshold condition, notify, test all paths", "45 min", "lab"),
-    ("2:15 – 3:00",  "Lab 15: Order Processing (Agent + Flow) — confirm, log, restock alert", "45 min", "lab"),
-    ("3:00 – 3:15",  "Tea break", "15 min", "break"),
-    ("3:15 – 3:30",  "Module 5: Business Workflow Workshop briefing", "15 min", "topic"),
-    ("3:30 – 4:45",  "Lab 16: Capstone Workshop — design, build & present your own workflow", "75 min", "lab"),
-    ("4:45 – 5:00",  "Course wrap-up, feedback & where to go next", "15 min", "topic"),
+    ("9:00 – 9:15",  "Day 2 recap & Q&A", "15 min", "topic", "63–64"),
+    ("9:15 – 9:45",  "Module 4: End-to-End Orchestration Concepts", "30 min", "topic", "65–71"),
+    ("9:45 – 10:45", "Lab 12: Email Enquiry → Excel Logging → Notification", "60 min", "lab", "72"),
+    ("10:45 – 11:00","Tea break", "15 min", "break", "—"),
+    ("11:00 – 12:00","Lab 13: Invoice Upload → Approval Workflow (file trigger)", "60 min", "lab", "73"),
+    ("12:00 – 12:30","Lab 14: Purchase Request → Manager Approval — build", "30 min", "lab", "74"),
+    ("12:30 – 1:30", "Lunch", "60 min", "break", "—"),
+    ("1:30 – 2:15",  "Lab 14 (cont.): threshold condition, notify, test all paths", "45 min", "lab", "74"),
+    ("2:15 – 3:00",  "Lab 15: Order Processing (Agent + Flow) — confirm, log, restock alert", "45 min", "lab", "75–76"),
+    ("3:00 – 3:15",  "Tea break", "15 min", "break", "—"),
+    ("3:15 – 3:30",  "Module 5: Business Workflow Workshop briefing", "15 min", "topic", "77–83"),
+    ("3:30 – 4:45",  "Lab 16: Capstone Workshop — design, build & present your own workflow", "75 min", "lab", "84–85"),
+    ("4:45 – 5:00",  "Course wrap-up, feedback & where to go next", "15 min", "topic", "86–94"),
 ]
 
 def total(rows):
-    return sum(int(d.split()[0]) for _,_,d,_ in rows)
+    return sum(int(r[2].split()[0]) for r in rows)
 for nm, rows in [("Day 1",DAY1),("Day 2",DAY2),("Day 3",DAY3)]:
     assert total(rows) == 480, f"{nm} = {total(rows)} min (expected 480)"
 
@@ -172,6 +186,8 @@ bullets(doc, [
 ])
 
 heading(doc, "Daily Schedule", 1)
+para(doc, "The Slides column maps each session to the matching slides in the facilitator deck "
+          "(facilitator-slides.pptx, 94 slides) so trainers can pace delivery against the deck.")
 for nm, theme, rows in [
     ("Day 1 — Foundations & Power Automate", "Workflow concepts + your first five flows", DAY1),
     ("Day 2 — Building Business Agents with Copilot Studio", "Agents, knowledge/RAG, tools, and agent + flow", DAY2),
@@ -199,7 +215,7 @@ para(doc, "Assessment is continuous and practical. Each lab includes a Checkpoin
 
 add_footer(doc)
 prodoc.enable_update_fields(doc)
-out = os.path.join(REPO, f"courseware/Lesson Plan - {TITLE}.docx")
+out = os.path.join(REPO, f"courseware/LP-{TITLE}.docx")
 doc.save(out)
 print("Day totals:", {n: total(r) for n,r in [("D1",DAY1),("D2",DAY2),("D3",DAY3)]})
 print("Wrote", out)

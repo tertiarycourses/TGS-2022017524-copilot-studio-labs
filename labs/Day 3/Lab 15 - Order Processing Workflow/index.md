@@ -58,9 +58,11 @@ The flow needs somewhere to write each order. We use an Excel **Table** (not jus
      Collect one item at a time, be friendly and concise, then confirm the order has been placed.
      ```
 4. Click **Create**.
-5. In the left menu open **Topics** → **Add a topic** → **From blank**. Rename the topic **New Order** (click the topic name at the top to rename).
-6. Click the **Trigger** node → set **Phrases** to: `I want to place an order`, `new order`, `I'd like to buy`, `order products` (one phrase per line).
-7. Below the trigger, click **+** → **Ask a question** five times to add five questions. For each one, type the message, set what to **Identify**, and save the answer to a **variable**:
+5. In the left menu open **Topics** → **+ Add a topic** → **From blank**. On the toolbar select **Details** and set the **Name** to `New Order`.
+6. Set the topic **trigger** (latest Copilot Studio):
+   - **Generative orchestration (default):** the **Trigger** node reads **The agent chooses**. In **Details**, set the **Description** to `Use this topic when a customer wants to place an order or buy a product. It collects the customer's name, email, product, quantity, and delivery address.` No phrases needed.
+   - **(Optional) exact phrases:** hover the **Trigger** node → **Change trigger** → **User says a phrase**, then add `I want to place an order`, `new order`, `I'd like to buy`, `order products` (one per line).
+7. Below the trigger, select the **Add node** icon (**+**) → **Ask a question** five times to add five questions. For each one, type the message, set what to **Identify**, and save the answer to a **variable**:
 
    | Question message | Identify | Save answer as variable |
    |---|---|---|

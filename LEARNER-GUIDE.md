@@ -1204,7 +1204,7 @@ An agent is assembled from five kinds of building block. You'll meet each one ac
 | --- | --- | --- | --- |
 | **Instructions** | Plain-language directions that shape the agent's behaviour and personality | "You are a sales assistant. Always collect name, company, product, and quantity." | Lab 6 |
 | **Knowledge** | Documents / sites the agent can answer from (RAG) | Product catalogue, FAQ | Lab 7 |
-| **Topics** | Conversation flows triggered by what the user says | A "New Sales Enquiry" topic triggered by "I want a quote" | Lab 9 |
+| **Topics** | Conversation flows the agent runs when the user's message matches the topic's **description** (generative orchestration, the default) or its **trigger phrases** (classic) | A "New Sales Enquiry" topic the agent chooses when someone asks for a quote | Lab 9 |
 | **Tools / Actions** | Things the agent can *do*, including **Power Automate flows** | "Log enquiry to Excel" flow | Lab 8 |
 | **Variables** | Where captured answers are stored to pass onward | `customerName`, `product`, `quantity` | Lab 9 |
 
@@ -1631,7 +1631,7 @@ By the end of this lab, you will be able to:
 2. Add a **prebuilt connector action** as a tool (e.g. Send an email V2) and create its connection
 3. Write a clear tool **name and description** that tells the agent *when* to use the tool
 4. Set tool **inputs**, either as fixed values or filled by AI from the conversation
-5. (Alternative) Add a **Power Automate flow** as a tool
+5. (Alternative) Add a **multi-step Power Automate agent flow** as a tool (using **Add a row into a table**), and **disable a competing tool** so the agent calls the right one
 6. Test the agent actually **performing an action**, and read the **Activity map**
 
 **Prerequisites**
@@ -1656,7 +1656,9 @@ So far your **Company Helpdesk** agent can *answer* questions (using Knowledge).
 1. Go to **https://copilotstudio.microsoft.com** and confirm the **environment selector** (top-right) shows **NUS Copilot Sandbox** — the same environment as your Power Automate flows.
 2. Open your **Company Helpdesk** agent from Lab 6.
 3. Select the **Tools** tab (in some versions this is labelled **Actions**).
-4. Select **+ Add a tool**. You will see options grouped by type, such as:  —  **Connector** / **Prebuilt action** — ready-made actions from connectors like Office 365 Outlook, Excel, Teams.  —  **Flow** — a Power Automate flow you build or already have.  —  **Prompt** — an AI prompt that returns text.
+4. Select **+ Add a tool**. Microsoft groups tools into several **core tool types**:  —  **Prebuilt / custom connector action** — a single ready-made operation from a connector like Office 365 Outlook, Excel, or Teams (you use this in Steps 2–4).  —  **Agent flow** — a multi-step Power Automate flow with conditions and logic, used as one tool (you use this in Step 5).  —  **Prompt** — a single-turn AI prompt that returns text.  —  **REST API / MCP tool / Computer use** — connect to web services, a Model Context Protocol server, or GUI automation (advanced; out of scope here).
+
+> **How the agent picks a tool:** With **generative orchestration**, the agent chooses *which* tool to call at runtime **based purely on each tool's name and description** — there are no fixed trigger phrases. That is why a clear, intent-rich **description** (Step 3) is the single most important thing you write, and why two tools with overlapping descriptions confuse the agent (see Step 5a).
 
 > **⚠️ Warning:** Tools and the flows they call must live in the **same environment** as the agent. If your flow was built in a different environment, the agent will not be able to see or call it.
 
@@ -1689,28 +1691,72 @@ Decide how each input (To, Subject, Body) gets its value. You have two choices p
 
 > **Tip:** For your first test, set **To** as a **fixed** value (your own inbox). That way you can confirm the email actually arrives without risking sending it to the wrong person.
 
-**Step 5: (Alternative path) Add a Power Automate flow as a tool (~10 minutes)**
+**Step 5: (Alternative path) Add a Power Automate flow as a tool (~15 minutes)**
 
-A single connector action is fine for one step. For **multi-step** work (e.g. log a row *and* email *and* post to Teams), use a Power Automate flow instead.
+A single connector action (Steps 2–4) is perfect for **one** step. But real business work is usually **multi-step** — you often need to *log a record* **and** *notify someone* **and** *return a result* in one go. A single connector tool cannot do that; a **Power Automate agent flow** can. In this step you will build a flow that **logs a support request to a table**, then add that flow to the agent as a second tool.
 
-1. Select **+ Add a tool**, then choose **New Agent flow** (or pick an existing flow).
-2. Power Automate opens with the trigger **When an agent calls the flow** already in place.
-3. Add the **inputs** the agent will pass to the flow — for example a text input named `summary`.
-4. Add the actions the flow should perform (for example **Send an email (V2)**, or **Add a row** to a table).
-5. Add a **Respond to the agent** action at the end and return a result, for example a `status` of `Done`.
-6. **Save** and **Publish** the flow, then return to the agent. Map the flow's inputs to conversation values (fixed or filled by AI), just like in Step 4.
+> **Why a different action here?** In Steps 2–4 your agent already learned to *send an email* with a single connector tool. To show what a flow adds, this step uses a **different** action — **Add a row into a table** — so the flow *records* the request instead of emailing it. (Do **not** add another *Send an email* action here; that would just duplicate the tool you already built and confuse the agent about which one to call.)
 
-> **Tip:** Every flow used as a tool follows the same three-part shape: **When an agent calls the flow** (trigger) → do the work → **Respond to the agent** (give a result back). You will reuse this pattern throughout Day 3.
+**Step 5a — Turn OFF the connector tool from Step 4 first (do not skip)**
+
+If you leave the **Send notification email** connector tool (Steps 2–4) **enabled** while you add and test the new flow tool, your agent now has **two** tools that both look like "do something with the user's request." The orchestrator may keep choosing the old email tool and never call your new flow — making it look like the flow is broken when it is not. Disable the old tool so this exercise has exactly **one** active tool to reason about.
+
+1. In your agent, open the **Tools** tab.
+2. Find the **Send notification email** tool you added in Steps 2–4.
+3. Select its **… (More actions)** menu and turn the tool **Off** (toggle/disable it). *Do not delete it* — you will switch it back on later.
+4. Confirm the tool now shows as **Off / Disabled** in the list before continuing.
+
+> **⚠️ Warning:** This was the step most learners discovered was missing. With **both** tools on, the agent often fires the Step 4 email tool instead of the new flow, and the flow appears to "do nothing." Turning the connector tool **Off** isolates the flow so you can confirm it works.
+
+**Step 5b — Create the agent flow**
+
+1. In Copilot Studio's left navigation, select **Tools**, then **+ New tool** → choose the **Agent flow** tile. *(From inside the agent you can instead use the **Tools** tab → **+ Add a tool** → **New Agent flow**.)*
+2. Power Automate opens with two steps already in place: the trigger **When an agent calls the flow** and a **Respond to the agent** action. Every agent flow follows this three-part shape: **trigger → do the work → respond**.
+
+**Step 5c — Define the flow's input**
+
+1. Select the trigger **When an agent calls the flow**, then **+ Add an input**.
+2. Choose **Text**, name it `Request summary`, and give it the hint `A short summary of the support request`. This is the value the agent will pass in from the conversation.
+3. Open the **Overview** tab → **Details** → **Edit**, set **Flow name** to `Log support request` and **Description** to `Logs a support request as a new row in the requests table`, then **Save**.
+
+**Step 5d — Add the work: "Add a row into a table" (the only action here)**
+
+1. Back on the **Designer** tab, select the **+** between the trigger and **Respond to the agent** to insert an action.
+2. Search for `Excel`, choose **Excel Online (Business)**, then the action **Add a row into a table** (reuse the workbook and table from Lab 2, or any table with a `Request` column).
+3. Map the row's **Request** column to the trigger's `Request summary` input using **Dynamic content**.
+
+> **Reminder:** Add **a row into a table** here — **not** a *Send an email* action. The email path was already covered by the connector tool in Steps 2–4.
+
+**Step 5e — Respond to the agent**
+
+1. Select the **Respond to the agent** node, then **+ Add an output**.
+2. Choose **Text**, name it `status`, and set its value to `Logged` (or use **Dynamic content** to return the new row's ID). The flow **must** end here, or the agent never gets a result back.
+
+**Step 5f — Publish**
+
+1. Select **Save draft**, then **Publish**.
+2. Return to **Tools** and confirm the flow's status is **Ready**.
+
+**Step 5g — Add the flow to the agent and map its input**
+
+1. In the agent, open the **Tools** tab → **+ Add a tool**, apply the **Workflows** filter, select **Log support request**, then **Add and configure**.
+2. Set a clear **Description**: `Records a support request to the requests table when the user asks to log or file an issue.`
+3. Under **Additional details**, review **When this tool may be used**, **Ask the end user before running**, and **Credentials to use** (end-user credentials, with a sign-in prompt like `Please sign in to log the request`).
+4. Under **Inputs**, for the `Request summary` input set **Fill using** → **Dynamically fill with AI** so the agent writes the summary from the conversation (or **Custom value** to bind a variable), just like the fixed-vs-AI choice in Step 4.
+5. Under **Completion**, set **After running** → **Write the response with generative AI** so the agent confirms the result in natural language. **Save**.
+
+> **Tip:** Every flow used as a tool follows the same three-part shape: **When an agent calls the flow** (trigger) → **do the work** → **Respond to the agent** (give a result back). You will reuse this pattern throughout Day 3.
 
 **Step 6: Test the agent performing the action (~8 minutes)**
 
-1. Open the **Test** pane and select **Refresh** at the top so it picks up the new tool.
-2. Type a message that should trigger the tool, for example:  —  `Please email the support team that I need help with order 123.`
-3. Watch the agent decide to **call the tool**. If it asks for confirmation or shows a connection prompt, approve it.
-4. Confirm the action really happened — check that the email arrived in the inbox you set in Step 4.
-5. Open the **Activity map** (a diagram of the conversation, if shown) to see the tool being called and the exact data that was passed into it. This is the best way to understand *why* the agent did what it did.
+1. Open the **Test** pane and select **Refresh** at the top so it picks up the new flow tool.
+2. Type a message that should trigger the flow, for example:  —  `Please log a support request: I need help with order 123.`
+3. Watch the agent decide to **call the Log support request flow**. If it asks for confirmation or shows a sign-in prompt, approve it.
+4. Confirm the action really happened — open your table and check that a **new row** was added with the request summary.
+5. Open the **Activity map** (a diagram of the conversation, if shown) to see the tool being called and the exact data passed into it. This is the best way to understand *why* the agent did what it did.
+6. **Switch the email tool back on:** return to the **Tools** tab and turn the **Send notification email** tool (Steps 2–4) back **On**. With both tools live and clearly described, the agent can now *log* a request **and** *email* support — choosing each by its **description**.
 
-> **Tip:** If the email does not arrive, check three things in order: the connection (Unauthorized?), the **To** address, and whether the agent actually chose the tool (look at the Activity map).
+> **Tip:** If the flow does nothing, check three things in order: is the **Send notification email** tool still **Off** during the isolation test, did the flow **Publish** to status **Ready**, and did the agent actually choose the flow (look at the **Activity map**)?
 
 **Step 7: Refine the tool (~5 minutes)**
 
@@ -1739,7 +1785,9 @@ You have successfully completed this lab when:
 | Email never arrives | Wrong recipient or tool not called | Check the **To** value, confirm the connection, and verify the tool ran in the **Activity map**. |
 | Wrong data sent to the tool | AI filled inputs incorrectly | Use **fixed values** where data shouldn't change, or add clearer input hints; test again. |
 | Tool not listed after adding | Wrong environment, or not refreshed | Confirm the agent and flow are in the **same environment** (NUS Copilot Sandbox); refresh the page. |
-| Flow tool fails to return | No response step | Make sure the flow ends with **Respond to the agent**, then re-publish it. |
+| Flow tool fails to return | No response step | Make sure the flow ends with **Respond to the agent** with an output, then re-publish it. |
+| Agent calls the old email tool, never the flow | Two competing tools both enabled | Turn the **Send notification email** connector tool **Off** while you test the flow (Step 5a), then test again. |
+| Flow shows up but status isn't **Ready** | Not published | **Save draft** then **Publish** the flow; the **Tools** list must show status **Ready** before the agent can call it. |
 
 **Key Takeaways**
 
@@ -1747,6 +1795,8 @@ You have successfully completed this lab when:
 - The tool **description** is what makes the agent call the right tool at the right time — write it carefully.
 - Inputs can be **fixed** or **filled by AI** from the conversation; use fixed values for anything that must not change.
 - A flow used as a tool always goes **When an agent calls the flow → do the work → Respond to the agent**.
+- Use a **flow** (not a single connector action) when the work is **multi-step** — e.g. **Add a row into a table** to log a record and return a result.
+- When two tools overlap, the agent may pick the wrong one — **turn off** the competing tool while you test, then re-enable it once each tool has a precise description.
 - A broken connection causes an **Unauthorized** error — reconnect with a mailbox-enabled account.
 - Flows-as-tools are the foundation of the end-to-end workflows you build in Day 3.
 
@@ -1771,7 +1821,7 @@ Build a Sales Enquiry Assistant that Captures Structured Data
 By the end of this lab, you will be able to:
 
 1. Create a Copilot Studio **agent** from scratch in the correct environment
-2. Build a **topic** that starts from **trigger phrases**
+2. Build a **topic** and set its **trigger** so the agent knows when to run it — a **description** for generative orchestration (default), or **trigger phrases** for classic orchestration
 3. Add **Ask a question** nodes that save answers into named **variables**
 4. Choose the right **Identify** type so text and numbers are captured cleanly
 5. Return a tidy **structured summary** that inserts every captured variable
@@ -1812,27 +1862,38 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 
 **Step 2: Create the "New Sales Enquiry" topic (~10 minutes)**
 
-1. With your new agent open, select the **Topics** tab in the top menu.
-2. Select **Add a topic**, then choose **From blank**.
-3. At the top of the canvas, click the topic name (it may say "Untitled") and rename it to `New Sales Enquiry`.
-4. Select the **Trigger** node at the top of the canvas. In the panel that opens, make sure the trigger type is set to **Phrases**.
-5. Add the following **trigger phrases** — these are example sentences a customer might type to start this topic. Press **Enter** after each one:  —  `I want to make an enquiry`  —  `I'd like a quote`  —  `new sales enquiry`  —  `I'm interested in a product`
-6. Select **Save** (top-right of the canvas).
+> **⚠️ Read this first — the latest Copilot Studio works differently.** New agents now use **generative orchestration** by default. In this mode a topic is triggered by its **name and description** — the agent *chooses* the topic when the user's message matches that description — **not** by a fixed list of "Phrases". The old phrase list still exists, but it's now called **User says a phrase** and only appears if you deliberately switch the trigger type. This lab uses the modern **description-based** trigger (recommended and easiest); the phrase option is shown at the end of this step.
 
-> **Tip:** You don't need to list every possible sentence. The agent matches phrases that are *similar in meaning*, not just exact text. Four to six varied phrases is plenty.
+1. Open your **Sales Enquiry Assistant** agent, then in the agent's top menu select **Topics**. *(If you don't see it, select **⋯ More** and choose **Topics**.)*
+2. Select **+ Add a topic**, then choose **From blank**. A blank canvas opens with a single **Trigger** node at the top. *(You may also see **Create from description with Copilot** — ignore it for this lab so you build the steps yourself.)*
+3. On the canvas toolbar, select **Details** to open the **Topic details** panel, then set:  —  **Name:** `New Sales Enquiry`  *(don't use a full stop/period in a topic name)*  —  **Description:** `Use this topic when the customer wants to make a sales enquiry, ask for a quote, or say they are interested in buying a product. It collects the customer's name, company, product, and quantity.`
+
+Close the panel. This **Description** is what makes the agent pick this topic, so keep it specific.
+
+1. Select the **Trigger** node once. For a generative-orchestration agent it reads **The agent chooses** — that is correct, and it uses the description from step 3. **You do not need to add any phrases.**
+2. Select **Save** (top-right of the canvas).
+
+> **Tip:** The agent matches on *meaning*, not exact wording. A clear, specific **Description** is what makes the topic fire reliably — write it the way you'd explain to a colleague *when* this topic should be used.
+
+**(Optional) Want exact trigger phrases instead?** Only if your agent uses **classic orchestration**, or you specifically want the topic to fire on set phrases:
+
+1. Hover over the **Trigger** node and select the **Change trigger** icon.
+2. Choose **User says a phrase**.
+3. Add example phrases (aim for 5–10), each on its own line: `I want to make an enquiry`, `I'd like a quote`, `new sales enquiry`, `I'm interested in a product`.
+4. Select **Save**.
 
 **Step 3: Capture the customer's name and company (~10 minutes)**
 
-1. Under the **Trigger** node, select the **+** (Add node) button, then choose **Ask a question**.
-2. Configure the question node:  —  **Question text:** `Sure, I can help with that! What is your full name?`  —  **Identify:** open this dropdown and choose **User's entire response**. This captures the whole reply as plain text (good for names).  —  **Save response as:** Copilot Studio creates a variable automatically. Click the variable name and rename it to `customerName`.
-3. Select the **+** below that node and add a second **Ask a question** node for the company:  —  **Question text:** `Thanks! Which company are you with?`  —  **Identify:** **User's entire response**  —  **Save response as:** rename the variable to `company`
+1. Under the **Trigger** node, select the **Add node** icon (**+**), then choose **Ask a question**. A **Question** node appears.
+2. Configure the question node:  —  **Ask a question (message):** `Sure, I can help with that! What is your full name?`  —  **Identify:** open this dropdown and choose **User's entire response**. This captures the whole reply as plain text (good for names).  —  **Save user response as:** Copilot Studio creates a variable automatically. Select the variable name and rename it to `customerName`.
+3. Select the **Add node** icon (**+**) below that node and add a second **Ask a question** node for the company:  —  **Ask a question (message):** `Thanks! Which company are you with?`  —  **Identify:** **User's entire response**  —  **Save user response as:** rename the variable to `company`
 
 > **Tip:** Rename variables right away. A clear name like `customerName` is much easier to find later than the default `Var1`, especially when you map it to a flow in Lab 10.
 
 **Step 4: Capture the product and quantity (~10 minutes)**
 
-1. Add another **Ask a question** node for the product:  —  **Question text:** `Which product are you interested in?`  —  **Identify:** **User's entire response**  —  **Save response as:** `product`
-2. Add a final **Ask a question** node for the quantity:  —  **Question text:** `How many units would you like?`  —  **Identify:** open the dropdown and choose **Number**. This forces the answer to be a real number, so it can be used in calculations and stored as a number later.  —  **Save response as:** `quantity`
+1. Add another **Ask a question** node for the product:  —  **Ask a question (message):** `Which product are you interested in?`  —  **Identify:** **User's entire response**  —  **Save user response as:** `product`
+2. Add a final **Ask a question** node for the quantity:  —  **Ask a question (message):** `How many units would you like?`  —  **Identify:** open the dropdown and choose **Number**. This forces the answer to be a real number, so it can be used in calculations and stored as a number later.  —  **Save user response as:** `quantity`
 
 > **⚠️ Warning:** Make sure quantity uses **Identify = Number**, not "User's entire response". If you leave it as text, `quantity` becomes a word like "twenty-five" instead of `25`, and the Excel/flow steps in Lab 10 will store messy data.
 
@@ -1840,7 +1901,7 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 
 **Step 5: Confirm and summarize (~10 minutes)**
 
-1. Select the **+** below the quantity question and choose **Send a message**.
+1. Select the **Add node** icon (**+**) below the quantity question and choose **Send a message**. A **Message** node appears.
 2. Type the summary text below. Wherever you see a curly-brace variable, do **not** type it as plain text — instead place your cursor there, select the **{x}** (Insert variable) button on the node, and pick the matching variable from the list:
 
 ```
@@ -1859,7 +1920,7 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 **Step 6: Test the assistant (~10 minutes)**
 
 1. Open the **Test** pane on the right (if it was already open, select the **Refresh** / restart icon so it picks up your latest changes).
-2. Type a trigger phrase: `I'd like a quote`.
+2. Type a message that starts an enquiry, e.g. `I'd like a quote`. The agent should recognise this from your topic **Description** and start the **New Sales Enquiry** topic.
 3. Answer each question in turn:  —  Name: `Mei Ling`  —  Company: `BrightTech`  —  Product: `Air Fryer Pro`  —  Quantity: `25`
 4. Confirm the agent returns the structured summary with all four values filled in correctly.
 5. Now test the **unhappy path**: start the topic again, and when asked for quantity, type the word `twenty-five` instead of a number. Because **Identify** is set to **Number**, the agent should **re-ask** the question. Type `25` and confirm it then accepts it.
@@ -1873,7 +1934,7 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 You are ready to move on when all of the following are true:
 
 - ✅ An agent named **Sales Enquiry Assistant** exists in the **NUS Copilot Sandbox** environment
-- ✅ It has a **New Sales Enquiry** topic that starts from trigger phrases
+- ✅ It has a **New Sales Enquiry** topic with a clear **trigger** — a description (**The agent chooses**) or trigger phrases
 - ✅ Four variables are captured: `customerName`, `company`, `product`, and `quantity` (Number)
 - ✅ A structured summary with all four values is returned during testing
 - ✅ Typing text for the quantity causes the agent to re-ask
@@ -1882,8 +1943,9 @@ You are ready to move on when all of the following are true:
 
 | Problem | Solution |
 | --- | --- |
-| Topic doesn't trigger when I type | Add more, more varied trigger phrases; type something close in meaning to one of them. Re-test after **Save**. |
-| Variable shows as blank in the summary | You probably typed the variable name as text. Delete it and re-insert it using the **{x}** button. Also confirm the **Save response as** name matches. |
+| I can't find a "Phrases" trigger type | New agents use **generative orchestration**, so the trigger is **The agent chooses** (description-based). Either write a clear topic **Description**, or hover the **Trigger** node → **Change trigger** → **User says a phrase** to add phrases. |
+| Topic doesn't trigger when I type | Make the topic **Description** more specific about *when* to use it (or add more varied phrases if using **User says a phrase**). Type something close in meaning; re-test after **Save**. |
+| Variable shows as blank in the summary | You probably typed the variable name as text. Delete it and re-insert it using the **{x}** button. Also confirm the **Save user response as** name matches. |
 | Summary shows literal `{customerName}` text | Same cause — insert variables via **{x}**, do not type curly braces by hand. |
 | Quantity answer is rejected or re-asked forever | Set the quantity question's **Identify** to **Number** and answer with digits like `25`, not spelled-out words. |
 | Test pane shows old behaviour | Select the **Refresh / restart** icon at the top of the Test pane to reload the latest version of the topic. |
@@ -1891,7 +1953,7 @@ You are ready to move on when all of the following are true:
 
 **Key Takeaways**
 
-- **Topics** are started by **trigger phrases** — example sentences a user might type.
+- **Topics** are triggered by a **description** (**The agent chooses**, generative orchestration — the default) or by **trigger phrases** (**User says a phrase**, classic orchestration).
 - **Ask a question** nodes capture answers into named **variables**, which is the foundation of structured data.
 - The **Identify** type matters: use **User's entire response** for free text and **Number** for numeric answers.
 - A confirmation summary builds user trust and lets you visually verify the captured data before any automation runs.
@@ -1962,9 +2024,9 @@ At **ACME Pte Ltd**, staff currently email the procurement team to request suppl
 
 - Select **Create**.
 
-1. Open the **Topics** tab, select **Add a topic**, then **From blank**. Rename the topic to `New Procurement Request`.
-2. Select the **Trigger** node, set it to **Phrases**, and add these trigger phrases (press **Enter** after each):  —  `I need to buy something`  —  `procurement request`  —  `I want to order supplies`  —  `raise a purchase request`
-3. Add four **Ask a question** nodes in order, using the **+** button each time. For each, set the **Identify** type and rename the **Save response as** variable exactly as shown:  —  Question `What is your name?` → Identify **User's entire response** → save as `requester`  —  Question `What item do you need?` → Identify **User's entire response** → save as `item`  —  Question `How many do you need?` → Identify **Number** → save as `quantity`  —  Question `What is the reason for this request?` → Identify **User's entire response** → save as `reason`
+1. Open the **Topics** tab, select **+ Add a topic**, then **From blank**. On the toolbar select **Details** and set the **Name** to `New Procurement Request`.
+2. Give the topic a clear **trigger** so the agent knows when to run it:  —  **Latest Copilot Studio (generative orchestration — default):** the **Trigger** node reads **The agent chooses**. In the **Details** panel, set the **Description** to `Use this topic when a staff member wants to raise a procurement or purchase request to buy supplies. It collects their name, item, quantity, and reason.` No phrases are needed.  —  **(Optional) Classic orchestration / exact phrases:** hover the **Trigger** node → **Change trigger** → **User says a phrase**, then add phrases such as `procurement request`, `I need to buy something`, `I want to order supplies`, `raise a purchase request`.
+3. Add four **Ask a question** nodes in order, using the **Add node** icon (**+**) each time. For each, set the **Identify** type and rename the **Save user response as** variable exactly as shown:  —  Question `What is your name?` → Identify **User's entire response** → save as `requester`  —  Question `What item do you need?` → Identify **User's entire response** → save as `item`  —  Question `How many do you need?` → Identify **Number** → save as `quantity`  —  Question `What is the reason for this request?` → Identify **User's entire response** → save as `reason`
 4. Select **Save**.
 
 > **⚠️ Warning:** Set the quantity question's **Identify** to **Number**. If it stays as text, the Excel **Quantity** column will store words instead of numbers.
@@ -2036,7 +2098,7 @@ At **ACME Pte Ltd**, staff currently email the procurement team to request suppl
 **Step 6: Test end-to-end (~10 minutes)**
 
 1. Open the **Test** pane and select the **Refresh / restart** icon so it loads the latest topic.
-2. Type a trigger phrase: `procurement request`. Answer the questions:  —  Name: `Daniel`  —  Item: `Wireless mouse`  —  Quantity: `10`  —  Reason: `New hires`
+2. Type a message that starts the request, e.g. `procurement request` — the agent recognises it from the topic **Description** (or phrases). Answer the questions:  —  Name: `Daniel`  —  Item: `Wireless mouse`  —  Quantity: `10`  —  Reason: `New hires`
 3. Confirm all three results occurred:  —  The agent shows the confirmation message ("Logged and procurement team notified. Your request has been recorded. Thank you!").  —  A **new row** appears in **Procurement Log.xlsx** (with a real date, the four values, and Status `Pending`).  —  The **notification email** arrives in your inbox.
 4. If anything is missing, open the flow in Power Automate and review its **run history** (28-day run history) — select the latest run to inspect the inputs each step received and any error messages.
 
@@ -2167,7 +2229,7 @@ At **ACME Pte Ltd**, every sales enquiry currently gets the same copy-paste repl
 1. Back in the topic, select the flow's tool node and map each input to its matching topic variable — the flow gets empty values if you skip this:  —  input `customerName` → variable `customerName`  —  input `company` → variable `company`  —  input `product` → variable `product`  —  input `quantity` → variable `quantity`
 2. (Optional) After the tool node, add a **Send a message** node showing `{result}` so the agent confirms the email was sent.
 3. Select **Save** to save the topic.
-4. Open the **Test** pane, select the **Refresh / restart** icon, type a trigger phrase, and run the enquiry:  —  Name: `Mei Ling`, Company: `BrightTech`, Product: `Air Fryer Pro`, Quantity: `25`
+4. Open the **Test** pane, select the **Refresh / restart** icon, type a message that starts the enquiry (the agent recognises it from the topic **Description**), and run the enquiry:  —  Name: `Mei Ling`, Company: `BrightTech`, Product: `Air Fryer Pro`, Quantity: `25`
 5. Confirm:  —  The flow runs successfully (check **run history** if unsure).  —  You receive a **uniquely worded, personalised** email — not a fixed template.
 6. Run it again with different details and compare the two emails; the AI adapts the wording each time.
 
@@ -2860,9 +2922,9 @@ The flow needs somewhere to write each order. We use an Excel **Table** (not jus
 ```
 
 1. Click **Create**.
-2. In the left menu open **Topics** → **Add a topic** → **From blank**. Rename the topic **New Order** (click the topic name at the top to rename).
-3. Click the **Trigger** node → set **Phrases** to: `I want to place an order`, `new order`, `I'd like to buy`, `order products` (one phrase per line).
-4. Below the trigger, click **+** → **Ask a question** five times to add five questions. For each one, type the message, set what to **Identify**, and save the answer to a **variable**:
+2. In the left menu open **Topics** → **+ Add a topic** → **From blank**. On the toolbar select **Details** and set the **Name** to `New Order`.
+3. Set the topic **trigger** (latest Copilot Studio):  —  **Generative orchestration (default):** the **Trigger** node reads **The agent chooses**. In **Details**, set the **Description** to `Use this topic when a customer wants to place an order or buy a product. It collects the customer's name, email, product, quantity, and delivery address.` No phrases needed.  —  **(Optional) exact phrases:** hover the **Trigger** node → **Change trigger** → **User says a phrase**, then add `I want to place an order`, `new order`, `I'd like to buy`, `order products` (one per line).
+4. Below the trigger, select the **Add node** icon (**+**) → **Ask a question** five times to add five questions. For each one, type the message, set what to **Identify**, and save the answer to a **variable**:
 
 | Question message | Identify | Save answer as variable |
 | --- | --- | --- |

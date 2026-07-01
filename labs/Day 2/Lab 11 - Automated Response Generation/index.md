@@ -84,7 +84,7 @@ At **ACME Pte Ltd**, every sales enquiry currently gets the same copy-paste repl
    - input `quantity` → variable `quantity`
 2. (Optional) After the tool node, add a **Send a message** node showing `{result}` so the agent confirms the email was sent.
 3. Select **Save** to save the topic.
-4. Open the **Test** pane, select the **Refresh / restart** icon, type a trigger phrase, and run the enquiry:
+4. Open the **Test** pane, select the **Refresh / restart** icon, type a message that starts the enquiry (the agent recognises it from the topic **Description**), and run the enquiry:
    - Name: `Mei Ling`, Company: `BrightTech`, Product: `Air Fryer Pro`, Quantity: `25`
 5. Confirm:
    - The flow runs successfully (check **run history** if unsure).

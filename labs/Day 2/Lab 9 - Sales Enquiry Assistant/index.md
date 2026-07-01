@@ -6,7 +6,7 @@ Build a Sales Enquiry Assistant that Captures Structured Data
 ## Lab Objectives
 By the end of this lab, you will be able to:
 1. Create a Copilot Studio **agent** from scratch in the correct environment
-2. Build a **topic** that starts from **trigger phrases**
+2. Build a **topic** and set its **trigger** so the agent knows when to run it — a **description** for generative orchestration (default), or **trigger phrases** for classic orchestration
 3. Add **Ask a question** nodes that save answers into named **variables**
 4. Choose the right **Identify** type so text and numbers are captured cleanly
 5. Return a tidy **structured summary** that inserts every captured variable
@@ -44,48 +44,56 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 > **Tip:** If **Create** is greyed out, the **Name** field is usually empty. Every agent needs a name before it can be created.
 
 ### Step 2: Create the "New Sales Enquiry" topic (~10 minutes)
-1. With your new agent open, select the **Topics** tab in the top menu.
-2. Select **Add a topic**, then choose **From blank**.
-3. At the top of the canvas, click the topic name (it may say "Untitled") and rename it to `New Sales Enquiry`.
-4. Select the **Trigger** node at the top of the canvas. In the panel that opens, make sure the trigger type is set to **Phrases**.
-5. Add the following **trigger phrases** — these are example sentences a customer might type to start this topic. Press **Enter** after each one:
-   - `I want to make an enquiry`
-   - `I'd like a quote`
-   - `new sales enquiry`
-   - `I'm interested in a product`
-6. Select **Save** (top-right of the canvas).
 
-> **Tip:** You don't need to list every possible sentence. The agent matches phrases that are *similar in meaning*, not just exact text. Four to six varied phrases is plenty.
+> **⚠️ Read this first — the latest Copilot Studio works differently.** New agents now use **generative orchestration** by default. In this mode a topic is triggered by its **name and description** — the agent *chooses* the topic when the user's message matches that description — **not** by a fixed list of "Phrases". The old phrase list still exists, but it's now called **User says a phrase** and only appears if you deliberately switch the trigger type. This lab uses the modern **description-based** trigger (recommended and easiest); the phrase option is shown at the end of this step.
+
+1. Open your **Sales Enquiry Assistant** agent, then in the agent's top menu select **Topics**. *(If you don't see it, select **⋯ More** and choose **Topics**.)*
+2. Select **+ Add a topic**, then choose **From blank**. A blank canvas opens with a single **Trigger** node at the top. *(You may also see **Create from description with Copilot** — ignore it for this lab so you build the steps yourself.)*
+3. On the canvas toolbar, select **Details** to open the **Topic details** panel, then set:
+   - **Name:** `New Sales Enquiry`  *(don't use a full stop/period in a topic name)*
+   - **Description:** `Use this topic when the customer wants to make a sales enquiry, ask for a quote, or say they are interested in buying a product. It collects the customer's name, company, product, and quantity.`
+
+   Close the panel. This **Description** is what makes the agent pick this topic, so keep it specific.
+4. Select the **Trigger** node once. For a generative-orchestration agent it reads **The agent chooses** — that is correct, and it uses the description from step 3. **You do not need to add any phrases.**
+5. Select **Save** (top-right of the canvas).
+
+> **Tip:** The agent matches on *meaning*, not exact wording. A clear, specific **Description** is what makes the topic fire reliably — write it the way you'd explain to a colleague *when* this topic should be used.
+
+**(Optional) Want exact trigger phrases instead?** Only if your agent uses **classic orchestration**, or you specifically want the topic to fire on set phrases:
+   1. Hover over the **Trigger** node and select the **Change trigger** icon.
+   2. Choose **User says a phrase**.
+   3. Add example phrases (aim for 5–10), each on its own line: `I want to make an enquiry`, `I'd like a quote`, `new sales enquiry`, `I'm interested in a product`.
+   4. Select **Save**.
 
 ### Step 3: Capture the customer's name and company (~10 minutes)
-1. Under the **Trigger** node, select the **+** (Add node) button, then choose **Ask a question**.
+1. Under the **Trigger** node, select the **Add node** icon (**+**), then choose **Ask a question**. A **Question** node appears.
 2. Configure the question node:
-   - **Question text:** `Sure, I can help with that! What is your full name?`
+   - **Ask a question (message):** `Sure, I can help with that! What is your full name?`
    - **Identify:** open this dropdown and choose **User's entire response**. This captures the whole reply as plain text (good for names).
-   - **Save response as:** Copilot Studio creates a variable automatically. Click the variable name and rename it to `customerName`.
-3. Select the **+** below that node and add a second **Ask a question** node for the company:
-   - **Question text:** `Thanks! Which company are you with?`
+   - **Save user response as:** Copilot Studio creates a variable automatically. Select the variable name and rename it to `customerName`.
+3. Select the **Add node** icon (**+**) below that node and add a second **Ask a question** node for the company:
+   - **Ask a question (message):** `Thanks! Which company are you with?`
    - **Identify:** **User's entire response**
-   - **Save response as:** rename the variable to `company`
+   - **Save user response as:** rename the variable to `company`
 
 > **Tip:** Rename variables right away. A clear name like `customerName` is much easier to find later than the default `Var1`, especially when you map it to a flow in Lab 10.
 
 ### Step 4: Capture the product and quantity (~10 minutes)
 1. Add another **Ask a question** node for the product:
-   - **Question text:** `Which product are you interested in?`
+   - **Ask a question (message):** `Which product are you interested in?`
    - **Identify:** **User's entire response**
-   - **Save response as:** `product`
+   - **Save user response as:** `product`
 2. Add a final **Ask a question** node for the quantity:
-   - **Question text:** `How many units would you like?`
+   - **Ask a question (message):** `How many units would you like?`
    - **Identify:** open the dropdown and choose **Number**. This forces the answer to be a real number, so it can be used in calculations and stored as a number later.
-   - **Save response as:** `quantity`
+   - **Save user response as:** `quantity`
 
 > **⚠️ Warning:** Make sure quantity uses **Identify = Number**, not "User's entire response". If you leave it as text, `quantity` becomes a word like "twenty-five" instead of `25`, and the Excel/flow steps in Lab 10 will store messy data.
 
 > **Tip:** Capturing into four separate named variables (`customerName`, `company`, `product`, `quantity`) is what makes the output **structured** — each piece of data is isolated and reusable. A single blob of free text could not be logged into separate spreadsheet columns.
 
 ### Step 5: Confirm and summarize (~10 minutes)
-1. Select the **+** below the quantity question and choose **Send a message**.
+1. Select the **Add node** icon (**+**) below the quantity question and choose **Send a message**. A **Message** node appears.
 2. Type the summary text below. Wherever you see a curly-brace variable, do **not** type it as plain text — instead place your cursor there, select the **{x}** (Insert variable) button on the node, and pick the matching variable from the list:
    ```
    Thank you! Here is a summary of your enquiry:
@@ -101,7 +109,7 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 
 ### Step 6: Test the assistant (~10 minutes)
 1. Open the **Test** pane on the right (if it was already open, select the **Refresh** / restart icon so it picks up your latest changes).
-2. Type a trigger phrase: `I'd like a quote`.
+2. Type a message that starts an enquiry, e.g. `I'd like a quote`. The agent should recognise this from your topic **Description** and start the **New Sales Enquiry** topic.
 3. Answer each question in turn:
    - Name: `Mei Ling`
    - Company: `BrightTech`
@@ -117,7 +125,7 @@ You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in 
 ## Checkpoint
 You are ready to move on when all of the following are true:
 - ✅ An agent named **Sales Enquiry Assistant** exists in the **NUS Copilot Sandbox** environment
-- ✅ It has a **New Sales Enquiry** topic that starts from trigger phrases
+- ✅ It has a **New Sales Enquiry** topic with a clear **trigger** — a description (**The agent chooses**) or trigger phrases
 - ✅ Four variables are captured: `customerName`, `company`, `product`, and `quantity` (Number)
 - ✅ A structured summary with all four values is returned during testing
 - ✅ Typing text for the quantity causes the agent to re-ask
@@ -125,15 +133,16 @@ You are ready to move on when all of the following are true:
 ## Troubleshooting
 | Problem | Solution |
 |---------|----------|
-| Topic doesn't trigger when I type | Add more, more varied trigger phrases; type something close in meaning to one of them. Re-test after **Save**. |
-| Variable shows as blank in the summary | You probably typed the variable name as text. Delete it and re-insert it using the **{x}** button. Also confirm the **Save response as** name matches. |
+| I can't find a "Phrases" trigger type | New agents use **generative orchestration**, so the trigger is **The agent chooses** (description-based). Either write a clear topic **Description**, or hover the **Trigger** node → **Change trigger** → **User says a phrase** to add phrases. |
+| Topic doesn't trigger when I type | Make the topic **Description** more specific about *when* to use it (or add more varied phrases if using **User says a phrase**). Type something close in meaning; re-test after **Save**. |
+| Variable shows as blank in the summary | You probably typed the variable name as text. Delete it and re-insert it using the **{x}** button. Also confirm the **Save user response as** name matches. |
 | Summary shows literal `{customerName}` text | Same cause — insert variables via **{x}**, do not type curly braces by hand. |
 | Quantity answer is rejected or re-asked forever | Set the quantity question's **Identify** to **Number** and answer with digits like `25`, not spelled-out words. |
 | Test pane shows old behaviour | Select the **Refresh / restart** icon at the top of the Test pane to reload the latest version of the topic. |
 | Agent answers off-topic questions | Tighten the **Instructions** to say it must steer back to capturing the enquiry. |
 
 ## Key Takeaways
-- **Topics** are started by **trigger phrases** — example sentences a user might type.
+- **Topics** are triggered by a **description** (**The agent chooses**, generative orchestration — the default) or by **trigger phrases** (**User says a phrase**, classic orchestration).
 - **Ask a question** nodes capture answers into named **variables**, which is the foundation of structured data.
 - The **Identify** type matters: use **User's entire response** for free text and **Number** for numeric answers.
 - A confirmation summary builds user trust and lets you visually verify the captured data before any automation runs.
