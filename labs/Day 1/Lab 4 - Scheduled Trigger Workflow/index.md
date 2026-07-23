@@ -26,7 +26,7 @@ At **ACME Pte Ltd**, some work isn't triggered by an event — it just needs to 
 ## Step-by-Step Guide
 
 ### Step 1: Create a scheduled flow (~6 minutes)
-1. Go to **https://make.powerautomate.com**.
+1. Go to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>**.
 2. Top-left, confirm the environment selector reads **NUS Copilot Sandbox**. If not, click it and switch.
 3. In the left menu, click **+ Create**.
 4. Under "Start from blank", click **Scheduled cloud flow**.

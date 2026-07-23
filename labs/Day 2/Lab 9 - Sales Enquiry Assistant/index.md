@@ -16,7 +16,7 @@ By the end of this lab, you will be able to:
 - Completed [Lab 6](../Lab%206%20-%20Create%20Your%20First%20Agent/index.md)
 - Read [Module 3](../Module%203%20-%20Business%20Agents%20Concepts.md), especially *Prompt design for structured outputs*
 
-> **Tip:** Sign in to Copilot Studio at [https://copilotstudio.microsoft.com](https://copilotstudio.microsoft.com) and confirm the environment shown at the **top-right** says **NUS Copilot Sandbox** before you start. Every lab on Day 2 must be built in this same environment, otherwise your agent and your flow will not be able to see each other later.
+> **Tip:** Sign in to Copilot Studio at <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a> and confirm the environment shown at the **top-right** says **NUS Copilot Sandbox** before you start. Every lab on Day 2 must be built in this same environment, otherwise your agent and your flow will not be able to see each other later.
 
 ## Scenario
 You work at **ACME Pte Ltd**. The sales team complains that enquiries arrive in inconsistent formats — some by email, some by phone notes — so details get lost. Your job is to build a **Sales Enquiry Assistant** agent that walks a customer through a short set of questions and captures **name, company, product, and quantity** as separate, named pieces of data. The result is a clean **structured summary** — exactly the kind of tidy data a Power Automate flow can log and route automatically in the next lab.

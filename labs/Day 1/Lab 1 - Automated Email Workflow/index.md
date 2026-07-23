@@ -14,7 +14,7 @@ By the end of this lab, you will be able to:
 
 ## Prerequisites
 - Completed [Lab 0](../Lab%200%20-%20Environment%20Setup/index.md) (accounts ready)
-- Signed in at https://make.powerautomate.com with **NUS Copilot Sandbox** selected (top-right)
+- Signed in at <a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a> with **NUS Copilot Sandbox** selected (top-right)
 - Outlook working with your account (a mailbox-enabled account)
 
 ## Scenario
@@ -25,7 +25,7 @@ At **ACME Pte Ltd**, every customer enquiry should get an instant, personalized 
 ## Step-by-Step Guide
 
 ### Step 1: Start a new flow (~5 minutes)
-1. Go to **https://make.powerautomate.com** and sign in.
+1. Go to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>** and sign in.
 2. Confirm the **Environment selector** (top-right) shows **NUS Copilot Sandbox** — the environment from Lab 0.
 3. In the left menu, select **Create**.
 4. Under "Start from blank", select **Instant cloud flow**.

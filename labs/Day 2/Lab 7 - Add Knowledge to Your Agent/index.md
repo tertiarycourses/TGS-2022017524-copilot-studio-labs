@@ -55,7 +55,7 @@ Pick **one** source to start (you can add more later). Choose whichever is easie
 
 ### Step 2: Open your agent's Knowledge tab (~3 minutes)
 
-1. Go to **https://copilotstudio.microsoft.com** and confirm the **environment selector** (top-right) shows **NUS Copilot Sandbox**.
+1. Go to **<a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a>** and confirm the **environment selector** (top-right) shows **NUS Copilot Sandbox**.
 2. Open your **Company Helpdesk** agent from Lab 6.
 3. Select the **Knowledge** tab.
 4. Select **+ Add knowledge**.

@@ -23,7 +23,7 @@ ACME Pte Ltd receives customer enquiries by email to a shared inbox. Right now, 
 ## Step-by-Step Guide
 
 ### Step 1: Create an automated cloud flow (~5 minutes)
-1. In your browser, go to **https://make.powerautomate.com** and sign in.
+1. In your browser, go to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>** and sign in.
 2. Top-right, confirm the environment selector shows **NUS Copilot Sandbox**. If it shows a different environment, click it and switch — every tool in this course uses the same environment.
 3. In the left menu, select **Create**.
 4. Under **Start from blank**, select **Automated cloud flow**.

@@ -23,7 +23,7 @@ At ACME Pte Ltd, staff raise purchase requests through the **Procurement Assista
 ## Step-by-Step Guide
 
 ### Step 1: Reuse the Procurement Assistant agent (~5 minutes)
-1. Go to **https://copilotstudio.microsoft.com**, confirm the environment is **NUS Copilot Sandbox**, and open your **Procurement Assistant** agent (from Day 2 Lab 10).
+1. Go to **<a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a>**, confirm the environment is **NUS Copilot Sandbox**, and open your **Procurement Assistant** agent (from Day 2 Lab 10).
 2. Open its **New Procurement Request** topic and confirm it captures these variables: `requester`, `requesterEmail`, `item`, `quantity`, `reason`.
    - If `requesterEmail` is missing, add an **Ask a question** node: `What is your email?` → save the answer to a variable named `requesterEmail`.
    - Add an `estCost` variable: add an **Ask a question** node `What is the estimated total cost (SGD)?`, set the **Identify** type to **Number**, and save to `estCost`.

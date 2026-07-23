@@ -150,6 +150,6 @@ Your capstone is complete when:
 You have completed the **Microsoft Copilot Studio & Power Automate for Business Workflow Automation** course. You can now design and build end-to-end automations that capture requests, apply business rules, route approvals, and notify stakeholders — across **Sales, Finance, Procurement, and Order Processing**.
 
 **Where to go next:**
-- Explore the [Power Automate Templates Gallery](https://make.powerautomate.com/templates/) for ready-made patterns.
-- Review [Copilot Studio documentation](https://learn.microsoft.com/microsoft-copilot-studio/) for advanced agent features.
+- Explore the <a href="https://make.powerautomate.com/templates/" target="_blank" rel="noopener">Power Automate Templates Gallery</a> for ready-made patterns.
+- Review <a href="https://learn.microsoft.com/microsoft-copilot-studio/" target="_blank" rel="noopener">Copilot Studio documentation</a> for advanced agent features.
 - Identify one manual process at your workplace and automate it this week.

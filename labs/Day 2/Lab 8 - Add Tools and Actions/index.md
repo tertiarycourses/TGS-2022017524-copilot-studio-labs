@@ -31,7 +31,7 @@ So far your **Company Helpdesk** agent can *answer* questions (using Knowledge).
 
 ### Step 1: Open the Tools tab (~5 minutes)
 
-1. Go to **https://copilotstudio.microsoft.com** and confirm the **environment selector** (top-right) shows **NUS Copilot Sandbox** — the same environment as your Power Automate flows.
+1. Go to **<a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a>** and confirm the **environment selector** (top-right) shows **NUS Copilot Sandbox** — the same environment as your Power Automate flows.
 2. Open your **Company Helpdesk** agent from Lab 6.
 3. Select the **Tools** tab (in some versions this is labelled **Actions**).
 4. Select **+ Add a tool**. Microsoft groups tools into several **core tool types**:

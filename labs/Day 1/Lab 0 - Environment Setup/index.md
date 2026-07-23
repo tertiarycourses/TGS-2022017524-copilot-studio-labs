@@ -35,7 +35,7 @@ You work for **ACME Pte Ltd** and will spend the next three days automating ACME
 
 This creates a brand-new *work* account such as `admin@yourname.onmicrosoft.com` with Microsoft 365 (Outlook, Excel, OneDrive, SharePoint) — exactly what Power Automate and Copilot Studio need. Skip this entirely if you already have a work/school account.
 
-1. Open a browser and go to **https://www.microsoft.com/microsoft-365/business** (or search "Microsoft 365 Business Standard free trial").
+1. Open a browser and go to **<a href="https://www.microsoft.com/microsoft-365/business" target="_blank" rel="noopener">https://www.microsoft.com/microsoft-365/business</a>** (or search "Microsoft 365 Business Standard free trial").
 2. Choose **Microsoft 365 Business Standard** and select **Try free for 1 month**.
 3. Enter an email address to start. When prompted, choose **Set up account** / **Create a new account**.
 4. Fill in your details (name, business name — you may use your own name, country, phone for verification).
@@ -52,7 +52,7 @@ This creates a brand-new *work* account such as `admin@yourname.onmicrosoft.com`
 
 ### Step 1: Sign in to the Microsoft 365 portal (~5 minutes)
 
-1. Go to **https://www.office.com** (or **https://m365.cloud.microsoft**).
+1. Go to **<a href="https://www.office.com" target="_blank" rel="noopener">https://www.office.com</a>** (or **<a href="https://m365.cloud.microsoft" target="_blank" rel="noopener">https://m365.cloud.microsoft</a>**).
 2. Select **Sign in** and enter your **work/school account** (Option A) or your new **Business trial account** (Option B), then your password.
 3. If this is your first sign-in, you may be asked to set up multi-factor authentication (MFA). Follow the prompts using your mobile phone.
 4. Once signed in, you should see the Microsoft 365 home page with app tiles (Outlook, Word, Excel, etc.).
@@ -67,7 +67,7 @@ This creates a brand-new *work* account such as `admin@yourname.onmicrosoft.com`
 
 An **environment** is a container that holds your flows, agents, and data. For this course we'll create a dedicated **Sandbox** environment with **Dataverse** turned on, so Day 2/Day 3 Copilot Studio agents have a database to use.
 
-1. Open a new tab and go to the **Power Platform admin center**: **https://admin.powerplatform.microsoft.com**.
+1. Open a new tab and go to the **Power Platform admin center**: **<a href="https://admin.powerplatform.microsoft.com" target="_blank" rel="noopener">https://admin.powerplatform.microsoft.com</a>**.
 2. Sign in with the **same account** from Step 1.
 3. In the left menu, select **Manage → Environments**.
 4. Select **+ New** (top of the page).
@@ -87,7 +87,7 @@ An **environment** is a container that holds your flows, agents, and data. For t
 
 Power Automate is where you build the automated workflows (called **flows**).
 
-1. Open a new tab and go to **https://make.powerautomate.com**.
+1. Open a new tab and go to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>**.
 2. Sign in with the **same account**.
 3. The first time, you may be asked to **select your country/region** — choose the correct one and select **Get started**.
 4. You'll see the Power Automate home page with a left-hand menu: **Home, Create, My flows, Templates, Connectors, Learn, More**.
@@ -104,7 +104,7 @@ Power Automate is where you build the automated workflows (called **flows**).
 
 Copilot Studio is where you build the AI **agents** (used on Day 2 and Day 3).
 
-1. Open a new tab and go to **https://copilotstudio.microsoft.com**.
+1. Open a new tab and go to **<a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a>**.
 2. Sign in with the **same account** again.
 3. If prompted, select your **country/region** and select **Start free trial** (or **Try free**). This activates a **30-day Copilot Studio trial** at no cost.
 4. Wait for the workspace to load. You'll see the Copilot Studio home page with options to **Create** an agent.
@@ -121,12 +121,12 @@ Run this quick checklist. Each item should already be true if the steps above su
 
 | # | Check | Where |
 |---|-------|-------|
-| 1 | I can sign in and see app tiles | https://office.com |
+| 1 | I can sign in and see app tiles | <a href="https://office.com" target="_blank" rel="noopener">https://office.com</a> |
 | 2 | I can open Outlook and send myself an email | Outlook |
 | 3 | I can open Excel and it saves to OneDrive | Excel / OneDrive |
-| 4 | My **NUS Copilot Sandbox** environment shows status **Ready** | https://admin.powerplatform.microsoft.com |
-| 5 | Power Automate home page loads and **NUS Copilot Sandbox** is selected | https://make.powerautomate.com |
-| 6 | Copilot Studio loads, my trial is active, and **NUS Copilot Sandbox** is selected | https://copilotstudio.microsoft.com |
+| 4 | My **NUS Copilot Sandbox** environment shows status **Ready** | <a href="https://admin.powerplatform.microsoft.com" target="_blank" rel="noopener">https://admin.powerplatform.microsoft.com</a> |
+| 5 | Power Automate home page loads and **NUS Copilot Sandbox** is selected | <a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a> |
+| 6 | Copilot Studio loads, my trial is active, and **NUS Copilot Sandbox** is selected | <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a> |
 | 7 | Power Automate and Copilot Studio show the **same** environment | Top-right selector in both |
 
 If all seven are checked, your environment is ready.

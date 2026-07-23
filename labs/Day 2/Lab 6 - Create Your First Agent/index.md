@@ -15,7 +15,7 @@ By the end of this lab, you will be able to:
 ## Prerequisites
 - Completed [Lab 0](../../Day%201/Lab%200%20-%20Environment%20Setup/index.md) (Copilot Studio trial active)
 - Read [Module 3](../Module%203%20-%20Business%20Agents%20Concepts.md)
-- Signed in at https://copilotstudio.microsoft.com (same environment as Power Automate)
+- Signed in at <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a> (same environment as Power Automate)
 
 ## Scenario
 You work in IT at **ACME Pte Ltd**, a small company. Staff keep emailing IT the same basic questions: opening hours, who to contact, how to reset things. You will build a friendly **Company Helpdesk** agent that answers these questions automatically.
@@ -32,7 +32,7 @@ This lab is your guided tour of Copilot Studio. You will learn the interface and
 
 Before you build anything, make sure you are in the correct environment. This is the single most common cause of problems later in the course.
 
-1. Go to **https://copilotstudio.microsoft.com** and sign in with your course account.
+1. Go to **<a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">https://copilotstudio.microsoft.com</a>** and sign in with your course account.
 2. Look at the **top-right corner** of the screen. You will see an **environment selector** (a small label showing the current environment name, often with a globe or building icon).
 3. Click it and select **NUS Copilot Sandbox** (your course environment from Lab 0).
 

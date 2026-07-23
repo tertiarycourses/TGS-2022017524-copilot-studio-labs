@@ -23,7 +23,7 @@ At ACME Pte Ltd, staff drop supplier invoices into a shared OneDrive folder, but
 ## Step-by-Step Guide
 
 ### Step 1: Prepare the OneDrive folders (~5 minutes)
-1. Go to **https://www.office.com**, sign in, and open **OneDrive**.
+1. Go to **<a href="https://www.office.com" target="_blank" rel="noopener">https://www.office.com</a>**, sign in, and open **OneDrive**.
 2. Select **+ Add new** → **Folder** and create a folder named `Invoices`.
 3. Open the `Invoices` folder and create **three** subfolders inside it:
    - `Incoming`
@@ -34,7 +34,7 @@ At ACME Pte Ltd, staff drop supplier invoices into a shared OneDrive folder, but
 > **Tip:** Create all four folders **before** building the flow. The flow's triggers and Move file actions let you browse to these folders, which is far safer than typing paths by hand.
 
 ### Step 2: Create the automated flow with a file trigger (~8 minutes)
-1. Go to **https://make.powerautomate.com** and confirm the environment selector reads **NUS Copilot Sandbox**.
+1. Go to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>** and confirm the environment selector reads **NUS Copilot Sandbox**.
 2. In the left menu, select **Create** → **Automated cloud flow**.
 3. In the dialog:
    - **Flow name:** `Lab 13 - Invoice Upload Approval`

@@ -16,7 +16,7 @@ By the end of this lab, you will be able to:
 - Completed [Lab 9](../Lab%209%20-%20Sales%20Enquiry%20Assistant/index.md) (capturing variables)
 - Completed Day 1 Labs 1–2 (email + Excel actions)
 
-> **⚠️ Warning:** Your agent (Copilot Studio) and your flow (Power Automate) must live in the **same environment — NUS Copilot Sandbox**. If they are in different environments, the agent will not be able to find or call its flow. Before you begin, open both [Copilot Studio](https://copilotstudio.microsoft.com) and [Power Automate](https://make.powerautomate.com) and confirm the **top-right environment picker** shows **NUS Copilot Sandbox** in each.
+> **⚠️ Warning:** Your agent (Copilot Studio) and your flow (Power Automate) must live in the **same environment — NUS Copilot Sandbox**. If they are in different environments, the agent will not be able to find or call its flow. Before you begin, open both <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">Copilot Studio</a> and <a href="https://make.powerautomate.com" target="_blank" rel="noopener">Power Automate</a> and confirm the **top-right environment picker** shows **NUS Copilot Sandbox** in each.
 
 ## Scenario
 At **ACME Pte Ltd**, staff currently email the procurement team to request supplies, and someone manually copies each request into a spreadsheet. You'll replace that with an agent. When a staff member finishes their request, the agent **automatically logs** it to a shared spreadsheet **and emails** the procurement team — no manual copying, no missed requests. This is your first true **agent + flow** integration: the agent gathers the data, and a Power Automate flow does the real work.

@@ -15,7 +15,7 @@ By the end of this lab, you will be able to:
 - Completed [Lab 10](../Lab%2010%20-%20Procurement%20Request%20Workflow/index.md)
 - A **Sales Enquiry Assistant** agent (from Lab 9) you can reuse
 
-> **⚠️ Warning:** As in Lab 10, the agent and the flow must both be in the **NUS Copilot Sandbox** environment, or the agent cannot call its flow. Confirm the environment picker (top-right) in both [Copilot Studio](https://copilotstudio.microsoft.com) and [Power Automate](https://make.powerautomate.com).
+> **⚠️ Warning:** As in Lab 10, the agent and the flow must both be in the **NUS Copilot Sandbox** environment, or the agent cannot call its flow. Confirm the environment picker (top-right) in both <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">Copilot Studio</a> and <a href="https://make.powerautomate.com" target="_blank" rel="noopener">Power Automate</a>.
 
 ## Scenario
 At **ACME Pte Ltd**, every sales enquiry currently gets the same copy-paste reply. It works, but it feels impersonal. In this lab you'll reuse your **Sales Enquiry Assistant** from Lab 9 and add a flow that uses an **AI prompt** to draft a warm, personalised reply from the customer's captured details — then emails it automatically. This shows how generative AI turns the structured data you captured into polished, individual communication, while still keeping you in control of length and tone.

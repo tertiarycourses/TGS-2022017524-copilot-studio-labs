@@ -15,7 +15,7 @@ By the end of this lab, you will be able to:
 ## Prerequisites
 - Completed [Lab 1](../Lab%201%20-%20Automated%20Email%20Workflow/index.md)
 - Access to Excel via OneDrive (verified in Lab 0)
-- Signed in at https://make.powerautomate.com with **NUS Copilot Sandbox** selected (top-right)
+- Signed in at <a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a> with **NUS Copilot Sandbox** selected (top-right)
 
 ## Scenario
 At **ACME Pte Ltd**, every customer enquiry must be recorded so nothing is lost. In this lab you build a flow that takes submitted details (name, email, message) and **logs each one as a new row** in an Excel workbook — a running enquiry register the whole team can see. You'll also timestamp each row automatically.
@@ -27,7 +27,7 @@ At **ACME Pte Ltd**, every customer enquiry must be recorded so nothing is lost.
 ### Step 1: Create the Enquiry Log workbook with a Table (~10 minutes)
 Power Automate can only read and write Excel data that is formatted as a **Table** — not loose cells.
 
-1. Go to **https://office.com**, open **Excel**, and create a **New blank workbook**.
+1. Go to **<a href="https://office.com" target="_blank" rel="noopener">https://office.com</a>**, open **Excel**, and create a **New blank workbook**.
 2. Rename it (click the file name at the top of the screen): `Enquiry Log`. It saves automatically to **OneDrive**.
 3. In **row 1**, type these five column headers, one per cell (headers must be in row 1):
    - A1: `Date`
@@ -48,7 +48,7 @@ Power Automate can only read and write Excel data that is formatted as a **Table
 ### Step 2: Create the flow and trigger (~5 minutes)
 We'll use a manual trigger with inputs to *simulate* a submitted form. (Microsoft Forms uses the same downstream pattern — see Step 5.)
 
-1. Go to **https://make.powerautomate.com**, confirm **NUS Copilot Sandbox** is selected top-right, then select **Create → Instant cloud flow**.
+1. Go to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>**, confirm **NUS Copilot Sandbox** is selected top-right, then select **Create → Instant cloud flow**.
 2. **Flow name:** `Lab 2 - Log Enquiry to Excel`
 3. **Choose how to trigger this flow:** select **Manually trigger a flow**, then **Create**.
 4. Select the trigger card to open its panel, then select **+ Add an input** three times, choosing **Text** each time, and name them:
@@ -102,7 +102,7 @@ We'll use a manual trigger with inputs to *simulate* a submitted form. (Microsof
 
 ### Step 5: (Optional) Connect it to a real Microsoft Form (~5 minutes)
 To turn this into a true *form submission* workflow:
-1. Create a form at **https://forms.office.com** with three questions: Name, Email, Message.
+1. Create a form at **<a href="https://forms.office.com" target="_blank" rel="noopener">https://forms.office.com</a>** with three questions: Name, Email, Message.
 2. Build a **new** flow with the trigger **When a new response is submitted** (Microsoft Forms connector).
 3. Add the **Get response details** action, then the same **Add a row into a table** action, mapping the Forms answers into the columns (and keep the same `formatDateTime(...)` fx expression for Date).
 

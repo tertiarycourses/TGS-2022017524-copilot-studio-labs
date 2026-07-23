@@ -24,7 +24,7 @@ At **ACME Pte Ltd**, customers fill in an online enquiry form. The moment they *
 ## Step-by-Step Guide
 
 ### Step 1: Create the form in Microsoft Forms (~10 minutes)
-1. Open a new browser tab and go to **https://forms.office.com**.
+1. Open a new browser tab and go to **<a href="https://forms.office.com" target="_blank" rel="noopener">https://forms.office.com</a>**.
 2. Sign in with the **same account** you use for Power Automate in the **NUS Copilot Sandbox** tenant.
 3. Click **+ New Form**.
 4. Click the title at the top and enter: `Customer Enquiry Form`.
@@ -44,7 +44,7 @@ At **ACME Pte Ltd**, customers fill in an online enquiry form. The moment they *
 4. **Save this URL** somewhere — it's the link you'd send to customers, and you'll use it to test at the end.
 
 ### Step 3: Create the automated flow (~5 minutes)
-1. Go back to **https://make.powerautomate.com** (confirm the environment is **NUS Copilot Sandbox**).
+1. Go back to **<a href="https://make.powerautomate.com" target="_blank" rel="noopener">https://make.powerautomate.com</a>** (confirm the environment is **NUS Copilot Sandbox**).
 2. Left menu → **+ Create** → **Automated cloud flow**.
 3. **Flow name:** `Lab 5 - Form Submission to Email and Excel`.
 4. In "Choose your flow's trigger", search `Forms` and select **When a new response is submitted** (Microsoft Forms).

@@ -5,6 +5,10 @@
 [![Duration](https://img.shields.io/badge/Duration-3%20Days-orange)]()
 [![Labs](https://img.shields.io/badge/Labs-17%20Hands--On-purple)]()
 
+## Screenshot
+
+![Course repository and lab materials](screenshot.png)
+
 This repository contains hands-on lab materials for the **Microsoft Copilot Studio & Power Automate for Business Workflow Automation** course. Learn to automate real business processes — sales, finance, procurement, and order processing — by combining **Power Automate** flows with AI **agents** built in **Microsoft Copilot Studio**.
 
 The course is **practical and step-by-step**: every lab is written so a complete beginner can follow along, starting from creating your account through to building full end-to-end automated workflows.
